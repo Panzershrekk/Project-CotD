@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\totof\\documents\\work\\vertical\\project-cotd\\projectcotd\\intermediate\\build\\win64\\unrealeditor\\inc\\projectcotd\\uht\\projectcotd.init.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\totof\\documents\\work\\vertical\\project-cotd\\projectcotd\\intermediate\\build\\win64\\x64\\projectcotdeditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "c:\\users\\totof\\documents\\work\\vertical\\project-cotd\\projectcotd\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\projectcotd\\definitions.projectcotd.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
