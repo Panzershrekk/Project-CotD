@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "EntityStats.h"
 #include "ControllableEntity.generated.h"
 
 UCLASS()

@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ControllableEntity.h"
 #include "GameFramework/Actor.h"
 #include "BattleManager.generated.h"
 
@@ -15,15 +16,22 @@ public:
 	// Sets default values for this actor's properties
 	ABattleManager();
 
+	UPROPERTY(BlueprintReadOnly, Category = "Battle")
 	bool isbattleStarted;
+	UPROPERTY(BlueprintReadOnly, Category = "Battle")
 	int currentTurn;
 
+	UPROPERTY(BlueprintReadOnly, Category = "Battle")
+	TArray<AControllableEntity*> allControllableEntities;
+	UPROPERTY(BlueprintReadOnly, Category = "Battle")
+	TArray<AControllableEntity*> orderOfPlayList;
 	//---> PSeudo code
+// 
 	//List<CurentPlayable> all entities
 	//List<OrdererPlayeble> initiative
 
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
-	void StartCombat();
+	void StartCombat(TArray<AControllableEntity*> controllabledEntities);
 
 	void DefineNextPlayableEntity();
 	void CheckForBattleEnd();

@@ -25,11 +25,12 @@ void ABattleManager::Tick(float DeltaTime)
 
 }
 
-void ABattleManager::StartCombat()
+void ABattleManager::StartCombat(TArray<AControllableEntity*> controllableEntities)
 {
 	//Roll initative
 	isbattleStarted = true;
 	currentTurn = 0;
+	allControllableEntities = controllableEntities;
 }
 
 void ABattleManager::DefineNextPlayableEntity()
