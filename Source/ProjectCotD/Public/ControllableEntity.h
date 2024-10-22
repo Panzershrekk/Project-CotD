@@ -16,9 +16,6 @@ public:
 	// Sets default values for this pawn's properties
 	AControllableEntity();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	class UEntityStats* EntityStats;
-
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
