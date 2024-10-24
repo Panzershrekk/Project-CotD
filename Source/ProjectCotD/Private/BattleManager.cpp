@@ -31,6 +31,11 @@ void ABattleManager::StartCombat(TArray<AControllableEntity*> controllableEntiti
 	isbattleStarted = true;
 	currentTurn = 0;
 	allControllableEntities = controllableEntities;
+	orderOfPlayList = controllableEntities;
+	orderOfPlayList.Sort([](const AControllableEntity& A, const AControllableEntity& B)
+		{
+			return A.GetInitiative() > B.GetInitiative();
+		});
 }
 
 void ABattleManager::DefineNextPlayableEntity()

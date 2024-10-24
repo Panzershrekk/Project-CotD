@@ -31,3 +31,15 @@ void AControllableEntity::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 }
 
+int AControllableEntity::GetInitiative() const
+{
+    // Vérifie que l'EntityDataAsset n'est pas nul
+    if (EntityStatsDataAsset)
+    {
+        return 0;
+    }
+
+    // Retourne une valeur par défaut si le Data Asset n'est pas défini
+    return 0;
+}
+
