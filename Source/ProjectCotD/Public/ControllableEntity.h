@@ -4,6 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "EntityStatsDataAsset.h"
+#include "Components/CapsuleComponent.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
+#include "Components/ArrowComponent.h"
 #include "GameFramework/Pawn.h"
 #include "ControllableEntity.generated.h"
 
@@ -16,7 +20,20 @@ public:
 	AControllableEntity();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	UEntityStatsDataAsset* EntityStatsDataAsset;
-	
+
+
+	//Components
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UCapsuleComponent* CapsuleComponent;
+
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	USkeletalMeshComponent* Mesh;
+
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UCharacterMovementComponent* CharacterMovement;
+	UPROPERTY()
+	UArrowComponent* ArrowComponent;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

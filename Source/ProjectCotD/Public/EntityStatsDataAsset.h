@@ -43,6 +43,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	UStaticMesh* Model;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
+	USkeletalMesh* SkeletonMesh;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	UTexture2D* UIImage;

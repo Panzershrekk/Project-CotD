@@ -8,6 +8,14 @@ AControllableEntity::AControllableEntity()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+    CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
+    SetRootComponent(CapsuleComponent);
+    Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+    Mesh->SetupAttachment(CapsuleComponent);
+    ArrowComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
+    ArrowComponent->SetupAttachment(CapsuleComponent);
+    CharacterMovement = CreateDefaultSubobject<UCharacterMovementComponent>(TEXT("CharacterMovement"));
 }
 
 // Called when the game starts or when spawned
@@ -33,13 +41,10 @@ void AControllableEntity::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 int AControllableEntity::GetInitiative() const
 {
-    // Vérifie que l'EntityDataAsset n'est pas nul
     if (EntityStatsDataAsset)
     {
-        return 0;
+        return EntityStatsDataAsset->Initiative + FMath::RandRange(-EntityStatsDataAsset->InitiativeVariation, EntityStatsDataAsset->InitiativeVariation);
     }
-
-    // Retourne une valeur par défaut si le Data Asset n'est pas défini
     return 0;
 }
 
