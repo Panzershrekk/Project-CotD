@@ -50,6 +50,6 @@ public:
 	UTexture2D* UIImage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float GrossBite;
+	UMaterial* MaterialTest;
 
 };
