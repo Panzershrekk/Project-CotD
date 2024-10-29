@@ -2,6 +2,7 @@
 
 
 #include "ControllableEntity.h"
+#include "ControllableEntityAttributeSet.h"
 
 // Sets default values
 AControllableEntity::AControllableEntity()
@@ -18,12 +19,17 @@ AControllableEntity::AControllableEntity()
     ArrowComponent->SetupAttachment(RootComponent);
 
     CharacterMovement = CreateDefaultSubobject<UCharacterMovementComponent>(TEXT("CharacterMovement"));
+    AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 }
 
 // Called when the game starts or when spawned
 void AControllableEntity::BeginPlay()
 {
 	Super::BeginPlay();
+    if (IsValid(AbilitySystemComponent))
+    {
+        ControllableEntityAttributeSet = AbilitySystemComponent->GetSet<UControllableEntityAttributeSet>();
+    }
 }
 
 // Called every frame

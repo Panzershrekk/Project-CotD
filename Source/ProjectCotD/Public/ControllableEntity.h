@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "EntityStatsDataAsset.h"
+#include "AbilitySystemComponent.h"
+#include "AbilitySystemInterface.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -12,7 +14,7 @@
 #include "ControllableEntity.generated.h"
 
 UCLASS()
-class PROJECTCOTD_API AControllableEntity : public APawn
+class PROJECTCOTD_API AControllableEntity : public APawn, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 public:
@@ -34,9 +36,22 @@ public:
 	UPROPERTY()
 	UArrowComponent* ArrowComponent;
 
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	UAbilitySystemComponent* AbilitySystemComponent;
+
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
+	{
+		return AbilitySystemComponent;
+	}
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
+	const class UControllableEntityAttributeSet* ControllableEntityAttributeSet;
 
 public:	
 	// Called every frame

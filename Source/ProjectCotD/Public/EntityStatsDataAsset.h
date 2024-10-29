@@ -27,21 +27,6 @@ public:
 	float InitiativeVariation;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float BaseMaxHitPoint;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float BaseMaxMovement;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float BaseStrenght;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float BaseIntelligence;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
-	float BaseAgility;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	UStaticMesh* Model;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	USkeletalMesh* SkeletonMesh;
