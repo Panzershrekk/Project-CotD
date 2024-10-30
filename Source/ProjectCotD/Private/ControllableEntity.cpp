@@ -48,7 +48,7 @@ void AControllableEntity::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 int AControllableEntity::GetInitiative() const
 {
-    if (EntityStatsDataAsset)
+    if (ControllableEntityAttributeSet)
     {
         float variation = ControllableEntityAttributeSet->GetInitiativeVariation();
         return ControllableEntityAttributeSet->GetInitiative() + FMath::RandRange(-variation, variation);

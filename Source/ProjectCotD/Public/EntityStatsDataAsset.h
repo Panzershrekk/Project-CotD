@@ -34,4 +34,7 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Animation")
 	TSubclassOf<UAnimInstance> AnimClass;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
+	UDataTable* EntityNumericalStats;
+
 };
