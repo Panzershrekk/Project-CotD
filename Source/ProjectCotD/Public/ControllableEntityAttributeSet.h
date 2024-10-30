@@ -19,6 +19,8 @@ class PROJECTCOTD_API UControllableEntityAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 public:
+
+	//Health
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData Health;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Health);
@@ -27,6 +29,9 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxHealth);
 
+
+
+	//Mana
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData Mana;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Mana);
@@ -35,6 +40,18 @@ public:
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxMana);
 
+
+	//Martial Point
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData MartialPoint;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MartialPoint);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData MaxMartialPoint;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxMartialPoint);
+
+
+	//Others Stats
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData Initiative;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Initiative);

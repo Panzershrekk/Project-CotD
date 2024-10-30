@@ -50,7 +50,8 @@ int AControllableEntity::GetInitiative() const
 {
     if (EntityStatsDataAsset)
     {
-        return EntityStatsDataAsset->Initiative + FMath::RandRange(-EntityStatsDataAsset->InitiativeVariation, EntityStatsDataAsset->InitiativeVariation);
+        float variation = ControllableEntityAttributeSet->GetInitiativeVariation();
+        return ControllableEntityAttributeSet->GetInitiative() + FMath::RandRange(-variation, variation);
     }
     return 0;
 }
