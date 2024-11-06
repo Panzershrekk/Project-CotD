@@ -9,16 +9,10 @@ AControllableEntity::AControllableEntity()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-    CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
-    RootComponent = CapsuleComponent;
-
-    Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
-    Mesh->SetupAttachment(RootComponent);
 
     ArrowComponent = CreateDefaultSubobject<UArrowComponent>(TEXT("ArrowComponent"));
     ArrowComponent->SetupAttachment(RootComponent);
 
-    CharacterMovement = CreateDefaultSubobject<UCharacterMovementComponent>(TEXT("CharacterMovement"));
     AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 }
 

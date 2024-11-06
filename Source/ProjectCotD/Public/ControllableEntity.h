@@ -10,11 +10,11 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/ArrowComponent.h"
-#include "GameFramework/Pawn.h"
+#include "GameFramework/Character.h"
 #include "ControllableEntity.generated.h"
 
 UCLASS()
-class PROJECTCOTD_API AControllableEntity : public APawn, public IAbilitySystemInterface
+class PROJECTCOTD_API AControllableEntity : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 public:
@@ -23,17 +23,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	UEntityStatsDataAsset* EntityStatsDataAsset;
 
-
-	//Components
-	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UCapsuleComponent* CapsuleComponent;
-
-	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	USkeletalMeshComponent* Mesh;
-
-	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
-	UCharacterMovementComponent* CharacterMovement;
-	UPROPERTY()
 	UArrowComponent* ArrowComponent;
 
 
