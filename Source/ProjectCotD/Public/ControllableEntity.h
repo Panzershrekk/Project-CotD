@@ -23,9 +23,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	UEntityStatsDataAsset* EntityStatsDataAsset;
 
-	UArrowComponent* ArrowComponent;
-
-
 
 protected:
 	// Called when the game starts or when spawned
