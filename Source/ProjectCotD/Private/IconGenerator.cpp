@@ -37,10 +37,6 @@ UTexture2D* AIconGenerator::ConvertRenderTargetToTexture2D(UTextureRenderTarget2
 
     const int32 Width = RenderTarget->SizeX;
     const int32 Height = RenderTarget->SizeY;
-    if (Width != Height)
-    {
-        UE_LOG(LogTemp, Error, TEXT("Dimension must bu equal, current: Width=%d, Height=%d"), Width, Height);
-    }
 
     TArray<FColor> OutBMP;
     FRenderTarget* RenderTargetResource = RenderTarget->GameThread_GetRenderTargetResource();
