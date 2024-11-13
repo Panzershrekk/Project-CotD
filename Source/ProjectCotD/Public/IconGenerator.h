@@ -8,6 +8,7 @@
 #include "RenderUtils.h"                   
 #include "Runtime/Engine/Classes/Engine/TextureRenderTarget.h"
 #include "Engine/Texture.h"
+#include "ImageUtils.h"
 #include "GameFramework/Actor.h"
 #include "IconGenerator.generated.h"
 
@@ -20,7 +21,7 @@ public:
 	// Sets default values for this actor's properties
 	AIconGenerator();
 	UFUNCTION(BlueprintCallable, Category = "Icon gen")
-	UTexture2D* ConvertRenderTargetToTexture2D(UTextureRenderTarget2D* RenderTarget, UObject* Outer);
+	UTexture2D* ConvertRenderTargetToTexture2D(UTextureRenderTarget2D* RenderTarget);
 
 protected:
 	// Called when the game starts or when spawned

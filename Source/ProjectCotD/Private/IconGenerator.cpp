@@ -25,46 +25,66 @@ void AIconGenerator::Tick(float DeltaTime)
 
 }
 
-UTexture2D* AIconGenerator::ConvertRenderTargetToTexture2D(UTextureRenderTarget2D* RenderTarget, UObject* Outer)
+//Exemple of use -> https://forums.unrealengine.com/t/updatetextureregions-pitch/427713
+
+UTexture2D* AIconGenerator::ConvertRenderTargetToTexture2D(UTextureRenderTarget2D* RenderTarget)
 {
     if (!RenderTarget)
+    {
+        UE_LOG(LogTemp, Error, TEXT("RenderTarget is null"));
         return nullptr;
+    }
 
-    UTexture2D* NewTexture = UTexture2D::CreateTransient(RenderTarget->SizeX, RenderTarget->SizeY, PF_B8G8R8A8);
-    NewTexture->MipGenSettings = TMGS_NoMipmaps;
-    NewTexture->SRGB = RenderTarget->SRGB;
-
-    FTextureRenderTargetResource* RenderTargetResource = RenderTarget->GameThread_GetRenderTargetResource();
-    FReadSurfaceDataFlags ReadPixelFlags(RCM_UNorm);
-    ReadPixelFlags.SetLinearToGamma(false);
+    const int32 Width = RenderTarget->SizeX;
+    const int32 Height = RenderTarget->SizeY;
+    if (Width != Height)
+    {
+        UE_LOG(LogTemp, Error, TEXT("Dimension must bu equal, current: Width=%d, Height=%d"), Width, Height);
+    }
 
     TArray<FColor> OutBMP;
-    //RenderTargetResource->ReadPixels(OutBMP, ReadPixelFlags);
-    if (RenderTargetResource->ReadPixels(OutBMP, ReadPixelFlags))
+    FRenderTarget* RenderTargetResource = RenderTarget->GameThread_GetRenderTargetResource();
+    RenderTargetResource->ReadPixels(OutBMP);
+
+    if (OutBMP.Num() != Width * Height)
     {
-        UE_LOG(LogTemp, Log, TEXT("Pixels read successfully from RenderTarget."));
-        if (OutBMP.Num() > 0)
-        {
-            UE_LOG(LogTemp, Log, TEXT("OutBMP has %d pixels. First pixel color: %s"), OutBMP.Num(), *OutBMP[0].ToString());
-        }
-        else
-        {
-            UE_LOG(LogTemp, Warning, TEXT("OutBMP is empty after reading pixels."));
-        }
+        UE_LOG(LogTemp, Error, TEXT("Dimension must bu equal, current: Width=%d, Height=%d"), Width, Height);
+        return nullptr;
     }
-    else
+
+    //TODO: Change that, quick fix because transparency was 0, no matter what
+    for (int j = 0; j < OutBMP.Num(); j++)
     {
-        UE_LOG(LogTemp, Error, TEXT("Failed to read pixels from RenderTarget."));
+        OutBMP[j].A = 255;
     }
-    FUpdateTextureRegion2D Region(0, 0, 0, 0, RenderTarget->SizeX, RenderTarget->SizeY);
 
-    NewTexture->UpdateTextureRegions(0, 1, &Region,
-        RenderTarget->SizeX * sizeof(FColor),
-        sizeof(FColor),
-        (uint8*)OutBMP.GetData());
+    UTexture2D* Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
+    if (!Texture)
+    {
+        UE_LOG(LogTemp, Error, TEXT("Cannot create transient texture"));
+        return nullptr;
+    }
+    Texture->CompressionSettings = TC_Default;
+    Texture->SRGB = RenderTarget->SRGB;
+    Texture->UpdateResource();
 
-    NewTexture->UpdateResource();
-    UE_LOG(LogTemp, Log, TEXT("Texture2D updated with RenderTarget data."));
 
-    return NewTexture;
+    if (Texture->GetSizeX() != Width || Texture->GetSizeY() != Height)
+    {
+        UE_LOG(LogTemp, Error, TEXT("Texture size is wrong : Width=%d, Height=%d, TextureWidth=%d, TextureHeight=%d"),
+            Width, Height, Texture->GetSizeX(), Texture->GetSizeY());
+        return nullptr;
+    }
+
+    FUpdateTextureRegion2D* Region = new FUpdateTextureRegion2D(0, 0, 0, 0, Width, Height);
+    TFunction<void(uint8* SrcData, const FUpdateTextureRegion2D* Regions)> DataCleanupFunc =
+        [](uint8* SrcData, const FUpdateTextureRegion2D* Regions) {
+        delete[] SrcData;
+        delete[] Regions;
+        };
+
+    Texture->UpdateTextureRegions(0, 1, Region, Width * sizeof(FColor), sizeof(FColor), (uint8*)OutBMP.GetData(), DataCleanupFunc);
+    //Texture->UpdateTextureRegions(0, 1, Region, Width * sizeof(FColor), sizeof(FColor), reinterpret_cast<uint8*>(OutBMP.GetData()));
+
+    return Texture;
 }
