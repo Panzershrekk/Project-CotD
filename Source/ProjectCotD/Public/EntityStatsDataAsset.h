@@ -37,4 +37,6 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Stats")
 	UDataTable* EntityNumericalStats;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spells")
+	TArray<TSubclassOf<class UCOTDGameplayAbility>> EntitySpells;
 };
