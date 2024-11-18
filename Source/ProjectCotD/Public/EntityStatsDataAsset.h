@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "COTDGameplayAbility.h"
 #include "Engine/DataAsset.h"
 #include "EntityStatsDataAsset.generated.h"
 
@@ -14,6 +15,8 @@ class PROJECTCOTD_API UEntityStatsDataAsset : public UDataAsset
 {
 	GENERATED_BODY()
 public:
+	UFUNCTION(BlueprintCallable, Category = "Spells")
+	TArray<UAbilitiesDataAsset*> GetAbilitiesDataAssets() const;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	FName Name;
 
@@ -38,5 +41,5 @@ public:
 	UDataTable* EntityNumericalStats;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spells")
-	TArray<TSubclassOf<class UCOTDGameplayAbility>> EntitySpells;
+	TArray<TSubclassOf<UCOTDGameplayAbility>> EntitySpells;
 };

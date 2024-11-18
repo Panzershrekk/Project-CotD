@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitiesDataAsset.h"
 #include "Abilities/GameplayAbility.h"
 #include "COTDGameplayAbility.generated.h"
 
@@ -15,5 +16,5 @@ class PROJECTCOTD_API UCOTDGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Stats")
-	class UAbilitiesDataAsset* AbilitiesDataAsset;
+	UAbilitiesDataAsset* AbilitiesDataAsset;
 };
