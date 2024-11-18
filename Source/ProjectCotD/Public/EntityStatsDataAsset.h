@@ -16,7 +16,7 @@ class PROJECTCOTD_API UEntityStatsDataAsset : public UDataAsset
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable, Category = "Spells")
-	TArray<UAbilitiesDataAsset*> GetAbilitiesDataAssets() const;
+	TArray<UCOTDGameplayAbility*> GetAbilitiesDataAssets() const;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Stats")
 	FName Name;
 

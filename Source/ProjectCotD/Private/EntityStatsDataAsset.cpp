@@ -4,20 +4,20 @@
 #include "EntityStatsDataAsset.h"
 
 UFUNCTION(BlueprintCallable, Category = "Spells")
-TArray<UAbilitiesDataAsset*> UEntityStatsDataAsset::GetAbilitiesDataAssets() const
+TArray<UCOTDGameplayAbility*> UEntityStatsDataAsset::GetAbilitiesDataAssets() const
 {
-    TArray<UAbilitiesDataAsset*> DataAssets;
+    TArray<UCOTDGameplayAbility*> Abilities;
     for (TSubclassOf<UCOTDGameplayAbility> SpellClass : EntitySpells)
     {
         if (SpellClass)
         {
-            // Crée une instance temporaire pour accéder aux propriétés
+            // Crée une instance temporaire à partir de la classe pour accéder à ses propriétés
             UCOTDGameplayAbility* TempAbility = SpellClass->GetDefaultObject<UCOTDGameplayAbility>();
-            if (TempAbility && TempAbility->AbilitiesDataAsset)
+            if (TempAbility)
             {
-                DataAssets.Add(TempAbility->AbilitiesDataAsset);
+                Abilities.Add(TempAbility);
             }
         }
     }
-    return DataAssets;
+    return Abilities;
 }
