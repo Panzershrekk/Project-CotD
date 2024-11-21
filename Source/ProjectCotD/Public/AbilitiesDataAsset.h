@@ -24,4 +24,10 @@ public:
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     UTexture2D* Icon;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    float Range;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    float BaseDamage;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    float SupplementDamage;
 };
