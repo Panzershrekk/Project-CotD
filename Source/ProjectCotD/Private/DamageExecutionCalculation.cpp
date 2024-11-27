@@ -6,11 +6,32 @@
 #include "AbilitySystemComponent.h"
 #include "ControllableEntity.h"
 #include "DamageExecutionCalculation.h"
+#include "ControllableEntityAttributeSet.h"
 #include "GameFramework/Actor.h"
+
+struct DamageCapture
+{
+    DECLARE_ATTRIBUTE_CAPTUREDEF(Health);
+    DECLARE_ATTRIBUTE_CAPTUREDEF(MaxHealth);
+
+    DamageCapture()
+    {
+        DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Health, Target, false);
+        DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, MaxHealth, Target, false);
+    }
+};
+
+static DamageCapture& GetDamageCapture()
+{
+    static DamageCapture DamageCapture;
+    return DamageCapture;
+}
 
 UDamageExecutionCalculation::UDamageExecutionCalculation()
 {
-    // Vous pouvez ajouter ici des "Capture Definitions" pour collecter les stats nécessaires.
+    RelevantAttributesToCapture.Add(GetDamageCapture().HealthDef);
+    RelevantAttributesToCapture.Add(GetDamageCapture().MaxHealthDef);
+
 }
 
 void UDamageExecutionCalculation::Execute_Implementation(
@@ -18,7 +39,32 @@ void UDamageExecutionCalculation::Execute_Implementation(
     FGameplayEffectCustomExecutionOutput& OutExecutionOutput
 ) const
 {
-    float MinimumDamage = 0.f;
+    UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
+    AActor* TargetActor = TargetABSC ? TargetABSC->GetAvatarActor() : nullptr;
+
+    UAbilitySystemComponent* SourceABSC = ExecutionParams.GetSourceAbilitySystemComponent();
+    AActor* SourceActor = SourceABSC ? SourceABSC->GetAvatarActor() : nullptr;
+
+    const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+    const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
+    const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
+
+    FAggregatorEvaluateParameters EvaluationParameters;
+    EvaluationParameters.SourceTags = SourceTags;
+    EvaluationParameters.TargetTags = TargetTags;
+
+    float Health = 0.0f;
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().HealthDef, EvaluationParameters, Health);
+    
+    float MaxHealth = 0.0f;
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
+
+    //float HealthToAdd = -FMath::Clamp(MaxHealth - Health, 0.0f, 1.0f);
+    float HealthToAdd = -1;
+
+    OutExecutionOutput.AddOutputModifier(
+        FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, HealthToAdd));
+        /*float MinimumDamage = 0.f;
     float DamageVariation = 0.f;
     float Resistance = 0.f;
 
@@ -31,7 +77,7 @@ void UDamageExecutionCalculation::Execute_Implementation(
             MinimumDamage = AbilityData->AbilitiesDataAsset->BaseDamage;
             DamageVariation = AbilityData->AbilitiesDataAsset->SupplementDamage;
         }
-    }
+    }*/
 
     /*if (const UObject* TargetObject = Spec.GetEffectContext().GetTargetObject())
     {
@@ -41,10 +87,11 @@ void UDamageExecutionCalculation::Execute_Implementation(
         }
     }*/
 
-    float RandomVariation = FMath::RandRange(0.f, DamageVariation);
-    float TotalDamage = FMath::Max(0.f, MinimumDamage + RandomVariation - Resistance);
+    /*float RandomVariation = FMath::RandRange(0.f, DamageVariation);
+    float TotalDamage = FMath::Max(0.f, MinimumDamage + RandomVariation - Resistance);*/
+    //GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Some variable values: x: %f"), 5));
 
-    OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(
+    /*OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(
         FGameplayAttribute(), EGameplayModOp::Additive, TotalDamage
-    ));
+    ));*/
 }
