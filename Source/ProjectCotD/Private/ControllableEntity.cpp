@@ -47,3 +47,20 @@ int AControllableEntity::GetInitiative() const
     return 0;
 }
 
+void AControllableEntity::DataTableSetup()
+{
+    if (EntityStatsDataAsset)
+    {
+        TSubclassOf<UAttributeSet> AttributeClass = UControllableEntityAttributeSet::StaticClass();
+        UDataTable* StartingTable = EntityStatsDataAsset->EntityNumericalStats;
+
+        if (StartingTable)
+        {
+            AbilitySystemComponent->DefaultStartingData.Empty();
+            FAttributeDefaults AttributeDefaults = FAttributeDefaults();
+            AttributeDefaults.Attributes = AttributeClass;
+            AttributeDefaults.DefaultStartingTable = StartingTable;
+            AbilitySystemComponent->DefaultStartingData.Add(AttributeDefaults);
+        }
+    }
+}

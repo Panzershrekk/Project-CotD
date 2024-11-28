@@ -47,4 +47,7 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	int GetInitiative() const;
 
+	UFUNCTION(BlueprintCallable, Category = "ConstructorSetup")
+	void DataTableSetup();
+
 };

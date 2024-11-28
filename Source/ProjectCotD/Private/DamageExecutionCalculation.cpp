@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "DamageExecutionCalculation.h"
 #include "COTDGameplayAbility.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
 #include "AbilitySystemComponent.h"
 #include "ControllableEntity.h"
-#include "DamageExecutionCalculation.h"
 #include "ControllableEntityAttributeSet.h"
 #include "GameFramework/Actor.h"
 
