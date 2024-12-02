@@ -7,6 +7,7 @@
 #include "AbilitySystemComponent.h"
 #include "ControllableEntity.h"
 #include "ControllableEntityAttributeSet.h"
+#include "COTDGameInstance.h"
 #include "GameFramework/Actor.h"
 
 struct DamageCapture
@@ -39,6 +40,7 @@ void UDamageExecutionCalculation::Execute_Implementation(
     FGameplayEffectCustomExecutionOutput& OutExecutionOutput
 ) const
 {
+    /* KindofTemplate*/
     UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
     AActor* TargetActor = TargetABSC ? TargetABSC->GetAvatarActor() : nullptr;
 
@@ -52,6 +54,30 @@ void UDamageExecutionCalculation::Execute_Implementation(
     FAggregatorEvaluateParameters EvaluationParameters;
     EvaluationParameters.SourceTags = SourceTags;
     EvaluationParameters.TargetTags = TargetTags;
+    /* KindofTemplate*/
+
+    float BaseDamage = 0.f;
+    float SupplementVariation = 0.f;
+
+    if (SourceActor)
+    {
+        //AControllableEntity* SourceEntity = SourceActor->FindComponentByClass<AControllableEntity>();
+
+        //if (SourceEntity)
+        //{
+            BaseDamage = 4;//SourceAbility->AbilitiesDataAsset->BaseDamage;
+            SupplementVariation = 4;//SourceAbility->AbilitiesDataAsset->SupplementDamage;
+        //}
+    }
+    /*if (TargetActor)
+    {
+        AControllableEntity* TargetEntity = SourceActor->FindComponentByClass<AControllableEntity>();
+        if (TargetEntity)
+        {
+            //TBD
+        }
+    }*/
+
 
     float Health = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().HealthDef, EvaluationParameters, Health);
@@ -60,38 +86,22 @@ void UDamageExecutionCalculation::Execute_Implementation(
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
 
     //float HealthToAdd = -FMath::Clamp(MaxHealth - Health, 0.0f, 1.0f);
-    float HealthToAdd = -1;
+    int32 HealthToAdd = BaseDamage + FMath::RandRange(0, static_cast<int32>(FMath::FloorToInt(SupplementVariation)));
 
+  
+    if (SourceActor->GetWorld())
+    {
+        UCOTDGameInstance* GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
+        if (TargetActor && GI && GI->UIManager)
+        {
+            GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(HealthToAdd));
+        }
+    }
+    else
+    {
+        if (GEngine)
+            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Enorme proutorrr!"));
+    }
     OutExecutionOutput.AddOutputModifier(
         FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, HealthToAdd));
-        /*float MinimumDamage = 0.f;
-    float DamageVariation = 0.f;
-    float Resistance = 0.f;
-
-    const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
-
-    if (const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject())
-    {
-        if (const UCOTDGameplayAbility* AbilityData = Cast<UCOTDGameplayAbility>(SourceObject))
-        {
-            MinimumDamage = AbilityData->AbilitiesDataAsset->BaseDamage;
-            DamageVariation = AbilityData->AbilitiesDataAsset->SupplementDamage;
-        }
-    }*/
-
-    /*if (const UObject* TargetObject = Spec.GetEffectContext().GetTargetObject())
-    {
-        if (const AControllableEntity* TargetEntity = Cast<AControllableEntity>(TargetObject))
-        {
-            Resistance = 0;
-        }
-    }*/
-
-    /*float RandomVariation = FMath::RandRange(0.f, DamageVariation);
-    float TotalDamage = FMath::Max(0.f, MinimumDamage + RandomVariation - Resistance);*/
-    //GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::Printf(TEXT("Some variable values: x: %f"), 5));
-
-    /*OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(
-        FGameplayAttribute(), EGameplayModOp::Additive, TotalDamage
-    ));*/
 }
