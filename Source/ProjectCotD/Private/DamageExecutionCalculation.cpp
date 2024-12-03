@@ -56,18 +56,29 @@ void UDamageExecutionCalculation::Execute_Implementation(
     EvaluationParameters.TargetTags = TargetTags;
     /* KindofTemplate*/
 
-    float BaseDamage = 0.f;
-    float SupplementVariation = 0.f;
+    int32 BaseDamage = 0;
+    int32 SupplementVariation = 0;
 
-    if (SourceActor)
+    /*if (const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject())
     {
-        //AControllableEntity* SourceEntity = SourceActor->FindComponentByClass<AControllableEntity>();
+        if (const UCOTDGameplayAbility* AbilityData = Cast<UCOTDGameplayAbility>(SourceObject))
+        {
+            if (GEngine)
+                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals %f"), AbilityData->AbilitiesDataAsset->BaseDamage));
+            MinimumDamage = AbilityData->AbilitiesDataAsset->BaseDamage;
+            DamageVariation = AbilityData->AbilitiesDataAsset->SupplementDamage;
+        }
+    }*/
+    const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject();
+    if (SourceObject)
+    {
+        const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
+        if (SourceGameplayAbility)
+        {
+            BaseDamage = SourceGameplayAbility->AbilitiesDataAsset->BaseDamage;
+            SupplementVariation = SourceGameplayAbility->AbilitiesDataAsset->SupplementDamage;
+        }
 
-        //if (SourceEntity)
-        //{
-            BaseDamage = 4;//SourceAbility->AbilitiesDataAsset->BaseDamage;
-            SupplementVariation = 4;//SourceAbility->AbilitiesDataAsset->SupplementDamage;
-        //}
     }
     /*if (TargetActor)
     {
@@ -85,23 +96,16 @@ void UDamageExecutionCalculation::Execute_Implementation(
     float MaxHealth = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
 
-    //float HealthToAdd = -FMath::Clamp(MaxHealth - Health, 0.0f, 1.0f);
-    int32 HealthToAdd = BaseDamage + FMath::RandRange(0, static_cast<int32>(FMath::FloorToInt(SupplementVariation)));
+    int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
 
-  
-    if (SourceActor->GetWorld())
+    if (SourceActor && SourceActor->GetWorld())
     {
         UCOTDGameInstance* GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
         if (TargetActor && GI && GI->UIManager)
         {
-            GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(HealthToAdd));
+            GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(Calaculated));
         }
     }
-    else
-    {
-        if (GEngine)
-            GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Enorme proutorrr!"));
-    }
     OutExecutionOutput.AddOutputModifier(
-        FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, HealthToAdd));
+        FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, Calaculated));
 }

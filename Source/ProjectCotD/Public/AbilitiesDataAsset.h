@@ -27,7 +27,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     float Range;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
-    float BaseDamage;
+    int32 BaseDamage;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
-    float SupplementDamage;
+    int32 SupplementDamage;
 };

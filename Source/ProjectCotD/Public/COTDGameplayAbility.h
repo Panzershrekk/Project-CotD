@@ -17,4 +17,6 @@ class PROJECTCOTD_API UCOTDGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Stats")
 	UAbilitiesDataAsset* AbilitiesDataAsset;
+	UFUNCTION(BlueprintCallable, Category = "Abilities")
+	void ApplyCustomGameplayEffectToTarget(UAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
 };
