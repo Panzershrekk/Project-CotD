@@ -10,6 +10,15 @@
  * 
  */
 
+UENUM(BlueprintType)
+enum class ETargetingType : uint8
+{
+    SingleTarget UMETA(DisplayName = "Single Target"),
+    MultiTarget UMETA(DisplayName = "Multi Target"),
+    AreaOfEffect UMETA(DisplayName = "Area of Effect"),
+    Self UMETA(DisplayName = "Self"),
+    Global UMETA(DisplayName = "Global")
+};
 
 UCLASS()
 class PROJECTCOTD_API UAbilitiesDataAsset : public UDataAsset
@@ -30,7 +39,8 @@ public:
     int32 BaseDamage;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     int32 SupplementDamage;
-
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    ETargetingType TargetingType;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     bool IsAreaOfEffect;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
