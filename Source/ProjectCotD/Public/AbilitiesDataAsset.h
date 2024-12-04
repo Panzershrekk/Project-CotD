@@ -30,4 +30,9 @@ public:
     int32 BaseDamage;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     int32 SupplementDamage;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    bool IsAreaOfEffect;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    float AreaSelectorRadius;
 };
