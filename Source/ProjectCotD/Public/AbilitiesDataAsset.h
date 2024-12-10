@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "COTDProjectile.h"
 #include "Engine/DataAsset.h"
 #include "AbilitiesDataAsset.generated.h"
 
@@ -45,4 +46,8 @@ public:
     bool IsAreaOfEffect;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     float AreaSelectorRadius;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    bool IsProjectile;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
+    TSubclassOf<ACOTDProjectile> ProjectileActor;
 };
