@@ -33,7 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	void StartCombat(TArray<AControllableEntity*> controllabledEntities);
 
-	void DefineNextPlayableEntity();
+	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
+	AControllableEntity* DefineNextPlayableEntity(AControllableEntity* CurrentPlaying);
 	void CheckForBattleEnd();
 
 protected:

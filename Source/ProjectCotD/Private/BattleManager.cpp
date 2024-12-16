@@ -38,8 +38,28 @@ void ABattleManager::StartCombat(TArray<AControllableEntity*> controllableEntiti
 		});
 }
 
-void ABattleManager::DefineNextPlayableEntity()
+AControllableEntity* ABattleManager::DefineNextPlayableEntity(AControllableEntity* CurrentPlaying)
 {
+
+	if (!CurrentPlaying)
+	{
+		return nullptr;
+	}
+	for (int32 Index = 0; Index < orderOfPlayList.Num(); ++Index)
+	{
+		if (orderOfPlayList[Index] == CurrentPlaying)
+		{
+			if (Index + 1 < orderOfPlayList.Num())
+			{
+				return orderOfPlayList[Index + 1];
+			}
+			else
+			{
+				return orderOfPlayList[0];
+			}
+		}
+	}
+	return nullptr;
 }
 
 void ABattleManager::CheckForBattleEnd()
