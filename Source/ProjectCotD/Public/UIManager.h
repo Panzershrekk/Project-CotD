@@ -17,6 +17,8 @@ public:
 
 	// Sets default values for this actor's properties
 	UUIManager();
+	UFUNCTION(BlueprintImplementableEvent, Category = "UI")
+	void UpdateHealth(const AActor* ControllableEntity);
 	void ShowHealthChangeFloating(const FVector& Location, const FString& Text);
 	void Initialize(UWorld* World);
 private:

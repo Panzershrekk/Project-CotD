@@ -32,7 +32,6 @@ UDamageExecutionCalculation::UDamageExecutionCalculation()
 {
     RelevantAttributesToCapture.Add(GetDamageCapture().HealthDef);
     RelevantAttributesToCapture.Add(GetDamageCapture().MaxHealthDef);
-
 }
 
 void UDamageExecutionCalculation::Execute_Implementation(
@@ -98,14 +97,27 @@ void UDamageExecutionCalculation::Execute_Implementation(
 
     int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
 
+    OutExecutionOutput.AddOutputModifier(
+        FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
+    TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
+    TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
+        this, &UDamageExecutionCalculation::OnHealthChanged);
     if (SourceActor && SourceActor->GetWorld())
     {
         UCOTDGameInstance* GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
+        Info = FInformations(TargetActor, SourceActor, GI);
         if (TargetActor && GI && GI->UIManager)
         {
             GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(Calaculated));
+            //GI->UIManager->UpdateHealth(TargetActor);
         }
     }
-    OutExecutionOutput.AddOutputModifier(
-        FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, Calaculated));
+}
+
+void UDamageExecutionCalculation::OnHealthChanged(const FOnAttributeChangeData& Data) const
+{
+    if (Info.GI && Info.GI->UIManager && Info.TargetActor)
+    {
+        Info.GI->UIManager->UpdateHealth(Info.TargetActor);
+    }
 }
