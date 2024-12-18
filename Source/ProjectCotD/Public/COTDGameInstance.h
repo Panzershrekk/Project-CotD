@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UIManager.h"
+#include "BattleManager.h"
 #include "Engine/GameInstance.h"
 #include "COTDGameInstance.generated.h"
 
@@ -17,9 +18,13 @@ class PROJECTCOTD_API UCOTDGameInstance : public UGameInstance
 public:
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
 	UUIManager* UIManager;
+	UPROPERTY(BlueprintReadOnly, Category = "Managers")
+	UBattleManager* BattleManager;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUIManager> UIManagerClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Battle")
+	TSubclassOf<UBattleManager> BattleManagerClass;
 
 	virtual void Init() override;
 };

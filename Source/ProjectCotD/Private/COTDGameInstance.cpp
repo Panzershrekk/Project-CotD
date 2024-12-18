@@ -15,4 +15,12 @@ void UCOTDGameInstance::Init()
             UIManager->Initialize(GetWorld());
         }
     }
+    if (BattleManagerClass)
+    {
+        BattleManager = NewObject<UBattleManager>(this, BattleManagerClass);
+        if (BattleManager)
+        {
+
+        }
+    }
 }

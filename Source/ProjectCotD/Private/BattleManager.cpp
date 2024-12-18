@@ -4,28 +4,11 @@
 #include "BattleManager.h"
 
 // Sets default values
-ABattleManager::ABattleManager()
+UBattleManager::UBattleManager()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 }
 
-// Called when the game starts or when spawned
-void ABattleManager::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ABattleManager::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-void ABattleManager::StartCombat(TArray<AControllableEntity*> controllableEntities)
+void UBattleManager::StartCombat(TArray<AControllableEntity*> controllableEntities)
 {
 	//Roll initative
 	isbattleStarted = true;
@@ -38,7 +21,7 @@ void ABattleManager::StartCombat(TArray<AControllableEntity*> controllableEntiti
 		});
 }
 
-AControllableEntity* ABattleManager::DefineNextPlayableEntity(AControllableEntity* CurrentPlaying)
+AControllableEntity* UBattleManager::DefineNextPlayableEntity(AControllableEntity* CurrentPlaying)
 {
 
 	if (!CurrentPlaying)
@@ -62,6 +45,6 @@ AControllableEntity* ABattleManager::DefineNextPlayableEntity(AControllableEntit
 	return nullptr;
 }
 
-void ABattleManager::CheckForBattleEnd()
+void UBattleManager::CheckForBattleEnd()
 {
 }
