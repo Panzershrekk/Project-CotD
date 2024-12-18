@@ -118,6 +118,6 @@ void UDamageExecutionCalculation::OnHealthChanged(const FOnAttributeChangeData& 
 {
     if (Info.GI && Info.GI->UIManager && Info.TargetActor)
     {
-        Info.GI->UIManager->UpdateHealth(Info.TargetActor);
+        Info.GI->BattleManager->ApplyDamageToEntityAndUpdateUI(Info.TargetActor);
     }
 }

@@ -21,7 +21,8 @@ void UUIManager::ShowHealthChangeFloating(const FVector& Location, const FString
     }
 }
 
-void UUIManager::Initialize(UWorld* World)
+void UUIManager::Initialize(UWorld* World, UCOTDGameInstance* Instance)
 {
+    COTDGameInstance = Instance;
     this->CachedWorld = World;
 }

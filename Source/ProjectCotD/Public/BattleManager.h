@@ -7,6 +7,8 @@
 #include "GameFramework/Actor.h"
 #include "BattleManager.generated.h"
 
+class UCOTDGameInstance;
+
 UCLASS(Blueprintable, BlueprintType)
 class PROJECTCOTD_API UBattleManager : public UObject
 {
@@ -15,11 +17,15 @@ class PROJECTCOTD_API UBattleManager : public UObject
 public:	
 	// Sets default values for this actor's properties
 	UBattleManager();
+	void Initialize(UCOTDGameInstance* Instance);
 
+	UPROPERTY(BlueprintReadOnly, Category = "Battle")
+	UCOTDGameInstance* COTDGameInstance;
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
 	bool isbattleStarted;
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
 	int currentTurn;
+
 
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
 	TArray<AControllableEntity*> allControllableEntities;
@@ -36,4 +42,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	AControllableEntity* DefineNextPlayableEntity(AControllableEntity* CurrentPlaying);
 	void CheckForBattleEnd();
+	UFUNCTION(BlueprintImplementableEvent, Category = "Battle")
+	void ApplyDamageToEntityAndUpdateUI(const AActor* ControllableEntity);
 };

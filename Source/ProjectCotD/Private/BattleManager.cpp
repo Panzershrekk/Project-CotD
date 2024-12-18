@@ -8,6 +8,12 @@ UBattleManager::UBattleManager()
 {
 }
 
+void UBattleManager::Initialize(UCOTDGameInstance* Instance)
+{
+	COTDGameInstance = Instance;
+}
+
+
 void UBattleManager::StartCombat(TArray<AControllableEntity*> controllableEntities)
 {
 	//Roll initative

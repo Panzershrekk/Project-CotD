@@ -12,7 +12,7 @@ void UCOTDGameInstance::Init()
         UIManager = NewObject<UUIManager>(this, UIManagerClass);
         if (UIManager)
         {
-            UIManager->Initialize(GetWorld());
+            UIManager->Initialize(GetWorld(), this);
         }
     }
     if (BattleManagerClass)
@@ -20,7 +20,7 @@ void UCOTDGameInstance::Init()
         BattleManager = NewObject<UBattleManager>(this, BattleManagerClass);
         if (BattleManager)
         {
-
+            BattleManager->Initialize(this);
         }
     }
 }
