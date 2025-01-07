@@ -47,7 +47,15 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     float AreaSelectorRadius;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    bool RequireATarget;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    bool RequireLineOfSight;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     bool IsProjectile;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
     TSubclassOf<ACOTDProjectile> ProjectileActor;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
+    float ProjectileArc;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
+    float ProjectileSpeed;
 };

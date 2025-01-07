@@ -23,7 +23,7 @@ void UBattleManager::StartCombat(TArray<AControllableEntity*> controllableEntiti
 	orderOfPlayList = controllableEntities;
 	orderOfPlayList.Sort([](const AControllableEntity& A, const AControllableEntity& B)
 		{
-			return A.GetInitiative() > B.GetInitiative();
+			return A.GetInitiative() < B.GetInitiative();
 		});
 }
 
