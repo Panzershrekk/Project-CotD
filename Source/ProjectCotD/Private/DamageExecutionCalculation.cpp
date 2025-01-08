@@ -55,30 +55,9 @@ void UDamageExecutionCalculation::Execute_Implementation(
     EvaluationParameters.TargetTags = TargetTags;
     /* KindofTemplate*/
 
-    int32 BaseDamage = 0;
-    int32 SupplementVariation = 0;
 
-    /*if (const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject())
-    {
-        if (const UCOTDGameplayAbility* AbilityData = Cast<UCOTDGameplayAbility>(SourceObject))
-        {
-            if (GEngine)
-                GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("World delta for current frame equals %f"), AbilityData->AbilitiesDataAsset->BaseDamage));
-            MinimumDamage = AbilityData->AbilitiesDataAsset->BaseDamage;
-            DamageVariation = AbilityData->AbilitiesDataAsset->SupplementDamage;
-        }
-    }*/
+
     const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject();
-    if (SourceObject)
-    {
-        const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
-        if (SourceGameplayAbility)
-        {
-            BaseDamage = SourceGameplayAbility->AbilitiesDataAsset->BaseDamage;
-            SupplementVariation = SourceGameplayAbility->AbilitiesDataAsset->SupplementDamage;
-        }
-
-    }
     /*if (TargetActor)
     {
         AControllableEntity* TargetEntity = SourceActor->FindComponentByClass<AControllableEntity>();
@@ -95,21 +74,31 @@ void UDamageExecutionCalculation::Execute_Implementation(
     float MaxHealth = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
 
-    int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
-
-    OutExecutionOutput.AddOutputModifier(
-        FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
-    TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
-    TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
-        this, &UDamageExecutionCalculation::OnHealthChanged);
-    if (SourceActor && SourceActor->GetWorld())
+    if (SourceObject)
     {
-        UCOTDGameInstance* GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
-        Info = FInformations(TargetActor, SourceActor, GI);
-        if (TargetActor && GI && GI->UIManager)
+        const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
+        for (FDamagerInfo DamagerInfo : SourceGameplayAbility->AbilitiesDataAsset->DamagersInfos)
         {
-            GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(Calaculated));
-            //GI->UIManager->UpdateHealth(TargetActor);
+            int32 BaseDamage = DamagerInfo.BaseDamage;
+            int32 SupplementVariation = DamagerInfo.SupplementDamage;
+
+            int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
+
+            OutExecutionOutput.AddOutputModifier(
+                FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
+            TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
+            TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
+                this, &UDamageExecutionCalculation::OnHealthChanged);
+            if (SourceActor && SourceActor->GetWorld())
+            {
+                UCOTDGameInstance* GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
+                Info = FInformations(TargetActor, SourceActor, GI);
+                if (TargetActor && GI && GI->UIManager)
+                {
+                    GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(Calaculated));
+                    //GI->UIManager->UpdateHealth(TargetActor);
+                }
+            }
         }
     }
 }

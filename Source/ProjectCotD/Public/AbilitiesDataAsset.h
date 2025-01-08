@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "COTDProjectile.h"
+#include "DamagerTypes.h"
 #include "Engine/DataAsset.h"
 #include "AbilitiesDataAsset.generated.h"
 
@@ -37,9 +38,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     float Range;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
-    int32 BaseDamage;
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
-    int32 SupplementDamage;
+    TArray<FDamagerInfo> DamagersInfos;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     ETargetingType TargetingType;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
@@ -59,3 +58,4 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
     float ProjectileSpeed;
 };
+
