@@ -77,28 +77,38 @@ void UDamageExecutionCalculation::Execute_Implementation(
     if (SourceObject)
     {
         const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
+        TQueue<FDamagerDisplayInfo> DamageQueueDisplayer;
+        UCOTDGameInstance* GI = nullptr;
+        if (SourceActor && SourceActor->GetWorld())
+        {
+            GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
+        }
         for (FDamagerInfo DamagerInfo : SourceGameplayAbility->AbilitiesDataAsset->DamagersInfos)
         {
             int32 BaseDamage = DamagerInfo.BaseDamage;
             int32 SupplementVariation = DamagerInfo.SupplementDamage;
-
             int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
 
+            FDamagerDisplayInfo Displayer;
+            Displayer.DisplayColor = FLinearColor::White;
+            Displayer.DamageDone = Calaculated;
+            if (GI && GI->DamageColorManager)
+            {
+                Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DamagerInfo.SubDamageType);
+            }
+            DamageQueueDisplayer.Enqueue(Displayer);
             OutExecutionOutput.AddOutputModifier(
                 FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
             TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
             TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
                 this, &UDamageExecutionCalculation::OnHealthChanged);
-            if (SourceActor && SourceActor->GetWorld())
-            {
-                UCOTDGameInstance* GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
-                Info = FInformations(TargetActor, SourceActor, GI);
-                if (TargetActor && GI && GI->UIManager)
-                {
-                    GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), FString::FromInt(Calaculated));
-                    //GI->UIManager->UpdateHealth(TargetActor);
-                }
-            }
+
+            Info = FInformations(TargetActor, SourceActor, GI);
+        }
+        if (TargetActor && GI && GI->UIManager)
+        {
+            GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), DamageQueueDisplayer);
+            //GI->UIManager->UpdateHealth(TargetActor);
         }
     }
 }

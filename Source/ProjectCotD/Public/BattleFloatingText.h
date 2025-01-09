@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageColorInfo.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/Actor.h"
 #include "BattleFloatingText.generated.h"
@@ -18,6 +19,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "TextRender")
 	UTextRenderComponent* TextRender;
 	void Initialize(const FString& Text);
+	void Initialize(const FDamagerDisplayInfo& Display);
 
 protected:
 	// Called when the game starts or when spawned

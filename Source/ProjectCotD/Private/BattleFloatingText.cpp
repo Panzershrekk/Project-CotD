@@ -27,3 +27,13 @@ void ABattleFloatingText::Initialize(const FString& Text)
 	}
 }
 
+void ABattleFloatingText::Initialize(const FDamagerDisplayInfo& Displayer)
+{
+	if (TextRender)
+	{
+		TextRender->SetTextRenderColor(Displayer.DisplayColor.ToFColor(true));
+		TextRender->SetText(FText::FromString(FString::FromInt(Displayer.DamageDone)));
+	}
+}
+
+

@@ -7,7 +7,7 @@
 #include "DamageColorInfo.generated.h"
 
 USTRUCT(BlueprintType)
-struct FDamageColorInfo
+struct FDamageColorInfo : public FTableRowBase
 {
     GENERATED_BODY()
 

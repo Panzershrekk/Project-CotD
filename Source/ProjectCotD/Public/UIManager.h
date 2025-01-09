@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DamageColorInfo.h"
 #include "GameFramework/Actor.h"
 #include "UIManager.generated.h"
 
@@ -31,6 +32,7 @@ public:
 	}
 
 	void ShowHealthChangeFloating(const FVector& Location, const FString& Text);
+	void ShowHealthChangeFloating(const FVector& Location, TQueue<FDamagerDisplayInfo>& DisplayerInfo);
 	void Initialize(UWorld* World, UCOTDGameInstance* Instance);
 private:
 	UWorld* CachedWorld;

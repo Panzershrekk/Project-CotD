@@ -23,4 +23,13 @@ void UCOTDGameInstance::Init()
             BattleManager->Initialize(this);
         }
     }
+
+    if (DamageColorManagerClass)
+    {
+        DamageColorManager = NewObject<UDamageColorManager>(this, DamageColorManagerClass);
+        if (DamageColorManager)
+        {
+            DamageColorManager->Initialize(this);
+        }
+    }
 }
