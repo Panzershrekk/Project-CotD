@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "DamageExecutionCalculation.h"
+#include "DOTEffectExecutionCalculation.h"
 #include "COTDGameplayAbility.h"
 #include "GameplayEffect.h"
 #include "GameplayEffectTypes.h"
@@ -8,7 +8,7 @@
 #include "ControllableEntity.h"
 #include "ControllableEntityAttributeSet.h"
 #include "COTDGameInstance.h"
-#include "GameFramework/Actor.h"
+#include "GameplayEffectDamageOverTurn.h"
 
 struct DamageCapture
 {
@@ -28,13 +28,13 @@ static DamageCapture& GetDamageCapture()
     return DamageCapture;
 }
 
-UDamageExecutionCalculation::UDamageExecutionCalculation()
+UDOTEffectExecutionCalculation::UDOTEffectExecutionCalculation()
 {
     RelevantAttributesToCapture.Add(GetDamageCapture().HealthDef);
     RelevantAttributesToCapture.Add(GetDamageCapture().MaxHealthDef);
 }
 
-void UDamageExecutionCalculation::Execute_Implementation(
+void UDOTEffectExecutionCalculation::Execute_Implementation(
     const FGameplayEffectCustomExecutionParameters& ExecutionParams,
     FGameplayEffectCustomExecutionOutput& OutExecutionOutput
 ) const
@@ -55,65 +55,52 @@ void UDamageExecutionCalculation::Execute_Implementation(
     EvaluationParameters.TargetTags = TargetTags;
     /* KindofTemplate*/
 
-
-
     const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject();
-    /*if (TargetActor)
-    {
-        AControllableEntity* TargetEntity = SourceActor->FindComponentByClass<AControllableEntity>();
-        if (TargetEntity)
-        {
-            //TBD
-        }
-    }*/
-
 
     float Health = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().HealthDef, EvaluationParameters, Health);
-    
+
     float MaxHealth = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
 
+    const UGameplayEffectDamageOverTurn* DOTEffect = Cast<UGameplayEffectDamageOverTurn>(Spec.Def);
+    UCOTDGameInstance* GI = nullptr;
     if (SourceObject)
     {
         const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
         TQueue<FDamagerDisplayInfo> DamageQueueDisplayer;
-        UCOTDGameInstance* GI = nullptr;
         if (SourceActor && SourceActor->GetWorld())
         {
             GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
         }
-        for (FDamagerInfo DamagerInfo : SourceGameplayAbility->AbilitiesDataAsset->DamagersInfos)
+    }
+    if (DOTEffect)
+    {
+        int32 BaseDamage = 1;
+        int32 Calaculated = BaseDamage;
+
+        FDamagerDisplayInfo Displayer;
+        Displayer.DisplayColor = FLinearColor::White;
+        Displayer.DamageDone = Calaculated;
+        if (GI && GI->DamageColorManager)
         {
-            int32 BaseDamage = DamagerInfo.BaseDamage;
-            int32 SupplementVariation = DamagerInfo.SupplementDamage;
-            int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
-
-            FDamagerDisplayInfo Displayer;
-            Displayer.DisplayColor = FLinearColor::White;
-            Displayer.DamageDone = Calaculated;
-            if (GI && GI->DamageColorManager)
-            {
-                Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DamagerInfo.SubDamageType);
-            }
-            DamageQueueDisplayer.Enqueue(Displayer);
-            OutExecutionOutput.AddOutputModifier(
-                FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
-            TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
-            TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
-                this, &UDamageExecutionCalculation::OnHealthChanged);
-
-            Info = FDamageOriginInformations(TargetActor, SourceActor, GI);
+            Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DOTEffect->DamagerInfo.SubDamageType);
         }
+        OutExecutionOutput.AddOutputModifier(
+            FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
+        TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
+        TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
+            this, &UDOTEffectExecutionCalculation::OnHealthChanged);
+
+        Info = FDamageOriginInformations(TargetActor, SourceActor, GI);
         if (TargetActor && GI && GI->UIManager)
         {
-            GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), DamageQueueDisplayer);
-            //GI->UIManager->UpdateHealth(TargetActor);
+             GI->UIManager->ShowHealthChangeFloating(TargetActor->GetActorLocation(), Displayer);
         }
     }
 }
 
-void UDamageExecutionCalculation::OnHealthChanged(const FOnAttributeChangeData& Data) const
+void UDOTEffectExecutionCalculation::OnHealthChanged(const FOnAttributeChangeData& Data) const
 {
     if (Info.GI && Info.GI->UIManager && Info.TargetActor)
     {

@@ -10,14 +10,14 @@ UUIManager::UUIManager()
 
 }
 
-void UUIManager::ShowHealthChangeFloating(const FVector& Location, const FString& Text)
+void UUIManager::ShowHealthChangeFloating(const FVector& Location, const FDamagerDisplayInfo& DisplayerInfo)
 {
     if (!CachedWorld) return;
 
     ABattleFloatingText* FloatingText = CachedWorld->SpawnActor<ABattleFloatingText>(DefaultFloatingTextClass, Location + FVector(0, 0, 100), FRotator::ZeroRotator);
     if (FloatingText)
     {
-        FloatingText->Initialize(Text); 
+        FloatingText->Initialize(DisplayerInfo);
     }
 }
 

@@ -31,7 +31,7 @@ public:
 		UpdateHealth(ControllableEntity);
 	}
 
-	void ShowHealthChangeFloating(const FVector& Location, const FString& Text);
+	void ShowHealthChangeFloating(const FVector& Location, const FDamagerDisplayInfo& DisplayerInfo);
 	void ShowHealthChangeFloating(const FVector& Location, TQueue<FDamagerDisplayInfo>& DisplayerInfo);
 	void Initialize(UWorld* World, UCOTDGameInstance* Instance);
 private:

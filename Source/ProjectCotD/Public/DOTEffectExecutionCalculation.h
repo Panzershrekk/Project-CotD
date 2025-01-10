@@ -5,25 +5,23 @@
 #include "CoreMinimal.h"
 #include "COTDUtils.h"
 #include "GameplayEffectExecutionCalculation.h"
-#include "DamageExecutionCalculation.generated.h"
+#include "DOTEffectExecutionCalculation.generated.h"
 
 /**
  * 
  */
-
 UCLASS()
-class PROJECTCOTD_API UDamageExecutionCalculation : public UGameplayEffectExecutionCalculation
+class PROJECTCOTD_API UDOTEffectExecutionCalculation : public UGameplayEffectExecutionCalculation
 {
-    GENERATED_BODY()
-    
-public:
+	GENERATED_BODY()
+public: 
     FDamageOriginInformations mutable Info;
-    UDamageExecutionCalculation();
+    UDOTEffectExecutionCalculation();
 
     virtual void Execute_Implementation(
         const FGameplayEffectCustomExecutionParameters& ExecutionParams,
         FGameplayEffectCustomExecutionOutput& OutExecutionOutput
     ) const override;
-	
+
     void OnHealthChanged(const FOnAttributeChangeData& Data) const;
 };
