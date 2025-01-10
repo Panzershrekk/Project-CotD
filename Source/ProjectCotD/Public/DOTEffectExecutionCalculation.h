@@ -8,8 +8,9 @@
 #include "DOTEffectExecutionCalculation.generated.h"
 
 /**
- * 
+ *
  */
+
 UCLASS()
 class PROJECTCOTD_API UDOTEffectExecutionCalculation : public UGameplayEffectExecutionCalculation
 {

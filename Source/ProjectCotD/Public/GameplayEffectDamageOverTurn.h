@@ -15,5 +15,6 @@ class PROJECTCOTD_API UGameplayEffectDamageOverTurn : public UGameplayEffect
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Other")
 	FDamagerInfo DamagerInfo;
 };

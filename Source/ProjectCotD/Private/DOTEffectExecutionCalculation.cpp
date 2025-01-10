@@ -39,6 +39,7 @@ void UDOTEffectExecutionCalculation::Execute_Implementation(
     FGameplayEffectCustomExecutionOutput& OutExecutionOutput
 ) const
 {
+    UE_LOG(LogTemp, Warning, TEXT("Applying dot effect"));
     /* KindofTemplate*/
     UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
     AActor* TargetActor = TargetABSC ? TargetABSC->GetAvatarActor() : nullptr;
