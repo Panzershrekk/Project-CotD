@@ -1,5 +1,4 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
 #include "DOTEffectExecutionCalculation.h"
 #include "COTDGameplayAbility.h"
 #include "GameplayEffect.h"
@@ -10,28 +9,31 @@
 #include "COTDGameInstance.h"
 #include "GameplayEffectDamageOverTurn.h"
 
-struct DamageCapture
+/*
+* 
+*/
+struct DotCapture
 {
     DECLARE_ATTRIBUTE_CAPTUREDEF(Health);
     DECLARE_ATTRIBUTE_CAPTUREDEF(MaxHealth);
 
-    DamageCapture()
+    DotCapture()
     {
         DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Health, Target, false);
         DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, MaxHealth, Target, false);
     }
 };
 
-static DamageCapture& GetDamageCapture()
+static DotCapture& GetDotCapture()
 {
-    static DamageCapture DamageCapture;
+    static DotCapture DamageCapture;
     return DamageCapture;
 }
 
 UDOTEffectExecutionCalculation::UDOTEffectExecutionCalculation()
 {
-    RelevantAttributesToCapture.Add(GetDamageCapture().HealthDef);
-    RelevantAttributesToCapture.Add(GetDamageCapture().MaxHealthDef);
+    RelevantAttributesToCapture.Add(GetDotCapture().HealthDef);
+    RelevantAttributesToCapture.Add(GetDotCapture().MaxHealthDef);
 }
 
 void UDOTEffectExecutionCalculation::Execute_Implementation(
@@ -59,21 +61,17 @@ void UDOTEffectExecutionCalculation::Execute_Implementation(
     const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject();
 
     float Health = 0.0f;
-    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().HealthDef, EvaluationParameters, Health);
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDotCapture().HealthDef, EvaluationParameters, Health);
 
     float MaxHealth = 0.0f;
-    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDotCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
 
     const UGameplayEffectDamageOverTurn* DOTEffect = Cast<UGameplayEffectDamageOverTurn>(Spec.Def);
     UCOTDGameInstance* GI = nullptr;
-    if (SourceObject)
+
+    if (SourceActor && SourceActor->GetWorld())
     {
-        const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
-        TQueue<FDamagerDisplayInfo> DamageQueueDisplayer;
-        if (SourceActor && SourceActor->GetWorld())
-        {
-            GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
-        }
+        GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
     }
     if (DOTEffect)
     {
@@ -88,9 +86,9 @@ void UDOTEffectExecutionCalculation::Execute_Implementation(
             Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DOTEffect->DamagerInfo.SubDamageType);
         }
         OutExecutionOutput.AddOutputModifier(
-            FGameplayModifierEvaluatedData(GetDamageCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
-        TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).RemoveAll(this);
-        TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDamageCapture().HealthProperty).AddUObject(
+            FGameplayModifierEvaluatedData(GetDotCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));
+        TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDotCapture().HealthProperty).RemoveAll(this);
+        TargetABSC->GetGameplayAttributeValueChangeDelegate(GetDotCapture().HealthProperty).AddUObject(
             this, &UDOTEffectExecutionCalculation::OnHealthChanged);
 
         Info = FDamageOriginInformations(TargetActor, SourceActor, GI);
