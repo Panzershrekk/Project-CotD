@@ -64,3 +64,41 @@ void AControllableEntity::DataTableSetup()
         }
     }
 }
+
+void AControllableEntity::TriggerDOT()
+{
+    FGameplayTagContainer QueryTags;
+    QueryTags.AddTag(FGameplayTag::RequestGameplayTag(TEXT("Effect.OnStartTurn")));
+    //TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffectsWithAllTags(QueryTags);
+    const FGameplayEffectQuery Query;
+    Query.OwningTagQuery.MakeQuery_MatchAllTags(QueryTags);
+    TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffects(Query);
+    for (FActiveGameplayEffectHandle& DOTEffect : ActiveDotEffect)
+    {
+        const FActiveGameplayEffect* ActiveDOTEffect = AbilitySystemComponent->GetActiveGameplayEffect(DOTEffect);
+        FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
+        const UGameplayEffect* GameplayEffect = Spec.Def;
+
+        //AbilitySystemComponent->Exec
+        for (const FGameplayEffectExecutionDefinition& ExecutionDef : GameplayEffect->Executions)
+        {
+            if (ExecutionDef.CalculationClass)
+            {
+                UDOTEffectExecutionCalculation* ExecutionInstance = NewObject<UDOTEffectExecutionCalculation>(this, ExecutionDef.CalculationClass);
+                FGameplayEffectContextHandle ContextHandle = Spec.GetEffectContext();
+                UAbilitySystemComponent* SourceASC = ContextHandle.GetOriginalInstigatorAbilitySystemComponent();
+
+                const TArray<FGameplayEffectExecutionScopedModifierInfo> Modifiers;
+                UAbilitySystemComponent* InTargetAbilityComponent = AbilitySystemComponent;
+                const FGameplayTagContainer InPassedIntags;
+                const FPredictionKey InPredictionKey;
+
+                FGameplayEffectCustomExecutionParameters ExecutionParams(Spec, Modifiers, InTargetAbilityComponent, InPassedIntags, InPredictionKey);
+                FGameplayEffectCustomExecutionOutput ExecutionOutput;
+                ExecutionInstance->Execute_Implementation(ExecutionParams, ExecutionOutput);
+                //DotExec->Execute_Implementation
+                UE_LOG(LogTemp, Warning, TEXT("Execution class found: %s"), *ExecutionDef.CalculationClass->GetName());
+            }
+        }
+    }
+}

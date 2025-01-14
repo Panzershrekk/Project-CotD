@@ -10,7 +10,9 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/ArrowComponent.h"
+#include "DOTEffectExecutionCalculation.h"
 #include "GameFramework/Character.h"
+#include "GameplayEffectExecutionCalculation.h"
 #include "ControllableEntity.generated.h"
 
 UCLASS()
@@ -49,5 +51,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "ConstructorSetup")
 	void DataTableSetup();
-
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	void TriggerDOT();
 };
