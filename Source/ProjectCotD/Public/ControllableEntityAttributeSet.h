@@ -59,7 +59,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData InitiativeVariation;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, InitiativeVariation);
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
+	FGameplayAttributeData Strenght;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Strenght);
 
 protected:
 	//virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
