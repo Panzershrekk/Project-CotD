@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EntityStatsDataAsset.h"
-#include "AbilitySystemComponent.h"
+#include "COTDAbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -31,9 +31,9 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GAS", meta = (AllowPrivateAccess = "true"))
-	UAbilitySystemComponent* AbilitySystemComponent;
+	UCOTDAbilitySystemComponent* AbilitySystemComponent;
 
-	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override
+	virtual UCOTDAbilitySystemComponent* GetAbilitySystemComponent() const override
 	{
 		return AbilitySystemComponent;
 	}

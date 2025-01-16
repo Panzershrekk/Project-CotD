@@ -15,6 +15,10 @@ class PROJECTCOTD_API UEffectOverTurn : public UGameplayEffect
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Application")
+	//Wether or not the calculation class should be triggered when applied, for a stats buff for exemple, you will want to apply it immediately
+	//For bleeding effect or damage over turn, you may not want to apply the Calculation class immediately
+	bool bTriggerCalculationClassOnApply = false;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn Duration")
 	//Number of turn that is applied when applying the effect
 	int32 TurnApplied;

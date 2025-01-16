@@ -10,7 +10,7 @@ AControllableEntity::AControllableEntity()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-    AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+    AbilitySystemComponent = CreateDefaultSubobject<UCOTDAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 }
 
 // Called when the game starts or when spawned
@@ -79,24 +79,11 @@ void AControllableEntity::TriggerDOT()
         FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
         const UGameplayEffect* GameplayEffect = Spec.Def;
 
-        //AbilitySystemComponent->Exec
         for (const FGameplayEffectExecutionDefinition& ExecutionDef : GameplayEffect->Executions)
         {
             if (ExecutionDef.CalculationClass)
             {
-                UDOTEffectExecutionCalculation* ExecutionInstance = NewObject<UDOTEffectExecutionCalculation>(this, ExecutionDef.CalculationClass);
-                FGameplayEffectContextHandle ContextHandle = Spec.GetEffectContext();
-                UAbilitySystemComponent* SourceASC = ContextHandle.GetOriginalInstigatorAbilitySystemComponent();
-
-                const TArray<FGameplayEffectExecutionScopedModifierInfo> Modifiers;
-                UAbilitySystemComponent* InTargetAbilityComponent = AbilitySystemComponent;
-                const FGameplayTagContainer InPassedIntags;
-                const FPredictionKey InPredictionKey;
-
-                FGameplayEffectCustomExecutionParameters ExecutionParams(Spec, Modifiers, InTargetAbilityComponent, InPassedIntags, InPredictionKey);
-                FGameplayEffectCustomExecutionOutput ExecutionOutput;
-                ExecutionInstance->Execute_Implementation(ExecutionParams, ExecutionOutput);
-                //DotExec->Execute_Implementation
+                AbilitySystemComponent->TriggerPeriodicEffect(DOTEffect);
                 UE_LOG(LogTemp, Warning, TEXT("Execution class found: %s"), *ExecutionDef.CalculationClass->GetName());
             }
         }
