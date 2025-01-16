@@ -3,27 +3,23 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "COTDUtils.h"
 #include "GameplayEffectExecutionCalculation.h"
 #include "EffectOverTurn.h"
-#include "DOTEffectExecutionCalculation.generated.h"
+#include "DynamicStatsChangeExecution.generated.h"
 
 /**
- *
+ * 
  */
-
 UCLASS()
-class PROJECTCOTD_API UDOTEffectExecutionCalculation : public UGameplayEffectExecutionCalculation
+class PROJECTCOTD_API UDynamicStatsChangeExecution : public UGameplayEffectExecutionCalculation
 {
 	GENERATED_BODY()
-public: 
-    FDamageOriginInformations mutable Info;
-    UDOTEffectExecutionCalculation();
+public:
+    /*FDamageOriginInformations mutable Info;*/
+    UDynamicStatsChangeExecution();
 
     virtual void Execute_Implementation(
         const FGameplayEffectCustomExecutionParameters& ExecutionParams,
         FGameplayEffectCustomExecutionOutput& OutExecutionOutput
     ) const override;
-
-    void OnHealthChanged(const FOnAttributeChangeData& Data) const;
 };

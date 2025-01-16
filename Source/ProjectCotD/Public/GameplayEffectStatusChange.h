@@ -5,16 +5,16 @@
 #include "CoreMinimal.h"
 #include "DamagerTypes.h"
 #include "GameplayEffect.h"
+#include "EffectOverTurn.h"
 #include "GameplayEffectStatusChange.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECTCOTD_API UGameplayEffectStatusChange : public UGameplayEffect
+class PROJECTCOTD_API UGameplayEffectStatusChange : public UEffectOverTurn
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Other")
-	FDamagerInfo DamagerInfo;
+
 };
