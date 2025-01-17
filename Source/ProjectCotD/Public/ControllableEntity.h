@@ -52,5 +52,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "ConstructorSetup")
 	void DataTableSetup();
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	void TriggerDOT();
+	void HandleStartOfTurnEffect();
+
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	void DecreaseTurnRemainingOnOverTurnEffect();
 };

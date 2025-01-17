@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
+#include "EffectOverTurn.h"
 #include "COTDAbilitySystemComponent.generated.h"
 
 /**
@@ -26,4 +27,6 @@ public:
     {
         return ActiveGameplayEffects;
     }
+
+    void DecreaseOverTurnEffectTurnRemaining(const UEffectOverTurn* Effect, FActiveGameplayEffectHandle& EffectHandle);
 };

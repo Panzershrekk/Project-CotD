@@ -65,7 +65,7 @@ void AControllableEntity::DataTableSetup()
     }
 }
 
-void AControllableEntity::TriggerDOT()
+void AControllableEntity::HandleStartOfTurnEffect()
 {
     FGameplayTagContainer QueryTags;
     QueryTags.AddTag(FGameplayTag::RequestGameplayTag(TEXT("Effect.OnStartTurn")));
@@ -79,13 +79,30 @@ void AControllableEntity::TriggerDOT()
         FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
         const UGameplayEffect* GameplayEffect = Spec.Def;
 
-        for (const FGameplayEffectExecutionDefinition& ExecutionDef : GameplayEffect->Executions)
+        AbilitySystemComponent->TriggerPeriodicEffect(DOTEffect);
+
+        /*for (const FGameplayEffectExecutionDefinition& ExecutionDef : GameplayEffect->Executions)
         {
             if (ExecutionDef.CalculationClass)
             {
-                AbilitySystemComponent->TriggerPeriodicEffect(DOTEffect);
                 UE_LOG(LogTemp, Warning, TEXT("Execution class found: %s"), *ExecutionDef.CalculationClass->GetName());
             }
+        }*/
+    }
+}
+
+void AControllableEntity::DecreaseTurnRemainingOnOverTurnEffect()
+{
+    const FGameplayEffectQuery Query;
+    TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffects(Query);
+    for (FActiveGameplayEffectHandle& DOTEffect : ActiveDotEffect)
+    {
+        const FActiveGameplayEffect* ActiveDOTEffect = AbilitySystemComponent->GetActiveGameplayEffect(DOTEffect);
+        FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
+        UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(Spec.Def);
+        if (EffectOverTurn)
+        {
+            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(EffectOverTurn, DOTEffect);
         }
     }
 }
