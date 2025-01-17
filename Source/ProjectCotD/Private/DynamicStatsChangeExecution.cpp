@@ -71,9 +71,9 @@ void UDynamicStatsChangeExecution::Execute_Implementation(
     const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject();
     float Strenght = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetStatsCapture().StrenghtDef, EvaluationParameters, Strenght);      
-    int32 Calaculated = 2; 
+    int32 Calaculated = Strenght + 2;
 
 	OutExecutionOutput.AddOutputModifier(
-		  FGameplayModifierEvaluatedData(GetStatsCapture().StrenghtProperty, EGameplayModOp::Additive, Calaculated));
+		  FGameplayModifierEvaluatedData(GetStatsCapture().StrenghtProperty, EGameplayModOp::Override, Calaculated));
 
 }

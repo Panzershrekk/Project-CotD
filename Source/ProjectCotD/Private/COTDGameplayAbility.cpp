@@ -21,15 +21,16 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
             //Check if it's an overturn effect
             if (EffectClass && EffectClass->IsChildOf(UEffectOverTurn::StaticClass()))
             {
-                UClass* EffectClassPtr = EffectClass.Get();
-                if (EffectClassPtr->IsChildOf(UEffectOverTurn::StaticClass()))
+                const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(EffectSpecHandle.Data->Def);
+                if (EffectOverTurn)
                 {
-                    UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(EffectClassPtr->GetDefaultObject());
-                    if (EffectOverTurn && EffectOverTurn->bExecutePeriodicEffectOnApplication == true)
+                    UE_LOG(LogTemp, Warning, TEXT("Applying remain"));
+                    EffectSpecHandle.Data->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("TurnRemaining")), 6);
+                    if (EffectOverTurn->bExecutePeriodicEffectOnApplication == true)
                     {
                         AbilitySystemComponent->TriggerPeriodicEffect(EffectHandle);
                     }
-                }
+				}
             }
                 //const FActiveGameplayEffect *AGE = AbilitySystemComponent->GetActiveGameplayEffect(AGEH);
             /*FActiveGameplayEffectsContainer& ActiveEffectsContainer = AGE;

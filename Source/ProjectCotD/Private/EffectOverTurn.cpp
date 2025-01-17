@@ -3,6 +3,12 @@
 
 #include "EffectOverTurn.h"
 
+void UEffectOverTurn::Setup() const
+{
+	TurnRemaining = TurnApplied;
+}
+
+
 int32 UEffectOverTurn::DecreaseTurnRemaining()
 {
 	TurnRemaining -= 1;

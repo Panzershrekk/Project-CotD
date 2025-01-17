@@ -28,5 +28,5 @@ public:
         return ActiveGameplayEffects;
     }
 
-    void DecreaseOverTurnEffectTurnRemaining(const UEffectOverTurn* Effect, FActiveGameplayEffectHandle& EffectHandle);
+    void DecreaseOverTurnEffectTurnRemaining(FGameplayEffectSpec Spec, FActiveGameplayEffectHandle& EffectHandle);
 };

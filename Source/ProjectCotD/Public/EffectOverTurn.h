@@ -22,17 +22,16 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Turn Duration")
 	//Number of turn that is applied when applying the effect
 	int32 TurnApplied;
-
-protected:
 	//Turn before the effect is gone
 	mutable int32 TurnRemaining;
 
 public:
+	void Setup() const;
 	//Remove 1 Turn from effect
 	int32 DecreaseTurnRemaining();
 
 	UFUNCTION(BlueprintCallable, Category = "Turn Duration")
-	int32 GetTurnRemaining()
+	int32 GetTurnRemaining() const
 	{
 		return TurnRemaining;
 	}

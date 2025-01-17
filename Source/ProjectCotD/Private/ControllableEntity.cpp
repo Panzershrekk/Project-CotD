@@ -99,10 +99,11 @@ void AControllableEntity::DecreaseTurnRemainingOnOverTurnEffect()
     {
         const FActiveGameplayEffect* ActiveDOTEffect = AbilitySystemComponent->GetActiveGameplayEffect(DOTEffect);
         FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
-        UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(Spec.Def);
+        const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(Spec.Def);
+        UE_LOG(LogTemp, Warning, TEXT("Effect Address: %p"), EffectOverTurn);
         if (EffectOverTurn)
         {
-            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(EffectOverTurn, DOTEffect);
+            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(Spec, DOTEffect);
         }
     }
 }
