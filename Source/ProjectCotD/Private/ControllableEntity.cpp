@@ -103,7 +103,7 @@ void AControllableEntity::DecreaseTurnRemainingOnOverTurnEffect()
         UE_LOG(LogTemp, Warning, TEXT("Effect Address: %p"), EffectOverTurn);
         if (EffectOverTurn)
         {
-            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(Spec, DOTEffect);
+            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(DOTEffect);
         }
     }
 }

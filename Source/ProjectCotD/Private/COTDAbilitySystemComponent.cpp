@@ -3,30 +3,44 @@
 
 #include "COTDAbilitySystemComponent.h"
 
-void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FGameplayEffectSpec Spec, FActiveGameplayEffectHandle& EffectHandle)
+void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle& EffectHandle)
 {
-	//EffectSpecHandle.Data->GetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("TurnRemaining")), EffectOverTurn->TurnApplied);
+    if (EffectHandle.IsValid())
+    {
+        const FActiveGameplayEffect* ActiveEffect = GetActiveGameplayEffect(EffectHandle);
+        if (ActiveEffect)
+        {
+            FGameplayTag TurnRemainingTag = FGameplayTag::RequestGameplayTag(FName("TurnRemaining"));
 
-	if (EffectHandle.IsValid())
-	{
-		FGameplayTag TurnRemainingTag = FGameplayTag::RequestGameplayTag(FName("TurnRemaining"));
-		float CurrentTurnRemaining = Spec.GetSetByCallerMagnitude(TurnRemainingTag, false);
-		UE_LOG(LogTemp, Warning, TEXT("Turn remainig %f, effect or effect handle is undefined"), CurrentTurnRemaining);
+            const FGameplayEffectSpec& Spec = ActiveEffect->Spec;
+            float CurrentTurnRemaining = Spec.GetSetByCallerMagnitude(TurnRemainingTag, false);
 
-		CurrentTurnRemaining -= 1;
-		if (CurrentTurnRemaining <= 0)
-		{
-			this->RemoveActiveGameplayEffect(EffectHandle);
-		}
-		Spec.SetSetByCallerMagnitude(TurnRemainingTag, CurrentTurnRemaining);
-		/*int32 TurnRemaining = Effect->DecreaseTurnRemaining();
-		if (TurnRemaining <= 0)
-		{
-			this->RemoveActiveGameplayEffect(EffectHandle);
-		}*/
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Error in %s, effect or effect handle is undefined"), *GetClass()->GetName());
-	}
+            UE_LOG(LogTemp, Warning, TEXT("Turn remaining: %f"), CurrentTurnRemaining);
+
+            CurrentTurnRemaining -= 1.0f;
+
+            if (CurrentTurnRemaining <= 0.0f)
+            {
+                RemoveActiveGameplayEffect(EffectHandle);
+            }
+            else
+            {
+                /*const FActiveGameplayEffect* MutableActiveEffect = GetActiveGameplayEffect(EffectHandle);
+                FActiveGameplayEffect* MutableActiveEffect = GetActiveGameplayEffect(EffectHandle);
+
+                if (MutableActiveEffect)
+                {
+                    MutableActiveEffect->Spec.SetSetByCallerMagnitude(TurnRemainingTag, CurrentTurnRemaining);
+                }*/
+            }
+        }
+        else
+        {
+            UE_LOG(LogTemp, Warning, TEXT("No active effect found for handle."));
+        }
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Invalid EffectHandle."));
+    }
 }
