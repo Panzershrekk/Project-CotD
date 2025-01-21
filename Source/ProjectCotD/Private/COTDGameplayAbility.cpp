@@ -17,31 +17,22 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
         FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(EffectClass, GetAbilityLevel(), GameplayEffectContextHandle);
         if (EffectSpecHandle.IsValid())
         {
+            const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(EffectSpecHandle.Data->Def);;
             //Check if it's an overturn effect
-            if (EffectClass && EffectClass->IsChildOf(UEffectOverTurn::StaticClass()))
+            if (EffectClass && EffectOverTurn)
             {
-                const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(EffectSpecHandle.Data->Def);
-                if (EffectOverTurn)
+                FGameplayTag TurnRemainingTag = FGameplayTag::RequestGameplayTag(FName("TurnRemaining"));
+                EffectSpecHandle.Data->SetSetByCallerMagnitude(TurnRemainingTag, EffectOverTurn->TurnApplied);
+                UE_LOG(LogTemp, Warning, TEXT("SetByCallerMagnitude TurnRemaining: %f, Address: %p"), EffectSpecHandle.Data->GetSetByCallerMagnitude(TurnRemainingTag, false), EffectOverTurn);
+            }
+            FActiveGameplayEffectHandle EffectHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*EffectSpecHandle.Data.Get(), TargetAbilitySystem);
+            if (EffectOverTurn)
+            {
+                if (EffectOverTurn->bExecutePeriodicEffectOnApplication == true)
                 {
-                    FGameplayTag TurnRemainingTag = FGameplayTag::RequestGameplayTag(FName("TurnRemaining"));
-                    EffectSpecHandle.Data->SetSetByCallerMagnitude(TurnRemainingTag, 6.0f);
-                    UE_LOG(LogTemp, Warning, TEXT("SetByCallerMagnitude TurnRemaining: %f, Address: %p"), EffectSpecHandle.Data->GetSetByCallerMagnitude(TurnRemainingTag, false), EffectOverTurn);
-				}
-                FActiveGameplayEffectHandle EffectHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*EffectSpecHandle.Data.Get(), TargetAbilitySystem);
-                if (EffectOverTurn)
-                {
-                    if (EffectOverTurn->bExecutePeriodicEffectOnApplication == true)
-                    {
-                        AbilitySystemComponent->TriggerPeriodicEffect(EffectHandle);
-                    }
+                    AbilitySystemComponent->TriggerPeriodicEffect(EffectHandle);
                 }
             }
-                //const FActiveGameplayEffect *AGE = AbilitySystemComponent->GetActiveGameplayEffect(AGEH);
-            /*FActiveGameplayEffectsContainer& ActiveEffectsContainer = AGE;
-            AbilitySystemComponent->ExecutePeriodicEffect(EffectSpecHandle);
-
-                //ActiveGameplayEffects.ExecuteActiveEffectsFrom(Spec, PredictionKey);
-                EffectClass->*/
         }
     }
 }

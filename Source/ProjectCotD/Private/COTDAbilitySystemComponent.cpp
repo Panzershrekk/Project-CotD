@@ -25,10 +25,13 @@ void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGam
             }
             else
             {
-                /*const FActiveGameplayEffect* MutableActiveEffect = GetActiveGameplayEffect(EffectHandle);
-                FActiveGameplayEffect* MutableActiveEffect = GetActiveGameplayEffect(EffectHandle);
+                const FActiveGameplayEffect* MutableActiveEffect = GetActiveGameplayEffect(EffectHandle);
+                FGameplayEffectSpec& MutableSpec = const_cast<FGameplayEffectSpec&>(MutableActiveEffect->Spec);
+                MutableSpec.SetSetByCallerMagnitude(TurnRemainingTag, CurrentTurnRemaining);
+                CurrentTurnRemaining = Spec.GetSetByCallerMagnitude(TurnRemainingTag, false);
 
-                if (MutableActiveEffect)
+                UE_LOG(LogTemp, Warning, TEXT("Turn remaining after effect: %f"), CurrentTurnRemaining);
+                /*if (MutableActiveEffect)
                 {
                     MutableActiveEffect->Spec.SetSetByCallerMagnitude(TurnRemainingTag, CurrentTurnRemaining);
                 }*/

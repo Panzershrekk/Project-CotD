@@ -29,4 +29,16 @@ public:
     }
 
     void DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle& EffectHandle);
+
+    UFUNCTION(BlueprintCallable, Category = "GAS")
+
+    float GetSetByCallerMagnitudeFromEffect(FActiveGameplayEffectHandle EffectHandle, FGameplayTag CallerTag) const
+    {
+        if (const FActiveGameplayEffect* ActiveEffect = GetActiveGameplayEffect(EffectHandle))
+        {
+            return ActiveEffect->Spec.GetSetByCallerMagnitude(CallerTag, false);
+        }
+
+        return -1.0f;
+    }
 };
