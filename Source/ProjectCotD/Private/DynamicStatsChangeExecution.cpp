@@ -20,6 +20,7 @@ struct StatsCapture
     StatsCapture()
     {
         DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Strenght, Target, false);
+        //DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Intelligence, Source, true);
     }
 };
 
@@ -39,8 +40,9 @@ void UDynamicStatsChangeExecution::Execute_Implementation(
     FGameplayEffectCustomExecutionOutput& OutExecutionOutput
 ) const
 {
+    
     /* KindofTemplate*/
-    UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
+    /*UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
     AActor* TargetActor = TargetABSC ? TargetABSC->GetAvatarActor() : nullptr;
 
     UAbilitySystemComponent* SourceABSC = ExecutionParams.GetSourceAbilitySystemComponent();
@@ -53,19 +55,7 @@ void UDynamicStatsChangeExecution::Execute_Implementation(
     FAggregatorEvaluateParameters EvaluationParameters;
     EvaluationParameters.SourceTags = SourceTags;
     EvaluationParameters.TargetTags = TargetTags;
-    /* KindofTemplate*/
     UE_LOG(LogTemp, Warning, TEXT("Applying stats change"));
-
-    //This will allow to get attribute from other entity
-    /*
-    if (ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
-        FGameplayEffectAttributeCaptureDefinition(
-            UAttributeSetBase::GetIntelligenceAttribute(), EGameplayEffectAttributeCaptureSource::Source, true),
-        FAggregatorEvaluateParameters(),
-        IntelligenceValue))
-    {
-        BaseValue = 10.0f; // Ex. valeur de base
-    }*/
 
 
     const UObject* SourceObject = Spec.GetEffectContext().GetSourceObject();
@@ -75,5 +65,45 @@ void UDynamicStatsChangeExecution::Execute_Implementation(
 
 	OutExecutionOutput.AddOutputModifier(
 		  FGameplayModifierEvaluatedData(GetStatsCapture().StrenghtProperty, EGameplayModOp::Additive, Calaculated));
+    */
+
+
+
+
+    //
+    /*float TargetStrenght = 0.0f;
+    FAggregatorEvaluateParameters EvaluationParameters;
+
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetStatsCapture().StrenghtDef, EvaluationParameters, TargetStrenght);
+
+    //ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetStatsCapture().IntelligenceDef, EvaluationParameters, SourceIntelligence);
+
+    float CalculatedStrenght = 2.0f;
+    OutExecutionOutput.AddOutputModifier(
+        FGameplayModifierEvaluatedData(GetStatsCapture().StrenghtProperty, EGameplayModOp::Additive, CalculatedStrenght));*/
+        // Obtenez les composants AbilitySystem
+    UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
+    UAbilitySystemComponent* SourceABSC = ExecutionParams.GetSourceAbilitySystemComponent();
+
+    // Capture des attributs
+    FAggregatorEvaluateParameters EvaluationParameters;
+    const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
+
+    // Récupération de l'intelligence de la source
+    float SourceIntelligence = 0.0f;
+    /*ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(
+        FGameplayEffectAttributeCaptureDefinition(
+            UControllableEntityAttributeSet::GetIntelligenceAttribute(),
+            EGameplayEffectAttributeCaptureSource::Source,
+            true),
+        EvaluationParameters,
+        SourceIntelligence);*/
+
+    // Calcul de la force à ajouter
+    float CalculatedStrength = 2.0f + SourceIntelligence;
+
+    // Définition de la magnitude pour le modificateur
+    OutExecutionOutput.AddOutputModifier(
+        FGameplayModifierEvaluatedData(GetStatsCapture().StrenghtProperty, EGameplayModOp::Additive, CalculatedStrength));
 
 }
