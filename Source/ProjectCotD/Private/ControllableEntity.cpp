@@ -95,7 +95,7 @@ void AControllableEntity::DecreaseTurnRemainingOnOverTurnEffect()
 {
     const FGameplayEffectQuery Query;
     TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffects(Query);
-    for (FActiveGameplayEffectHandle& DOTEffect : ActiveDotEffect)
+    for (FActiveGameplayEffectHandle DOTEffect : ActiveDotEffect)
     {
         const FActiveGameplayEffect* ActiveDOTEffect = AbilitySystemComponent->GetActiveGameplayEffect(DOTEffect);
         FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
@@ -103,7 +103,19 @@ void AControllableEntity::DecreaseTurnRemainingOnOverTurnEffect()
         UE_LOG(LogTemp, Warning, TEXT("Effect Address: %p"), EffectOverTurn);
         if (EffectOverTurn)
         {
-            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(DOTEffect);
+            //AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(DOTEffect);
+        }
+        bool bWasRemoved = AbilitySystemComponent->RemoveActiveGameplayEffect(DOTEffect);
+        if (bWasRemoved)
+        {
+            UE_LOG(LogTemp, Warning, TEXT("Effect successfully removed: %s"), *DOTEffect.ToString());
+            float CurrentForce = AbilitySystemComponent->GetNumericAttribute(UControllableEntityAttributeSet::GetStrenghtAttribute());
+            UE_LOG(LogTemp, Warning, TEXT("Force attribute after effect removal: %f"), CurrentForce);
+            AbilitySystemComponent->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag("Effect"));
+        }
+        else
+        {
+            UE_LOG(LogTemp, Error, TEXT("Failed to remove effect: %s"), *DOTEffect.ToString());
         }
     }
 }

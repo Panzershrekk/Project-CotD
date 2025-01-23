@@ -3,7 +3,7 @@
 
 #include "COTDAbilitySystemComponent.h"
 
-void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle& EffectHandle)
+void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle EffectHandle)
 {
     if (EffectHandle.IsValid())
     {

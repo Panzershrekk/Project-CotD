@@ -40,7 +40,7 @@ void UDynamicStatsChangeExecution::Execute_Implementation(
     FGameplayEffectCustomExecutionOutput& OutExecutionOutput
 ) const
 {
-    
+    UE_LOG(LogTemp, Warning, TEXT("Dynamic Stat change"));
     /* KindofTemplate*/
     /*UAbilitySystemComponent* TargetABSC = ExecutionParams.GetTargetAbilitySystemComponent();
     AActor* TargetActor = TargetABSC ? TargetABSC->GetAvatarActor() : nullptr;

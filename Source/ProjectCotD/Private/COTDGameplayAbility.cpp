@@ -30,9 +30,13 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
             {
                 if (EffectOverTurn->bExecutePeriodicEffectOnApplication == true)
                 {
-                    AbilitySystemComponent->TriggerPeriodicEffect(EffectHandle);
+
+                    //UAbilitySystemComponent::ActiveGameplayEffects.SetActiveGameplayEffectLevel(FActiveGameplayEffectHandle ActiveHandle, int32 NewLevel)
+                    //AbilitySystemComponent->SetActiveGameplayEffectLevel(EffectHandle, 0);
+                    //TargetAbilitySystem->TriggerPeriodicEffect(EffectHandle);
                 }
             }
+            //TargetAbilitySystem->RemoveActiveGameplayEffect(EffectHandle);
         }
     }
 }
