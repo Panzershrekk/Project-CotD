@@ -19,7 +19,7 @@ void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGam
 
             CurrentTurnRemaining -= 1.0f;
 
-            if (CurrentTurnRemaining <= 0.0f)
+            if (CurrentTurnRemaining <= 0.0f && CurrentTurnRemaining != -1)
             {
                 RemoveActiveGameplayEffect(EffectHandle);
             }
