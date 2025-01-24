@@ -69,53 +69,33 @@ void AControllableEntity::HandleStartOfTurnEffect()
 {
     FGameplayTagContainer QueryTags;
     QueryTags.AddTag(FGameplayTag::RequestGameplayTag(TEXT("Effect.OnStartTurn")));
-    //TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffectsWithAllTags(QueryTags);
     const FGameplayEffectQuery Query;
     Query.OwningTagQuery.MakeQuery_MatchAllTags(QueryTags);
-    TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffects(Query);
-    for (FActiveGameplayEffectHandle& DOTEffect : ActiveDotEffect)
+    TArray<FActiveGameplayEffectHandle> ActiveEffectsHandle = AbilitySystemComponent->GetActiveEffects(Query);
+    for (FActiveGameplayEffectHandle& ActiveEffectHandle : ActiveEffectsHandle)
     {
-        const FActiveGameplayEffect* ActiveDOTEffect = AbilitySystemComponent->GetActiveGameplayEffect(DOTEffect);
-        FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
-        const UGameplayEffect* GameplayEffect = Spec.Def;
-
-        AbilitySystemComponent->TriggerPeriodicEffect(DOTEffect);
-
-        /*for (const FGameplayEffectExecutionDefinition& ExecutionDef : GameplayEffect->Executions)
+        const FActiveGameplayEffect* ActiveEffect = AbilitySystemComponent->GetActiveGameplayEffect(ActiveEffectHandle);
+        FGameplayEffectSpec Spec = ActiveEffect->Spec;
+        const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(Spec.Def);
+        if (EffectOverTurn && EffectOverTurn->bTriggerCalculationAtTherStartOfEveryTurn == true)
         {
-            if (ExecutionDef.CalculationClass)
-            {
-                UE_LOG(LogTemp, Warning, TEXT("Execution class found: %s"), *ExecutionDef.CalculationClass->GetName());
-            }
-        }*/
+            AbilitySystemComponent->TriggerPeriodicEffect(ActiveEffectHandle);
+        }
     }
 }
 
 void AControllableEntity::DecreaseTurnRemainingOnOverTurnEffect()
 {
     const FGameplayEffectQuery Query;
-    TArray<FActiveGameplayEffectHandle> ActiveDotEffect = AbilitySystemComponent->GetActiveEffects(Query);
-    for (FActiveGameplayEffectHandle DOTEffect : ActiveDotEffect)
+    TArray<FActiveGameplayEffectHandle> ActiveEffectsHandle = AbilitySystemComponent->GetActiveEffects(Query);
+    for (FActiveGameplayEffectHandle& ActiveEffectHandle : ActiveEffectsHandle)
     {
-        const FActiveGameplayEffect* ActiveDOTEffect = AbilitySystemComponent->GetActiveGameplayEffect(DOTEffect);
-        FGameplayEffectSpec Spec = ActiveDOTEffect->Spec;
+        const FActiveGameplayEffect* ActiveEffect = AbilitySystemComponent->GetActiveGameplayEffect(ActiveEffectHandle);
+        FGameplayEffectSpec Spec = ActiveEffect->Spec;
         const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(Spec.Def);
-        UE_LOG(LogTemp, Warning, TEXT("Effect Address: %p"), EffectOverTurn);
         if (EffectOverTurn)
         {
-            //AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(DOTEffect);
-        }
-        bool bWasRemoved = AbilitySystemComponent->RemoveActiveGameplayEffect(DOTEffect);
-        if (bWasRemoved)
-        {
-            UE_LOG(LogTemp, Warning, TEXT("Effect successfully removed: %s"), *DOTEffect.ToString());
-            float CurrentForce = AbilitySystemComponent->GetNumericAttribute(UControllableEntityAttributeSet::GetStrenghtAttribute());
-            UE_LOG(LogTemp, Warning, TEXT("Force attribute after effect removal: %f"), CurrentForce);
-            AbilitySystemComponent->RemoveLooseGameplayTag(FGameplayTag::RequestGameplayTag("Effect"));
-        }
-        else
-        {
-            UE_LOG(LogTemp, Error, TEXT("Failed to remove effect: %s"), *DOTEffect.ToString());
+            AbilitySystemComponent->DecreaseOverTurnEffectTurnRemaining(ActiveEffectHandle);
         }
     }
 }

@@ -3,7 +3,7 @@
 
 #include "COTDAbilitySystemComponent.h"
 
-void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle EffectHandle)
+void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle& EffectHandle)
 {
     if (EffectHandle.IsValid())
     {
@@ -30,7 +30,6 @@ void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGam
                 MutableSpec.SetSetByCallerMagnitude(TurnRemainingTag, CurrentTurnRemaining);
                 CurrentTurnRemaining = Spec.GetSetByCallerMagnitude(TurnRemainingTag, false);
 
-                UE_LOG(LogTemp, Warning, TEXT("Turn remaining after effect: %f"), CurrentTurnRemaining);
                 /*if (MutableActiveEffect)
                 {
                     MutableActiveEffect->Spec.SetSetByCallerMagnitude(TurnRemainingTag, CurrentTurnRemaining);

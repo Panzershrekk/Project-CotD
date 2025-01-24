@@ -29,7 +29,7 @@ public:
     }
 
     UFUNCTION(BlueprintCallable, Category = "GAS")
-    void DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle EffectHandle);
+    void DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle& EffectHandle);
 
     UFUNCTION(BlueprintCallable, Category = "GAS")
 
