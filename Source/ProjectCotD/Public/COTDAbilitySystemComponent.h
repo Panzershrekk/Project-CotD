@@ -20,7 +20,7 @@ public:
     //Custom function to trigger calculation function on periodic effect
     void TriggerPeriodicEffect(FActiveGameplayEffectHandle Handle)
     {
-        ActiveGameplayEffects.ExecutePeriodicGameplayEffect(Handle);
+        //ActiveGameplayEffects.ExecutePeriodicGameplayEffect(Handle);
     }
 
     const FActiveGameplayEffectsContainer& GetActiveGameplayEffectsContainer() const

@@ -15,11 +15,11 @@
 */
 struct StatsCapture
 {
-    DECLARE_ATTRIBUTE_CAPTUREDEF(Strenght);
+    DECLARE_ATTRIBUTE_CAPTUREDEF(Strength);
 
     StatsCapture()
     {
-        DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Strenght, Target, false);
+        DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Strength, Target, false);
         //DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Intelligence, Source, true);
     }
 };
@@ -32,7 +32,7 @@ static StatsCapture& GetStatsCapture()
 
 UDynamicStatsChangeExecution::UDynamicStatsChangeExecution()
 {
-    RelevantAttributesToCapture.Add(GetStatsCapture().StrenghtDef);
+    RelevantAttributesToCapture.Add(GetStatsCapture().StrengthDef);
 }
 
 void UDynamicStatsChangeExecution::Execute_Implementation(
@@ -104,6 +104,6 @@ void UDynamicStatsChangeExecution::Execute_Implementation(
 
     // Définition de la magnitude pour le modificateur
     OutExecutionOutput.AddOutputModifier(
-        FGameplayModifierEvaluatedData(GetStatsCapture().StrenghtProperty, EGameplayModOp::Additive, CalculatedStrength));
+        FGameplayModifierEvaluatedData(GetStatsCapture().StrengthProperty, EGameplayModOp::Additive, CalculatedStrength));
 
 }

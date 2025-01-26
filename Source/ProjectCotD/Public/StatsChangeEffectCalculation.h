@@ -14,10 +14,10 @@ class PROJECTCOTD_API UStatsChangeEffectCalculation : public UGameplayModMagnitu
 {
 	GENERATED_BODY()
 
+protected:
+    FGameplayEffectAttributeCaptureDefinition StrengthDef;
+
 public:
     UStatsChangeEffectCalculation();
     virtual float CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const override;
-
-protected:
-    FGameplayEffectAttributeCaptureDefinition StrengthCapture;
 };
