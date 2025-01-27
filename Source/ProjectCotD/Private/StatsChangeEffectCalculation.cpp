@@ -2,30 +2,35 @@
 
 
 #include "StatsChangeEffectCalculation.h"
-#include "COTDGameplayAbility.h"
-#include "GameplayEffect.h"
 #include "ControllableEntityAttributeSet.h"
-#include "COTDGameInstance.h"
+
+
+/***** ! CAUTION ! *****/
+// Don't capture the attribute you are modifying, or it will be called 2 times
+/**********************/
 
 UStatsChangeEffectCalculation::UStatsChangeEffectCalculation()
 {
-    StrengthDef = FGameplayEffectAttributeCaptureDefinition(
-        UControllableEntityAttributeSet::GetStrengthAttribute(), 
-        EGameplayEffectAttributeCaptureSource::Source,          
-        true                                                    
-    );
-    RelevantAttributesToCapture.Add(StrengthDef);
+
+    /*StrengthDef.AttributeToCapture = UControllableEntityAttributeSet::GetStrengthAttribute();
+    StrengthDef.AttributeSource = EGameplayEffectAttributeCaptureSource::Source;
+    StrengthDef.bSnapshot = false;
+    RelevantAttributesToCapture.Add(StrengthDef);*/
 }
 
 float UStatsChangeEffectCalculation::CalculateBaseMagnitude_Implementation(const FGameplayEffectSpec& Spec) const
 {
+    const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
+    const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
+
     FAggregatorEvaluateParameters EvaluationParameters;
-    EvaluationParameters.SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
-    EvaluationParameters.TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
+    EvaluationParameters.TargetTags = TargetTags;
+    EvaluationParameters.SourceTags = SourceTags;
+
     float Strength = 0.0f;
-    GetCapturedAttributeMagnitude(StrengthDef, Spec, EvaluationParameters, Strength);
+    //GetCapturedAttributeMagnitude(StrengthDef, Spec, EvaluationParameters, Strength);
     Strength = FMath::Max<float>(Strength, 0.f);
     float FinalStrength = 2 + Strength;
-    UE_LOG(LogTemp, Warning, TEXT("Stats up fail! %f"), Strength);
+    UE_LOG(LogTemp, Warning, TEXT("Changing stats !"), Strength);
     return FinalStrength;
 }
