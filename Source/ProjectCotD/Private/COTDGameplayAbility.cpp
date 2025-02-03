@@ -3,6 +3,7 @@
 #include "COTDGameplayAbility.h"
 #include "GameplayEffect.h"
 
+/*
 void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass)
 {
     if (!TargetAbilitySystem || !EffectClass) return;
@@ -36,4 +37,4 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
             }
         }
     }
-}
+}*/

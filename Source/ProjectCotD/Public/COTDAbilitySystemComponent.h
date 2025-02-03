@@ -1,10 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
 #include "EffectOverTurn.h"
+#include "COTDGameplayAbility.h"
 #include "COTDAbilitySystemComponent.generated.h"
 
 /**
@@ -30,6 +29,8 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "GAS")
     void DecreaseOverTurnEffectTurnRemaining(FActiveGameplayEffectHandle& EffectHandle);
+    UFUNCTION(BlueprintCallable, Category = "GAS")
+    void ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, UCOTDGameplayAbility* Ability, TSubclassOf<UGameplayEffect> EffectClass);
 
     UFUNCTION(BlueprintCallable, Category = "GAS")
 

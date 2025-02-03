@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "AbilitiesDataAsset.h"
-#include "COTDAbilitySystemComponent.h"
+//#include "COTDAbilitySystemComponent.h"
 #include "EffectOverTurn.h"
 #include "Abilities/GameplayAbility.h"
 #include "COTDGameplayAbility.generated.h"
@@ -19,6 +19,6 @@ class PROJECTCOTD_API UCOTDGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Stats")
 	UAbilitiesDataAsset* AbilitiesDataAsset;
-	UFUNCTION(BlueprintCallable, Category = "Abilities")
-	void ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
+	/*UFUNCTION(BlueprintCallable, Category = "Abilities")
+	void ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);*/
 };

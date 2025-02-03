@@ -30,7 +30,7 @@ float UStatsChangeEffectCalculation::CalculateBaseMagnitude_Implementation(const
     float Strength = 0.0f;
     //GetCapturedAttributeMagnitude(StrengthDef, Spec, EvaluationParameters, Strength);
     Strength = FMath::Max<float>(Strength, 0.f);
-    float FinalStrength = 2 + Strength;
+    float FinalStrength = 2 /* + Strength*/;
     UE_LOG(LogTemp, Warning, TEXT("Changing stats !"), Strength);
     return FinalStrength;
 }
