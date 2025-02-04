@@ -28,6 +28,9 @@ protected:
 
     UPROPERTY()
     AActor* OwnerActor;
+    UPROPERTY()
+    const UGameplayEffectAura* AuraEffect;
+    bool IsIniatilized = false;
 
     UFUNCTION()
     void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -40,6 +43,6 @@ protected:
         
 
 public:
-    void Initialize(AActor* InOwner, UGameplayEffectAura& AuraEffect);
+    void Initialize(AActor* InOwner, const UGameplayEffectAura* AE);
 
 };

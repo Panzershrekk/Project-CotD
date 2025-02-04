@@ -3,7 +3,7 @@
 #include "COTDGameplayAbility.h"
 #include "GameplayEffect.h"
 
-/*
+
 void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass)
 {
     if (!TargetAbilitySystem || !EffectClass) return;
@@ -11,9 +11,10 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
     UCOTDAbilitySystemComponent* AbilitySystemComponent = Cast<UCOTDAbilitySystemComponent>(GetAbilitySystemComponentFromActorInfo());
     if (AbilitySystemComponent)
     {
+        AActor* EffectCauser = GetAvatarActorFromActorInfo();
         FGameplayEffectContextHandle GameplayEffectContextHandle = AbilitySystemComponent->MakeEffectContext();
         GameplayEffectContextHandle.AddSourceObject(this);
-        GameplayEffectContextHandle.Get()->SetEffectCauser(GetAvatarActorFromActorInfo());
+        GameplayEffectContextHandle.Get()->SetEffectCauser(EffectCauser);
 
         FGameplayEffectSpecHandle EffectSpecHandle = AbilitySystemComponent->MakeOutgoingSpec(EffectClass, GetAbilityLevel(), GameplayEffectContextHandle);
         if (EffectSpecHandle.IsValid())
@@ -26,6 +27,20 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
                 EffectSpecHandle.Data->SetSetByCallerMagnitude(TurnRemainingTag, EffectOverTurn->TurnApplied);
                 UE_LOG(LogTemp, Warning, TEXT("SetByCallerMagnitude TurnRemaining: %f, Address: %p"), EffectSpecHandle.Data->GetSetByCallerMagnitude(TurnRemainingTag, false), EffectOverTurn);
             }
+            const UGameplayEffectAura* EffectAura = Cast<UGameplayEffectAura>(EffectSpecHandle.Data->Def);;
+            if (AuraActorClass && EffectAura && EffectCauser)
+            {
+                FActorSpawnParameters SpawnParams;
+                SpawnParams.Owner = EffectCauser;
+                SpawnParams.Instigator = EffectCauser->GetInstigator();
+
+                AAuraRadiusActor* AuraInstance = EffectCauser->GetWorld()->SpawnActor<AAuraRadiusActor>(AuraActorClass, EffectCauser->GetActorLocation(), FRotator::ZeroRotator, SpawnParams);
+                if (AuraInstance)
+                {
+                    AuraInstance->Initialize(EffectCauser, EffectAura);
+                    SpawnedActorsForEffect.Add(AuraInstance);
+                }
+            }
             UE_LOG(LogTemp, Warning, TEXT("Applying stuff"));
             FActiveGameplayEffectHandle EffectHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*EffectSpecHandle.Data.Get(), TargetAbilitySystem);
             if (EffectOverTurn)
@@ -35,6 +50,21 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
                     TargetAbilitySystem->TriggerPeriodicEffect(EffectHandle);
                 }
             }
+            AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &UCOTDGameplayAbility::OnEffectRemoved);
         }
     }
-}*/
+}
+
+void UCOTDGameplayAbility::OnEffectRemoved(const FActiveGameplayEffect& EffectRemoved)
+{
+    for (int i = 0; SpawnedActorsForEffect.Num(); i++)
+    {
+        if (SpawnedActorsForEffect[i])
+        {
+            SpawnedActorsForEffect[i]->Destroy();
+            SpawnedActorsForEffect[i] = nullptr;
+        }
+    }
+    UE_LOG(LogTemp, Warning, TEXT("Actors spawned destroyed"));
+    SpawnedActorsForEffect.Empty();
+}

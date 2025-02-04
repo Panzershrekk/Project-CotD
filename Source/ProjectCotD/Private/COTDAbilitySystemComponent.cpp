@@ -46,36 +46,3 @@ void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGam
         UE_LOG(LogTemp, Warning, TEXT("Invalid EffectHandle."));
     }
 }
-
-//TBD
-void UCOTDAbilitySystemComponent::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, UCOTDGameplayAbility* Ability, TSubclassOf<UGameplayEffect> EffectClass)
-{
-    if (!TargetAbilitySystem || !EffectClass) return;
-
-
-        FGameplayEffectContextHandle GameplayEffectContextHandle = this->MakeEffectContext();
-        GameplayEffectContextHandle.AddSourceObject(this);
-        GameplayEffectContextHandle.Get()->SetEffectCauser(Ability->GetAvatarActorFromActorInfo());
-
-        FGameplayEffectSpecHandle EffectSpecHandle = this->MakeOutgoingSpec(EffectClass, Ability->GetAbilityLevel(), GameplayEffectContextHandle);
-        if (EffectSpecHandle.IsValid())
-        {
-            const UEffectOverTurn* EffectOverTurn = Cast<UEffectOverTurn>(EffectSpecHandle.Data->Def);;
-            //Check if it's an overturn effect
-            if (EffectClass && EffectOverTurn)
-            {
-                FGameplayTag TurnRemainingTag = FGameplayTag::RequestGameplayTag(FName("TurnRemaining"));
-                EffectSpecHandle.Data->SetSetByCallerMagnitude(TurnRemainingTag, EffectOverTurn->TurnApplied);
-                UE_LOG(LogTemp, Warning, TEXT("SetByCallerMagnitude TurnRemaining: %f, Address: %p"), EffectSpecHandle.Data->GetSetByCallerMagnitude(TurnRemainingTag, false), EffectOverTurn);
-            }
-            UE_LOG(LogTemp, Warning, TEXT("Applying stuff"));
-            FActiveGameplayEffectHandle EffectHandle = this->ApplyGameplayEffectSpecToTarget(*EffectSpecHandle.Data.Get(), TargetAbilitySystem);
-            if (EffectOverTurn)
-            {
-                if (EffectOverTurn->bTriggerCalculationClassOnApply == true)
-                {
-                    TargetAbilitySystem->TriggerPeriodicEffect(EffectHandle);
-                }
-            }
-        }
-}
