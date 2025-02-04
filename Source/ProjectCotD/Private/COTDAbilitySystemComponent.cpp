@@ -17,7 +17,10 @@ void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGam
 
             UE_LOG(LogTemp, Warning, TEXT("Turn remaining: %f"), CurrentTurnRemaining);
 
-            CurrentTurnRemaining -= 1.0f;
+            if (CurrentTurnRemaining != -1)
+            {
+                CurrentTurnRemaining -= 1.0f;
+            }
 
             if (CurrentTurnRemaining <= 0.0f && CurrentTurnRemaining != -1)
             {

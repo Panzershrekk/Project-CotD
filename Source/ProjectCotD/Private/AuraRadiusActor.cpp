@@ -3,6 +3,7 @@
 
 #include "AuraRadiusActor.h"
 #include "ControllableEntity.h"
+#include "COTDGameplayAbility.h"
 
 // Sets default values
 AAuraRadiusActor::AAuraRadiusActor()
@@ -62,6 +63,7 @@ void AAuraRadiusActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
         TArray<TSubclassOf<UGameplayEffect>> EffectsToApplyWithAura = AuraEffect->EffectsToApplyWithAura;
         for (TSubclassOf<UGameplayEffect> Effect : EffectsToApplyWithAura)
         {
+            //UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(ASC, Effect);
             ASC->ApplyGameplayEffectToSelf(Effect.GetDefaultObject(), 1.0f, EffectContext);
         }
 

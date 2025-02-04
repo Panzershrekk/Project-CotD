@@ -58,12 +58,11 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
 
 void UCOTDGameplayAbility::OnEffectRemoved(const FActiveGameplayEffect& EffectRemoved)
 {
-    for (int i = 0; SpawnedActorsForEffect.Num(); i++)
+    for (AActor* Actor : SpawnedActorsForEffect)
     {
-        if (SpawnedActorsForEffect[i])
+        if (Actor)
         {
-            SpawnedActorsForEffect[i]->Destroy();
-            SpawnedActorsForEffect[i] = nullptr;
+            Actor->Destroy();
         }
     }
     UE_LOG(LogTemp, Warning, TEXT("Actors spawned destroyed"));
