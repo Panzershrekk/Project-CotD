@@ -65,7 +65,7 @@ void AAuraRadiusActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
             ASC->ApplyGameplayEffectToSelf(Effect.GetDefaultObject(), 1.0f, EffectContext);
         }
 
-        UE_LOG(LogTemp, Warning, TEXT("Proutin"));
+        UE_LOG(LogTemp, Warning, TEXT("In aura"));
     }
 }
 
@@ -82,7 +82,6 @@ void AAuraRadiusActor::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AA
         {
             ASC->RemoveActiveGameplayEffectBySourceEffect(Effect, ASC);
         }
-        //ASC->Remo
-        UE_LOG(LogTemp, Warning, TEXT("Proutout"));
+        UE_LOG(LogTemp, Warning, TEXT("Out aura"));
     }
 }
