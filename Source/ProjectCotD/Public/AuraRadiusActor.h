@@ -41,6 +41,7 @@ protected:
     void OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
         UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
         
+    void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
 public:
     void Initialize(AActor* InOwner, const UGameplayEffectAura* AE);

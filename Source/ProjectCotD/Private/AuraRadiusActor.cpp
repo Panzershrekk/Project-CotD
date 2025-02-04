@@ -85,3 +85,22 @@ void AAuraRadiusActor::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AA
         UE_LOG(LogTemp, Warning, TEXT("Out aura"));
     }
 }
+
+void AAuraRadiusActor::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+    Super::EndPlay(EndPlayReason);
+
+    TArray<AActor*> OverlappingActors;
+    AuraCapsule->GetOverlappingActors(OverlappingActors, AControllableEntity::StaticClass());
+
+    for (AActor* Actor : OverlappingActors)
+    {
+        if (Actor)
+        {
+            OnOverlapEnd(AuraCapsule, Actor, nullptr, 0);
+        }
+    }
+
+    OverlappingActors.Empty();
+    UE_LOG(LogTemp, Warning, TEXT("Destroy aura"));
+}

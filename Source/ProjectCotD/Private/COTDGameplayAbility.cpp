@@ -41,6 +41,8 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
                     SpawnedActorsForEffect.Add(AuraInstance);
                 }
             }
+            UE_LOG(LogTemp, Warning, TEXT("Binding OnEffectRemoved delegate"));
+            TargetAbilitySystem->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &UCOTDGameplayAbility::OnEffectRemoved);
             UE_LOG(LogTemp, Warning, TEXT("Applying stuff"));
             FActiveGameplayEffectHandle EffectHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*EffectSpecHandle.Data.Get(), TargetAbilitySystem);
             if (EffectOverTurn)
@@ -50,7 +52,6 @@ void UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemC
                     TargetAbilitySystem->TriggerPeriodicEffect(EffectHandle);
                 }
             }
-            AbilitySystemComponent->OnAnyGameplayEffectRemovedDelegate().AddUObject(this, &UCOTDGameplayAbility::OnEffectRemoved);
         }
     }
 }
