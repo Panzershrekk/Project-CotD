@@ -2,8 +2,10 @@
 
 #include "CoreMinimal.h"
 #include "AbilitySystemComponent.h"
-#include "EffectOverTurn.h"
 #include "COTDAbilitySystemComponent.generated.h"
+
+class AAuraRadiusActor;
+class UCOTDGameplayAbility;
 
 /**
  * 
@@ -14,6 +16,10 @@ class PROJECTCOTD_API UCOTDAbilitySystemComponent : public UAbilitySystemCompone
 	GENERATED_BODY()
 	
 public:
+    UPROPERTY(EditDefaultsOnly, Category = "Aura")
+    TSubclassOf<AAuraRadiusActor> AuraActorClass;
+
+    TMap<FActiveGameplayEffectHandle, TWeakObjectPtr<AAuraRadiusActor>> ActiveAuraEffects;
 
     //Custom function to trigger calculation function on periodic effect
     void TriggerPeriodicEffect(FActiveGameplayEffectHandle Handle)
@@ -40,4 +46,8 @@ public:
 
         return -1.0f;
     }
+
+    UFUNCTION(BlueprintCallable, Category = "GAS")
+    void Test(AActor* EffectCauser, UCOTDGameplayAbility* GA, UCOTDAbilitySystemComponent* Target, TSubclassOf<UGameplayEffect> EffectClass, float EffectLevel);
+    void OnEffectRemoved(const FActiveGameplayEffect& RemovedEffect);
 };
