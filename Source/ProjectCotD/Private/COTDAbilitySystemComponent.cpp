@@ -54,10 +54,13 @@ void UCOTDAbilitySystemComponent::DecreaseOverTurnEffectTurnRemaining(FActiveGam
     }
 }
 
-void UCOTDAbilitySystemComponent::Test(AActor* EffectCauser, UCOTDGameplayAbility* GA, UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass, float EffectLevel)
+void UCOTDAbilitySystemComponent::ApplyCustomGameplayEffectToTarget(UCOTDGameplayAbility* GA, UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass, float EffectLevel)
 {
     
     //AActor* EffectCauser = GetAvatarActorFromActorInfo();
+    if (!TargetAbilitySystem || !EffectClass) return;
+
+    AActor* EffectCauser = GA->GetAvatarActorFromActorInfo();
     FGameplayEffectContextHandle GameplayEffectContextHandle = MakeEffectContext();
     GameplayEffectContextHandle.AddSourceObject(GA);
     GameplayEffectContextHandle.Get()->SetEffectCauser(EffectCauser);
@@ -84,7 +87,7 @@ void UCOTDAbilitySystemComponent::Test(AActor* EffectCauser, UCOTDGameplayAbilit
             AuraInstance = EffectCauser->GetWorld()->SpawnActor<AAuraRadiusActor>(AuraActorClass, EffectCauser->GetActorLocation(), FRotator::ZeroRotator, SpawnParams);
             if (AuraInstance)
             {
-                AuraInstance->Initialize(EffectCauser, EffectAura);
+                AuraInstance->Initialize(EffectCauser, EffectAura, GA);
                 /*Referencer l'actor de l'aura quelque part*/
                 //ActiveAuraEffects.Add(EffectHandle, AuraInstance);
             }

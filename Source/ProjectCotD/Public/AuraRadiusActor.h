@@ -29,6 +29,8 @@ protected:
     UPROPERTY()
     AActor* OwnerActor;
     UPROPERTY()
+    UCOTDGameplayAbility* Owner_GA;
+    UPROPERTY()
     const UGameplayEffectAura* AuraEffect;
     bool IsIniatilized = false;
 
@@ -44,6 +46,6 @@ protected:
     void EndPlay(const EEndPlayReason::Type EndPlayReason);
 
 public:
-    void Initialize(AActor* InOwner, const UGameplayEffectAura* AE);
+    void Initialize(AActor* InOwner, const UGameplayEffectAura* AE, UCOTDGameplayAbility* GA);
 
 };

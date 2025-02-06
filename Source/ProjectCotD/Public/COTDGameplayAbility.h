@@ -21,10 +21,4 @@ class PROJECTCOTD_API UCOTDGameplayAbility : public UGameplayAbility
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Stats")
 	UAbilitiesDataAsset* AbilitiesDataAsset;
-	UPROPERTY(EditDefaultsOnly, Category = "Aura")
-	TSubclassOf<AAuraRadiusActor> AuraActorClass;
-	TArray<AActor*> SpawnedActorsForEffect;
-	UFUNCTION(BlueprintCallable, Category = "Abilities")
-	void ApplyCustomGameplayEffectToTarget(UCOTDAbilitySystemComponent* TargetAbilitySystem, TSubclassOf<UGameplayEffect> EffectClass);
-	void OnEffectRemoved(const FActiveGameplayEffect& EffectRemoved);
 };

@@ -26,11 +26,12 @@ void AAuraRadiusActor::BeginPlay()
 	Super::BeginPlay();
 }
 
-void AAuraRadiusActor::Initialize(AActor* InOwner, const UGameplayEffectAura* AE)
+void AAuraRadiusActor::Initialize(AActor* InOwner, const UGameplayEffectAura* AE, UCOTDGameplayAbility* GA)
 {
     OwnerActor = InOwner;
-    if (OwnerActor && AE)
+    if (OwnerActor && AE && GA)
     {
+        Owner_GA = GA;
         AttachToActor(OwnerActor, FAttachmentTransformRules::KeepWorldTransform);
         AuraCapsule->SetCapsuleRadius(AE->AuraRadius);
         AuraEffect = AE;
@@ -63,8 +64,8 @@ void AAuraRadiusActor::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, 
         TArray<TSubclassOf<UGameplayEffect>> EffectsToApplyWithAura = AuraEffect->EffectsToApplyWithAura;
         for (TSubclassOf<UGameplayEffect> Effect : EffectsToApplyWithAura)
         {
-            //UCOTDGameplayAbility::ApplyCustomGameplayEffectToTarget(ASC, Effect);
-            ASC->ApplyGameplayEffectToSelf(Effect.GetDefaultObject(), 1.0f, EffectContext);
+            //ASC->ApplyGameplayEffectToSelf(Effect.GetDefaultObject(), 1.0f, EffectContext);
+            ASC->ApplyCustomGameplayEffectToTarget(Owner_GA, ASC, Effect, 1);
         }
 
         UE_LOG(LogTemp, Warning, TEXT("In aura"));

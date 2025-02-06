@@ -48,6 +48,6 @@ public:
     }
 
     UFUNCTION(BlueprintCallable, Category = "GAS")
-    void Test(AActor* EffectCauser, UCOTDGameplayAbility* GA, UCOTDAbilitySystemComponent* Target, TSubclassOf<UGameplayEffect> EffectClass, float EffectLevel);
+    void ApplyCustomGameplayEffectToTarget(UCOTDGameplayAbility* GA, UCOTDAbilitySystemComponent* Target, TSubclassOf<UGameplayEffect> EffectClass, float EffectLevel);
     void OnEffectRemoved(const FActiveGameplayEffect& RemovedEffect);
 };
