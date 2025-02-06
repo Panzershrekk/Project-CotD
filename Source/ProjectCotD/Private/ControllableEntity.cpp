@@ -61,6 +61,7 @@ void AControllableEntity::DataTableSetup()
             AttributeDefaults.Attributes = AttributeClass;
             AttributeDefaults.DefaultStartingTable = StartingTable;
             AbilitySystemComponent->DefaultStartingData.Add(AttributeDefaults);
+            AbilitySystemComponent->Test();
         }
     }
 }

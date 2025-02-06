@@ -22,26 +22,23 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
 	UCOTDGameInstance* COTDGameInstance;
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
-	bool isbattleStarted;
+	bool IsbattleStarted;
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
-	int currentTurn;
+	int CurrentTurn;
 
 
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
-	TArray<AControllableEntity*> allControllableEntities;
+	TArray<AControllableEntity*> AllControllableEntities;
 	UPROPERTY(BlueprintReadOnly, Category = "Battle")
-	TArray<AControllableEntity*> orderOfPlayList;
-	//---> PSeudo code
-// 
-	//List<CurentPlayable> all entities
-	//List<OrdererPlayeble> initiative
+	TArray<AControllableEntity*> OrderOfPlayList;
 
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
-	void StartCombat(TArray<AControllableEntity*> controllabledEntities);
+	void StartCombat();
 
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	AControllableEntity* DefineNextPlayableEntity(AControllableEntity* CurrentPlaying);
 	void CheckForBattleEnd();
+	//No need to be coded in cpp
 	UFUNCTION(BlueprintImplementableEvent, Category = "Battle")
 	void ApplyDamageToEntityAndUpdateUI(const AActor* ControllableEntity);
 };

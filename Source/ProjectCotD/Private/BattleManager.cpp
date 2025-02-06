@@ -14,14 +14,13 @@ void UBattleManager::Initialize(UCOTDGameInstance* Instance)
 }
 
 
-void UBattleManager::StartCombat(TArray<AControllableEntity*> controllableEntities)
+void UBattleManager::StartCombat()
 {
 	//Roll initative
-	isbattleStarted = true;
-	currentTurn = 0;
-	allControllableEntities = controllableEntities;
-	orderOfPlayList = controllableEntities;
-	orderOfPlayList.Sort([](const AControllableEntity& A, const AControllableEntity& B)
+	IsbattleStarted = true;
+	CurrentTurn = 0;
+	OrderOfPlayList = AllControllableEntities;
+	OrderOfPlayList.Sort([](const AControllableEntity& A, const AControllableEntity& B)
 		{
 			return A.GetInitiative() < B.GetInitiative();
 		});
@@ -34,17 +33,17 @@ AControllableEntity* UBattleManager::DefineNextPlayableEntity(AControllableEntit
 	{
 		return nullptr;
 	}
-	for (int32 Index = 0; Index < orderOfPlayList.Num(); ++Index)
+	for (int32 Index = 0; Index < OrderOfPlayList.Num(); ++Index)
 	{
-		if (orderOfPlayList[Index] == CurrentPlaying)
+		if (OrderOfPlayList[Index] == CurrentPlaying)
 		{
-			if (Index + 1 < orderOfPlayList.Num())
+			if (Index + 1 < OrderOfPlayList.Num())
 			{
-				return orderOfPlayList[Index + 1];
+				return OrderOfPlayList[Index + 1];
 			}
 			else
 			{
-				return orderOfPlayList[0];
+				return OrderOfPlayList[0];
 			}
 		}
 	}
