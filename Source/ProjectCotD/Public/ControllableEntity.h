@@ -57,8 +57,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 	void DecreaseTurnRemainingOnOverTurnEffect();
 
-	void OnConstruction(const FTransform& Transform)
+	UFUNCTION(BlueprintCallable, Category = "Gameplay")
+	void ForceConstructionScript()
 	{
-		Super::OnConstruction(Transform);
+		Super::OnConstruction(GetTransform());
 	}
 };
