@@ -58,7 +58,7 @@ void AControllableEntity::DataTableSetup()
         if (StartingTable)
         {
            
-            const UAttributeSet* a = AbilitySystemComponent->InitStats(AttributeClass, StartingTable);
+            AbilitySystemComponent->InitStats(AttributeClass, StartingTable);
             ControllableEntityAttributeSet = AbilitySystemComponent->GetSet<UControllableEntityAttributeSet>();
 
             if (ControllableEntityAttributeSet)
