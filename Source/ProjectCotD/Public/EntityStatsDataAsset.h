@@ -43,3 +43,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spells")
 	TArray<TSubclassOf<UCOTDGameplayAbility>> EntitySpells;
 };
+
+USTRUCT(BlueprintType)
+struct FSpawnWithTeamInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+	UEntityStatsDataAsset* EntityStatDataAsset;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Spawn")
+	int32 Team;
+};
