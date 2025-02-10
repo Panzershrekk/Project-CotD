@@ -52,42 +52,23 @@ void AControllableEntity::DataTableSetup()
 {
     if (EntityStatsDataAsset)
     {
-        /*TSubclassOf<UAttributeSet> AttributeClass = UControllableEntityAttributeSet::StaticClass();
+        TSubclassOf<UAttributeSet> AttributeClass = UControllableEntityAttributeSet::StaticClass();
         UDataTable* StartingTable = EntityStatsDataAsset->EntityNumericalStats;
 
         if (StartingTable)
         {
-            AbilitySystemComponent->DefaultStartingData.Empty();
-            FAttributeDefaults AttributeDefaults = FAttributeDefaults();
-            AttributeDefaults.Attributes = AttributeClass;
-            AttributeDefaults.DefaultStartingTable = StartingTable;
-            AbilitySystemComponent->DefaultStartingData.Add(AttributeDefaults);
+           
+            const UAttributeSet* a = AbilitySystemComponent->InitStats(AttributeClass, StartingTable);
             ControllableEntityAttributeSet = AbilitySystemComponent->GetSet<UControllableEntityAttributeSet>();
-            //AbilitySystemComponent->AddSpawnedAttribute();
-            //SetSpawnedAttributes
-        }*/
-        UDataTable* StartingTable = EntityStatsDataAsset->EntityNumericalStats;
 
-        if (StartingTable)
-        {
-            TSubclassOf<UAttributeSet> AttributeClass = UControllableEntityAttributeSet::StaticClass();
-            AbilitySystemComponent->DefaultStartingData.Empty();
-
-            TArray<FName> RowNames = StartingTable->GetRowNames();
-            for (FName RowName : RowNames)
+            if (ControllableEntityAttributeSet)
             {
-                UControllableEntityAttributeSet* EntityStats = StartingTable->FindRow<UControllableEntityAttributeSet>(RowName, FString());
-                if (EntityStats)
-                {
-                    FAttributeDefaults AttributeDefaults = FAttributeDefaults();
-                    AttributeDefaults.Attributes = AttributeClass;
-                    AttributeDefaults.DefaultStartingTable = StartingTable;
-                    AbilitySystemComponent->DefaultStartingData.Add(AttributeDefaults);
-                }
+                UE_LOG(LogTemp, Warning, TEXT("ControllableEntityAttributeSet correctly initialized!"));
             }
-
-            // Assuming UControllableEntityAttributeSet has been properly registered with ASC
-            ControllableEntityAttributeSet = AbilitySystemComponent->GetSet<UControllableEntityAttributeSet>();
+            else
+            {
+                UE_LOG(LogTemp, Error, TEXT("ControllableEntityAttributeSet is NULL after InitStats!"));
+            }
         }
     }
 }
