@@ -64,6 +64,25 @@ public:
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Strength);
 
+	/*************************************  LEVELING  *************************************************************/
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Leveling")
+	FGameplayAttributeData Experience;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Experience);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Leveling")
+	FGameplayAttributeData ExperienceToLevelUp;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, ExperienceToLevelUp);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Leveling")
+	FGameplayAttributeData Level;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Level);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Leveling")
+	FGameplayAttributeData UnassignedStatPoints;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, UnassignedStatPoints);
+
+
 protected:
-	//virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
 };

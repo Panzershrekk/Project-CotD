@@ -34,7 +34,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	void StartCombat();
-
+	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
+	void AddEntityByInitiative(AControllableEntity* NewEntity);
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	AControllableEntity* DefineNextPlayableEntity(AControllableEntity* CurrentPlaying);
 	void CheckForBattleEnd();

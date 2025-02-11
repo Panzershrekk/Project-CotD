@@ -19,11 +19,12 @@ void UBattleManager::StartCombat()
 	//Roll initative
 	IsbattleStarted = true;
 	CurrentTurn = 0;
-	OrderOfPlayList = AllControllableEntities;
-	OrderOfPlayList.Sort([](const AControllableEntity& A, const AControllableEntity& B)
-		{
-			return A.GetInitiative() < B.GetInitiative();
-		});
+	OrderOfPlayList.Empty();
+	UE_LOG(LogTemp, Warning, TEXT("Starting combat"));
+	for (AControllableEntity* Entity : AllControllableEntities)
+	{
+		AddEntityByInitiative(Entity);
+	}
 }
 
 AControllableEntity* UBattleManager::DefineNextPlayableEntity(AControllableEntity* CurrentPlaying)
@@ -48,6 +49,21 @@ AControllableEntity* UBattleManager::DefineNextPlayableEntity(AControllableEntit
 		}
 	}
 	return nullptr;
+}
+
+void UBattleManager::AddEntityByInitiative(AControllableEntity* Entity)
+{
+	if (!Entity) return;
+	int32 InsertIndex = 0;
+	Entity->RollInitiative();
+	for (; InsertIndex < OrderOfPlayList.Num(); ++InsertIndex)
+	{
+		if (Entity->GetInitiative() > OrderOfPlayList[InsertIndex]->GetInitiative())
+		{
+			break;
+		}
+	}
+	OrderOfPlayList.Insert(Entity, InsertIndex);
 }
 
 void UBattleManager::CheckForBattleEnd()

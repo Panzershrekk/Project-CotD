@@ -19,6 +19,9 @@ UCLASS()
 class PROJECTCOTD_API AControllableEntity : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
+	bool bHasRolledInitiative = false;
+	float RolledInitative = 0.f;
+
 public:
 	// Sets default values for this pawn's properties
 	AControllableEntity();
@@ -48,6 +51,7 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	int GetInitiative() const;
+	void RollInitiative();
 
 	UFUNCTION(BlueprintCallable, Category = "ConstructorSetup")
 	void DataTableSetup();
@@ -56,10 +60,4 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Gameplay")
 	void DecreaseTurnRemainingOnOverTurnEffect();
-
-	UFUNCTION(BlueprintCallable, Category = "Gameplay")
-	void ForceConstructionScript()
-	{
-		Super::OnConstruction(GetTransform());
-	}
 };

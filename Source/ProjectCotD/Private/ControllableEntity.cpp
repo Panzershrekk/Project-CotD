@@ -40,12 +40,18 @@ void AControllableEntity::SetupPlayerInputComponent(UInputComponent* PlayerInput
 
 int AControllableEntity::GetInitiative() const
 {
+    return RolledInitative;
+}
+
+void AControllableEntity::RollInitiative()
+{
+
     if (ControllableEntityAttributeSet)
     {
-        float variation = ControllableEntityAttributeSet->GetInitiativeVariation();
-        return ControllableEntityAttributeSet->GetInitiative() + FMath::RandRange(-variation, variation);
+        float Variation = ControllableEntityAttributeSet->GetInitiativeVariation();
+        RolledInitative = ControllableEntityAttributeSet->GetInitiative() + FMath::RandRange(-Variation, Variation);
+        bHasRolledInitiative = true;
     }
-    return 0;
 }
 
 void AControllableEntity::DataTableSetup()
