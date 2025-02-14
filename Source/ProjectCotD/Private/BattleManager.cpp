@@ -66,6 +66,12 @@ void UBattleManager::AddEntityByInitiative(AControllableEntity* Entity)
 	OrderOfPlayList.Insert(Entity, InsertIndex);
 }
 
+void UBattleManager::RemoveEntityFromPlay(AControllableEntity* Entity)
+{
+	if (!Entity) return;
+	OrderOfPlayList.Remove(Entity);
+}
+
 void UBattleManager::CheckForBattleEnd()
 {
 }

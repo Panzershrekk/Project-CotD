@@ -36,6 +36,9 @@ public:
 	void StartCombat();
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	void AddEntityByInitiative(AControllableEntity* NewEntity);
+	//This will remove the entity from the fight but it will still be physicaly here, for ressurection/necromancy kind of effect
+	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
+	void RemoveEntityFromPlay(AControllableEntity* EntityToRemove);
 	UFUNCTION(BlueprintCallable, Category = "BattleFlow")
 	AControllableEntity* DefineNextPlayableEntity(AControllableEntity* CurrentPlaying);
 	void CheckForBattleEnd();
