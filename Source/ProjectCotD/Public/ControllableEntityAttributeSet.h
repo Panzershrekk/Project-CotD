@@ -51,6 +51,16 @@ public:
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxMartialPoint);
 
 
+
+	//Martial Point
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData MagicPoint;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MagicPoint);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData MaxMagicPoint;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxMagicPoint);
+
 	//Others Stats
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData Initiative;
