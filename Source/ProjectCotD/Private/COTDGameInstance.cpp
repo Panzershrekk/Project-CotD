@@ -6,7 +6,6 @@
 void UCOTDGameInstance::Init()
 {
     Super::Init();
-
     if (UIManagerClass)
     {
         UIManager = NewObject<UUIManager>(this, UIManagerClass);
@@ -31,5 +30,13 @@ void UCOTDGameInstance::Init()
         {
             DamageColorManager->Initialize(this);
         }
+    }
+}
+
+void UCOTDGameInstance::UpdateWorld()
+{
+    if (UIManager)
+    {
+        UIManager->Initialize(GetWorld(), this);
     }
 }

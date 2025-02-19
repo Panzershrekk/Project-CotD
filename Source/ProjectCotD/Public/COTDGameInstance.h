@@ -32,4 +32,6 @@ public:
 	TSubclassOf<UDamageColorManager> DamageColorManagerClass;
 
 	virtual void Init() override;
+	UFUNCTION(BlueprintCallable, Category = "World")
+	void UpdateWorld();
 };

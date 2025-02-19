@@ -82,6 +82,10 @@ void UDamageExecutionCalculation::Execute_Implementation(
         if (SourceActor && SourceActor->GetWorld())
         {
             GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
+            if (GI == nullptr)
+            {
+                UE_LOG(LogTemp, Warning, TEXT("Instance is null"));
+            }
         }
         for (FDamagerInfo DamagerInfo : SourceGameplayAbility->AbilitiesDataAsset->DamagersInfos)
         {

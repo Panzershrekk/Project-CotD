@@ -28,7 +28,7 @@ void UUIManager::ShowHealthChangeFloating(const FVector& Location, TQueue<FDamag
     while (!DisplayerInfo.IsEmpty())
     {
         FDamagerDisplayInfo DisplayInfo;
-        if (DisplayerInfo.Peek(DisplayInfo))
+        if (DisplayerInfo.Peek(DisplayInfo) && DefaultFloatingTextClass)
         {
             ABattleFloatingText* FloatingText = CachedWorld->SpawnActor<ABattleFloatingText>(DefaultFloatingTextClass, Location + FVector(0, 0, 100 + offset), FRotator::ZeroRotator);
             offset += 150;
