@@ -51,6 +51,10 @@ public:
     bool RequireLineOfSight;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     bool IsProjectile;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    int32 MartialPointCost;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
+    int32 MagicPointCost;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
     TSubclassOf<ACOTDProjectile> ProjectileActor;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
