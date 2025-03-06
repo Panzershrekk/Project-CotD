@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UIManager.h"
 #include "BattleManager.h"
+#include "SaveManager.h"
 #include "DamageColorManager.h"
 #include "Engine/GameInstance.h"
 #include "COTDGameInstance.generated.h"
@@ -23,6 +24,8 @@ public:
 	UBattleManager* BattleManager;
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
 	UDamageColorManager* DamageColorManager;
+	UPROPERTY(BlueprintReadOnly, Category = "Managers")
+	USaveManager* SaveManager;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUIManager> UIManagerClass;
@@ -30,6 +33,8 @@ public:
 	TSubclassOf<UBattleManager> BattleManagerClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Color")
 	TSubclassOf<UDamageColorManager> DamageColorManagerClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Save")
+	TSubclassOf<USaveManager> SaveManagerClass;
 
 	virtual void Init() override;
 	UFUNCTION(BlueprintCallable, Category = "World")

@@ -31,6 +31,14 @@ void UCOTDGameInstance::Init()
             DamageColorManager->Initialize(this);
         }
     }
+    if (SaveManagerClass)
+    {
+        SaveManager = NewObject<USaveManager>(this, SaveManagerClass);
+        if (SaveManager)
+        {
+            SaveManager->Initialize(this);
+        }
+    }
 }
 
 void UCOTDGameInstance::UpdateWorld()
