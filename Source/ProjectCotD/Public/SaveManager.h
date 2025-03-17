@@ -27,6 +27,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SaveSystem")
 	void LoadGame();
 
+	UFUNCTION(BlueprintPure, Category = "SaveSystem")
+	UCOTDMainSaveGame* GetCurrentSaveGame() const { return CurrentSaveGame; }
+
 private:
 	UPROPERTY()
 	UCOTDMainSaveGame* CurrentSaveGame;
