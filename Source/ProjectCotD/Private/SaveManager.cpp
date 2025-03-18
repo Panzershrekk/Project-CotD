@@ -25,7 +25,7 @@ void USaveManager::SaveGame()
     }
 
     UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SaveSlotName, 0);
-    UE_LOG(LogTemp, Log, TEXT("Saving successful"));
+    UE_LOG(LogTemp, Warning, TEXT("Saving successful"));
 }
 
 void USaveManager::LoadGame()
@@ -35,7 +35,7 @@ void USaveManager::LoadGame()
         CurrentSaveGame = Cast<UCOTDMainSaveGame>(UGameplayStatics::LoadGameFromSlot(SaveSlotName, 0));
         if (CurrentSaveGame)
         {
-            UE_LOG(LogTemp, Log, TEXT("Loading sucess"));
+            UE_LOG(LogTemp, Warning, TEXT("Loading sucess"));
         }
     }
     else
