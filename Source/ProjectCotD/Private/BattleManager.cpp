@@ -16,7 +16,6 @@ void UBattleManager::Initialize(UCOTDGameInstance* Instance)
 
 void UBattleManager::StartCombat()
 {
-	//Roll initative
 	IsbattleStarted = true;
 	CurrentTurn = 0;
 	OrderOfPlayList.Empty();
@@ -25,6 +24,11 @@ void UBattleManager::StartCombat()
 	{
 		AddEntityByInitiative(Entity);
 	}
+}
+
+void UBattleManager::CleanCombat()
+{
+	OrderOfPlayList.Empty();
 }
 
 AControllableEntity* UBattleManager::DefineNextPlayableEntity(AControllableEntity* CurrentPlaying)
@@ -56,11 +60,14 @@ void UBattleManager::AddEntityByInitiative(AControllableEntity* Entity)
 	if (!Entity) return;
 	int32 InsertIndex = 0;
 	Entity->RollInitiative();
-	for (; InsertIndex < OrderOfPlayList.Num(); ++InsertIndex)
+	if (OrderOfPlayList.Num() > 0)
 	{
-		if (Entity->GetInitiative() > OrderOfPlayList[InsertIndex]->GetInitiative())
+		for (; InsertIndex < OrderOfPlayList.Num(); ++InsertIndex)
 		{
-			break;
+			if (Entity->GetInitiative() > OrderOfPlayList[InsertIndex]->GetInitiative())
+			{
+				break;
+			}
 		}
 	}
 	OrderOfPlayList.Insert(Entity, InsertIndex);
