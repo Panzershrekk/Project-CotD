@@ -70,6 +70,13 @@ public:
 	FGameplayAttributeData InitiativeVariation;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, InitiativeVariation);
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData Movement;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Movement);
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
+	FGameplayAttributeData MaxMovement;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxMovement);
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Strength);
