@@ -42,6 +42,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spells")
 	TArray<TSubclassOf<UCOTDGameplayAbility>> EntitySpells;
+
+	//Should mostly be passiv or over time
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BaseEffects")
+	TArray<TSubclassOf<UGameplayEffect>> StartingEffects;
 };
 
 USTRUCT(BlueprintType)
