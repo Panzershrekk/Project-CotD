@@ -8,12 +8,13 @@ void UDamageColorManager::Initialize(UCOTDGameInstance* Instance)
     COTDGameInstance = Instance;
 }
 
-FLinearColor UDamageColorManager::GetColorForDamageType(ESubDamagerType SubDamageType) const
+FLinearColor UDamageColorManager::GetColorForDamageType(FGameplayTag DamageTag) const
 {
-    if (!DamageColorDataTable) return FColor::White;
+    if (!DamageColorDataTable) 
+        return FColor::White;
 
     static const FString ContextString(TEXT("DamageColor"));
-    const FName RowName = FName(*UEnum::GetDisplayValueAsText(SubDamageType).ToString());
+    const FName RowName = FName(DamageTag.ToString());
     FDamageColorInfo* FoundRow = DamageColorDataTable->FindRow<FDamageColorInfo>(RowName, ContextString);
 
     return FoundRow ? FoundRow->DamageColor : FColor::White;

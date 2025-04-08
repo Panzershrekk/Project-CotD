@@ -107,7 +107,7 @@ void UDamageExecutionCalculation::Execute_Implementation(
             Displayer.DamageDone = Calaculated;
             if (GI && GI->DamageColorManager)
             {
-                Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DamagerInfo.SubDamageType);
+                Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DamagerInfo.SubDamageTag);
             }
             DamageQueueDisplayer.Enqueue(Displayer);
             OutExecutionOutput.AddOutputModifier(

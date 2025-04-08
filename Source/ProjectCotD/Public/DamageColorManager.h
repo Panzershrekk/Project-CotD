@@ -22,5 +22,5 @@ public:
     UDataTable* DamageColorDataTable;
 
     UFUNCTION(BlueprintCallable, Category = "Damage")
-    FLinearColor GetColorForDamageType(ESubDamagerType SubDamageType) const;
+    FLinearColor GetColorForDamageType(FGameplayTag DamageTag) const;
 };

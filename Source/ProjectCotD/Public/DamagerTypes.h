@@ -2,29 +2,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemComponent.h"
 #include "DamagerTypes.generated.h"
 
-// Enum pour les types principaux de dégâts
-UENUM(BlueprintType)
-enum class EDamagerType : uint8
-{
-    Physical UMETA(DisplayName = "Physical"),
-    Magical UMETA(DisplayName = "Magical"),
-};
-
-// Enum pour les sous-types de dégâts
-UENUM(BlueprintType)
-enum class ESubDamagerType : uint8
-{
-    None UMETA(DisplayName = "None"),
-    Blunt UMETA(DisplayName = "Blunt"),
-    Slashing UMETA(DisplayName = "Slashing"),
-    Piercing UMETA(DisplayName = "Piercing"),
-    Fire UMETA(DisplayName = "Fire"),
-    Frost UMETA(DisplayName = "Frost"),
-    Wind UMETA(DisplayName = "Wind"),
-    Shadow UMETA(DisplayName = "Shadow"),
-};
 
 USTRUCT(BlueprintType)
 struct FDamagerInfo
@@ -32,10 +12,10 @@ struct FDamagerInfo
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-    EDamagerType DamageType;
+    FGameplayTag DamageTag;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-    ESubDamagerType SubDamageType;
+    FGameplayTag SubDamageTag;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
     int32 BaseDamage;

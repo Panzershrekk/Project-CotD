@@ -12,10 +12,10 @@ struct FDamageColorInfo : public FTableRowBase
     GENERATED_BODY()
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
-    ESubDamagerType SubDamageType;
+    FGameplayTag SubDamageType;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
     FLinearColor DamageColor;
 
-    FDamageColorInfo() : SubDamageType(ESubDamagerType::None), DamageColor(FLinearColor::White) {}
+    FDamageColorInfo() : SubDamageType(), DamageColor(FLinearColor::White) {}
 };
