@@ -14,11 +14,13 @@ struct DamageCapture
 {
     DECLARE_ATTRIBUTE_CAPTUREDEF(Health);
     DECLARE_ATTRIBUTE_CAPTUREDEF(MaxHealth);
+    DECLARE_ATTRIBUTE_CAPTUREDEF(DamageMultiplier);
 
     DamageCapture()
     {
         DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, Health, Target, false);
         DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, MaxHealth, Target, false);
+        DEFINE_ATTRIBUTE_CAPTUREDEF(UControllableEntityAttributeSet, DamageMultiplier, Source, false);
     }
 };
 
@@ -32,6 +34,8 @@ UDamageExecutionCalculation::UDamageExecutionCalculation()
 {
     RelevantAttributesToCapture.Add(GetDamageCapture().HealthDef);
     RelevantAttributesToCapture.Add(GetDamageCapture().MaxHealthDef);
+    RelevantAttributesToCapture.Add(GetDamageCapture().DamageMultiplierDef);
+
 }
 
 void UDamageExecutionCalculation::Execute_Implementation(
@@ -74,6 +78,9 @@ void UDamageExecutionCalculation::Execute_Implementation(
     float MaxHealth = 0.0f;
     ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().MaxHealthDef, EvaluationParameters, MaxHealth);
 
+    float DamageMultiplier = 1.0f;
+    ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageCapture().DamageMultiplierDef, EvaluationParameters, DamageMultiplier);
+
     if (SourceObject)
     {
         const UCOTDGameplayAbility* SourceGameplayAbility = Cast<UCOTDGameplayAbility>(SourceObject);
@@ -91,7 +98,9 @@ void UDamageExecutionCalculation::Execute_Implementation(
         {
             int32 BaseDamage = DamagerInfo.BaseDamage;
             int32 SupplementVariation = DamagerInfo.SupplementDamage;
-            int32 Calaculated = BaseDamage + FMath::RandRange(0, SupplementVariation);
+            UE_LOG(LogTemp, Warning, TEXT("Damage multiplier is %f"), DamageMultiplier);
+
+            int32 Calaculated = (BaseDamage + FMath::RandRange(0, SupplementVariation)) * DamageMultiplier;
 
             FDamagerDisplayInfo Displayer;
             Displayer.DisplayColor = FLinearColor::White;

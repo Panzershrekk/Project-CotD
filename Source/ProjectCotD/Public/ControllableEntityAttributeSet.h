@@ -81,6 +81,10 @@ public:
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Strength);
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData DamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, DamageMultiplier);
+
 	/*************************************  LEVELING  *************************************************************/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Leveling")
