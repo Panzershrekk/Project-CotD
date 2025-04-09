@@ -98,16 +98,23 @@ void UDamageExecutionCalculation::Execute_Implementation(
         {
             int32 BaseDamage = DamagerInfo.BaseDamage;
             int32 SupplementVariation = DamagerInfo.SupplementDamage;
-            UE_LOG(LogTemp, Warning, TEXT("Damage multiplier is %f"), DamageMultiplier);
+            float CombinedMultipler = 1.0;
+            if (GI)
+            {
+                CombinedMultipler += DamageMultiplier
+                                 + GI->DamageManager->GetMultiplierFromTag(DamagerInfo.DamageTag, SourceABSC)
+                                 + GI->DamageManager->GetMultiplierFromTag(DamagerInfo.SubDamageTag, SourceABSC);
+            }
+            UE_LOG(LogTemp, Warning, TEXT("CombinedMultipler is %f"), CombinedMultipler);
 
-            int32 Calaculated = (BaseDamage + FMath::RandRange(0, SupplementVariation)) * DamageMultiplier;
+            int32 Calaculated = (BaseDamage + FMath::RandRange(0, SupplementVariation)) * CombinedMultipler;
 
             FDamagerDisplayInfo Displayer;
             Displayer.DisplayColor = FLinearColor::White;
             Displayer.DamageDone = Calaculated;
-            if (GI && GI->DamageColorManager)
+            if (GI && GI->DamageManager)
             {
-                Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DamagerInfo.SubDamageTag);
+                Displayer.DisplayColor = GI->DamageManager->GetColorForDamageType(DamagerInfo.SubDamageTag);
             }
             DamageQueueDisplayer.Enqueue(Displayer);
             OutExecutionOutput.AddOutputModifier(

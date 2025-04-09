@@ -6,7 +6,7 @@
 #include "UIManager.h"
 #include "BattleManager.h"
 #include "SaveManager.h"
-#include "DamageColorManager.h"
+#include "COTDDamageManager.h"
 #include "Engine/GameInstance.h"
 #include "COTDGameInstance.generated.h"
 
@@ -23,7 +23,7 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
 	UBattleManager* BattleManager;
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
-	UDamageColorManager* DamageColorManager;
+	UCOTDDamageManager* DamageManager;
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
 	USaveManager* SaveManager;
 
@@ -32,7 +32,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Battle")
 	TSubclassOf<UBattleManager> BattleManagerClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Color")
-	TSubclassOf<UDamageColorManager> DamageColorManagerClass;
+	TSubclassOf<UCOTDDamageManager> DamagerManagerClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Save")
 	TSubclassOf<USaveManager> SaveManagerClass;
 

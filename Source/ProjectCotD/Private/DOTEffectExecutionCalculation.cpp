@@ -80,9 +80,9 @@ void UDOTEffectExecutionCalculation::Execute_Implementation(
         FDamagerDisplayInfo Displayer;
         Displayer.DisplayColor = FLinearColor::White;
         Displayer.DamageDone = Calaculated;
-        if (GI && GI->DamageColorManager)
+        if (GI && GI->DamageManager)
         {
-            Displayer.DisplayColor = GI->DamageColorManager->GetColorForDamageType(DOTEffect->DamagerInfo.SubDamageTag);
+            Displayer.DisplayColor = GI->DamageManager->GetColorForDamageType(DOTEffect->DamagerInfo.SubDamageTag);
         }
         OutExecutionOutput.AddOutputModifier(
             FGameplayModifierEvaluatedData(GetDotCapture().HealthProperty, EGameplayModOp::Additive, -Calaculated));

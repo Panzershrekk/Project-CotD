@@ -19,7 +19,6 @@ class PROJECTCOTD_API UControllableEntityAttributeSet : public UAttributeSet
 {
 	GENERATED_BODY()
 public:
-
 	//Health
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Attributes")
 	FGameplayAttributeData Health;
@@ -81,10 +80,67 @@ public:
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Strength);
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
+	FGameplayAttributeData Intelligence;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Intelligence);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
+	FGameplayAttributeData Stamina;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Stamina);
+
+	/*************************************  MULTIPLIER  *************************************************************/
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
 	FGameplayAttributeData DamageMultiplier;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, DamageMultiplier);
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData PhysicalDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, PhysicalDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData MagicalDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MagicalDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData BluntDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, BluntDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData PiercingDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, PiercingDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData SlashDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, SlashDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData FireDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, FireDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData FrostDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, FrostDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData NatureDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, NatureDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData ShadowDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, ShadowDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData LightDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, LightDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData ArcaneDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, ArcaneDamageMultiplier);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BackgroundStats")
+	FGameplayAttributeData PoisonDamageMultiplier;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, PoisonDamageMultiplier);
 	/*************************************  LEVELING  *************************************************************/
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Leveling")

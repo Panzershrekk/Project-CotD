@@ -10,6 +10,8 @@ USTRUCT(BlueprintType)
 struct FDamageColorInfo : public FTableRowBase
 {
     GENERATED_BODY()
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
+    FGameplayAttribute AttributeMultiplier;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Damage")
     FGameplayTag SubDamageType;

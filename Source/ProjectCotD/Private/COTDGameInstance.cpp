@@ -23,12 +23,12 @@ void UCOTDGameInstance::Init()
         }
     }
 
-    if (DamageColorManagerClass)
+    if (DamagerManagerClass)
     {
-        DamageColorManager = NewObject<UDamageColorManager>(this, DamageColorManagerClass);
-        if (DamageColorManager)
+        DamageManager = NewObject<UCOTDDamageManager>(this, DamagerManagerClass);
+        if (DamageManager)
         {
-            DamageColorManager->Initialize(this);
+            DamageManager->Initialize(this);
         }
     }
     if (SaveManagerClass)
