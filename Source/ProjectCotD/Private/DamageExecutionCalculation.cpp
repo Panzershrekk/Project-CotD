@@ -105,8 +105,6 @@ void UDamageExecutionCalculation::Execute_Implementation(
                                  + GI->DamageManager->GetMultiplierFromTag(DamagerInfo.DamageTag, SourceABSC)
                                  + GI->DamageManager->GetMultiplierFromTag(DamagerInfo.SubDamageTag, SourceABSC);
             }
-            UE_LOG(LogTemp, Warning, TEXT("CombinedMultipler is %f"), CombinedMultipler);
-
             int32 Calaculated = (BaseDamage + FMath::RandRange(0, SupplementVariation)) * CombinedMultipler;
 
             FDamagerDisplayInfo Displayer;

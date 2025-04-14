@@ -24,7 +24,7 @@ FLinearColor UCOTDDamageManager::GetColorForDamageType(FGameplayTag DamageTag) c
 float UCOTDDamageManager::GetMultiplierFromTag(FGameplayTag DamageTag, const UAbilitySystemComponent* ASC) const
 {
     if (!DamageDataTable)
-        return 0.0f;
+        return 1.0f;
     static const FString ContextString(TEXT("AttributeMultiplier"));
     const FName RowName = FName(DamageTag.ToString());
     FDamageColorInfo* FoundRow = DamageDataTable->FindRow<FDamageColorInfo>(RowName, ContextString);
@@ -33,6 +33,6 @@ float UCOTDDamageManager::GetMultiplierFromTag(FGameplayTag DamageTag, const UAb
     {
         return ASC->GetNumericAttribute(FoundRow->AttributeMultiplier);
     }
-    UE_LOG(LogTemp, Warning, TEXT("DamageTag %f couldn't be found"), DamageTag.GetTagName());
-    return 0.0f;
+    UE_LOG(LogTemp, Warning, TEXT("DamageTag %s couldn't be found"), *DamageTag.GetTagName().ToString());
+    return 1.0f;
 }
