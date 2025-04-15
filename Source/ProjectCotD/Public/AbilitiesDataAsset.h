@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "COTDProjectile.h"
 #include "DamagerTypes.h"
+#include "COTDUtils.h"
 #include "Engine/DataAsset.h"
 #include "AbilitiesDataAsset.generated.h"
 
@@ -44,7 +45,7 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     bool IsAreaOfEffect;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
-    float AreaSelectorRadius;
+    FAreaSelector AreaSelector;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
     bool RequireATarget;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data")
@@ -62,4 +63,3 @@ public:
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Ability Data", meta = (EditCondition = "IsProjectile"))
     float ProjectileSpeed;
 };
-

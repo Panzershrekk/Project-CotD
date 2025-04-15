@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "TargetSelectorActor.h"
 #include "COTDUtils.generated.h"
 
 /**
@@ -31,3 +32,15 @@ struct FDamageOriginInformations
     }
 
 };
+
+USTRUCT(BlueprintType)
+struct FAreaSelector
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AreaSelector")
+    TSubclassOf<ATargetSelectorActor> AreaType;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AreaSelector")
+    FVector AreaSelectorSize;
+};
+
