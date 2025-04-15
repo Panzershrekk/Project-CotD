@@ -33,6 +33,15 @@ struct FDamageOriginInformations
 
 };
 
+UENUM(BlueprintType)
+enum class EAreaSelectionType : uint8
+{
+    //The area will be created where the cursor is
+    FromCursor UMETA(DisplayName = "From Cursor"),
+    //The area will be created from caster and follow the mouse (exemple a direct line)
+    FromCaster UMETA(DisplayName = "From Caster"),
+};
+
 USTRUCT(BlueprintType)
 struct FAreaSelector
 {
@@ -42,5 +51,7 @@ struct FAreaSelector
     TSubclassOf<ATargetSelectorActor> AreaType;
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AreaSelector")
     FVector AreaSelectorSize;
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AreaSelector")
+    EAreaSelectionType AreaSelectionType;
 };
 
