@@ -18,14 +18,14 @@ void USelfTest::RunTest(FEnvQueryInstance& QueryInstance) const
         return;
     }
 
-    const FVector QuerierLocation = QuerierActor->GetActorLocation();
+    FVector QuerierLocation = QuerierActor->GetActorLocation();
+    QuerierLocation.Z = 0;
 
     for (FEnvQueryInstance::ItemIterator It(this, QueryInstance); It; ++It)
     {
-        const FVector ItemLocation = GetItemLocation(QueryInstance, It.GetIndex());
-
+        FVector ItemLocation = GetItemLocation(QueryInstance, It.GetIndex());
+        ItemLocation.Z = 0;
         const float Distance = FVector::Dist(ItemLocation, QuerierLocation);
-
         const float Score = (Distance < Tolerance) ? 1.0f : 0.0f;
 
         It.SetScore(EEnvTestPurpose::Score, EEnvTestFilterType::Range, Score, 0.0f, 1.0f);
