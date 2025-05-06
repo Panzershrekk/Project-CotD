@@ -14,3 +14,15 @@ void ACOTDEndlessGameMode::InitRunWithGivenSeed(int32 Seed)
 	CurrentRunState.Gold = 0;
 	CurrentRunState.Seed = Seed;
 }
+
+void ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
+{
+}
+
+void ACOTDEndlessGameMode::StartCombat(const FMapNode& Node)
+{
+    /*auto GI = Cast<UEndlessGameInstance>(GetGameInstance());
+    GI->CurrentRun.Depth = Node.Depth;
+    GI->CurrentRun.Buffs.Append(Node.MapModifiers);
+    UGameplayStatics::OpenLevel(this, TEXT("CombatLevel"));*/
+}

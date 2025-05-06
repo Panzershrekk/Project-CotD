@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "EndlessRunState.h"
+#include "EndlessModeSaveGame.h"
 #include "random"
 #include "COTDEndlessGameMode.generated.h"
 
@@ -26,6 +26,18 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void InitRunWithGivenSeed(int32 Seed);
+
+    UFUNCTION(BlueprintCallable)
+    void GenerateRowAtDepth(int32 Depth);
+
+    UFUNCTION(BlueprintCallable)
+    void StartCombat(const FMapNode& Node);
+
+    UFUNCTION(BlueprintCallable)
+    void RestoreRun(const UEndlessModeSaveGame* SaveData)
+    {
+        CurrentRunState = SaveData->RunState;
+    }
 
     UFUNCTION(BlueprintCallable)
     int32 GenerateRandomSeed()

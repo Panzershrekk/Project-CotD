@@ -32,6 +32,14 @@ struct PROJECTCOTD_API FEndlessRunState
     int32 Seed;
 };
 
+USTRUCT(BlueprintType)
+struct PROJECTCOTD_API FMapNode
+{
+    GENERATED_BODY()
+
+    UPROPERTY(BlueprintReadOnly)
+    int32 Depth;
+};
 
 
 

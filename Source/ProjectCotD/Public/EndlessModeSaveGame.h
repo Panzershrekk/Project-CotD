@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "EndlessRunState.h"
 #include "GameFramework/SaveGame.h"
 #include "EndlessModeSaveGame.generated.h"
 
@@ -14,5 +15,6 @@ class PROJECTCOTD_API UEndlessModeSaveGame : public USaveGame
 {
 	GENERATED_BODY()
 public:
-
+	UPROPERTY()
+	FEndlessRunState RunState;
 };
