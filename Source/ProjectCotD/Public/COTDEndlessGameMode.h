@@ -28,7 +28,7 @@ public:
 	void InitRunWithGivenSeed(int32 Seed);
 
     UFUNCTION(BlueprintCallable)
-    void GenerateRowAtDepth(int32 Depth);
+    TArray<FMapNode> GenerateRowAtDepth(int32 Depth);
 
     UFUNCTION(BlueprintCallable)
     void StartCombat(const FMapNode& Node);

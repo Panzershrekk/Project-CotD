@@ -39,6 +39,17 @@ struct PROJECTCOTD_API FMapNode
 
     UPROPERTY(BlueprintReadOnly)
     int32 Depth;
+
+    /*UPROPERTY(BlueprintReadOnly)
+    FName NodeType;*/
+
+
+    /*UPROPERTY(BlueprintReadOnly)
+    TMap<FName, float> MapModifiers;*/
+
+    // Identifiant unique pour la navigation ou sauvegarde
+    UPROPERTY(BlueprintReadOnly)
+    FGuid NodeID;
 };
 
 

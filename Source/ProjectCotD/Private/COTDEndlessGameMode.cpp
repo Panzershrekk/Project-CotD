@@ -15,8 +15,21 @@ void ACOTDEndlessGameMode::InitRunWithGivenSeed(int32 Seed)
 	CurrentRunState.Seed = Seed;
 }
 
-void ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
+TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
 {
+    //FRandomStream RNG(CurrentRunState.Seed);
+    TArray<FMapNode> Nodes;
+    Nodes.Reserve(3);
+
+    for (int32 i = 0; i < 3; ++i)
+    {
+        FMapNode Node;
+        Node.Depth = Depth;
+
+        Node.NodeID = FGuid::NewGuid();
+        Nodes.Add(Node);
+    }
+    return Nodes;
 }
 
 void ACOTDEndlessGameMode::StartCombat(const FMapNode& Node)
