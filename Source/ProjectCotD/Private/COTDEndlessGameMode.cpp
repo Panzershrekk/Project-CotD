@@ -39,3 +39,9 @@ void ACOTDEndlessGameMode::StartCombat(const FMapNode& Node)
     GI->CurrentRun.Buffs.Append(Node.MapModifiers);
     UGameplayStatics::OpenLevel(this, TEXT("CombatLevel"));*/
 }
+
+/*GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());
+if (GI == nullptr)
+{*/
+//UE_LOG(LogTemp, Warning, TEXT("Instance is null"));
+//}

@@ -48,3 +48,20 @@ void UCOTDGameInstance::UpdateWorld()
         UIManager->Initialize(GetWorld(), this);
     }
 }
+
+void UCOTDGameInstance::ResetCombatResult()
+{
+    CombatResult.Reset();
+}
+
+void UCOTDGameInstance::ComputeCombatResult()
+{
+    float PerformanceScore = 0.f;
+    
+    PerformanceScore = CombatResult.Kill * 20 * (CombatResult.CurrentEndlessDepth + 1);
+    if (CombatResult.Victory == false)
+    {
+        PerformanceScore *= 0;
+    }
+    CombatResult.EndlessMoney = PerformanceScore;
+}

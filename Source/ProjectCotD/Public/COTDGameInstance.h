@@ -13,11 +13,54 @@
 /**
  * 
  */
+
+UENUM(BlueprintType)
+enum class EGameModeType : uint8
+{
+	None UMETA(DisplayName = "None"),
+	Quickplay UMETA(DisplayName = "Quickplay"),
+	Endless UMETA(DisplayName = "Endless"),
+};
+
+USTRUCT(BlueprintType)
+struct PROJECTCOTD_API FCombatResult
+{
+	GENERATED_BODY()
+
+	UPROPERTY(BlueprintReadWrite)
+	bool Victory = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 Kill = 0;
+
+	//For endless mode only
+	UPROPERTY(BlueprintReadWrite)
+	int32 CurrentEndlessDepth = 0;
+
+	/*** Calculated Post game ***/
+
+	//For endless mode only
+	UPROPERTY(BlueprintReadOnly)
+	float EndlessMoney = 0;
+
+	void Reset()
+	{
+		Victory = false;
+		Kill = 0;
+		CurrentEndlessDepth = 0;
+		EndlessMoney = 0;
+	}
+};
+
 UCLASS()
 class PROJECTCOTD_API UCOTDGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
 public:
+
+	/*********** ATTRIBUTES *************/
+
+	/* Managers */
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
 	UUIManager* UIManager;
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
@@ -36,7 +79,32 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Save")
 	TSubclassOf<USaveManager> SaveManagerClass;
 
+	/* Combat Section */
+	UPROPERTY(BlueprintReadOnly, Category = "Combat")
+	EGameModeType CurrentGameMode;
+
+	UPROPERTY(BlueprintReadWrite, Category = "Combat")
+	FCombatResult CombatResult;
+
+	/*********** FUNCTIONS *************/
+
 	virtual void Init() override;
+
+	/* World */
 	UFUNCTION(BlueprintCallable, Category = "World")
 	void UpdateWorld();
+
+	/* Combat Section */
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void SetGameMode(EGameModeType GameMode)
+	{
+		CurrentGameMode = GameMode;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void ResetCombatResult();
+
+	//Should be called at the end of the battle
+	UFUNCTION(BlueprintCallable, Category = "Combat")
+	void ComputeCombatResult();
 };
