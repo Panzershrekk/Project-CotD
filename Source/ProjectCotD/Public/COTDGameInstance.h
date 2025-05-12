@@ -31,7 +31,10 @@ struct PROJECTCOTD_API FCombatResult
 	bool Victory = false;
 
 	UPROPERTY(BlueprintReadWrite)
-	int32 Kill = 0;
+	int32 EnnemyKill = 0;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 AllyDeath = 0;
 
 	//For endless mode only
 	UPROPERTY(BlueprintReadWrite)
@@ -46,7 +49,7 @@ struct PROJECTCOTD_API FCombatResult
 	void Reset()
 	{
 		Victory = false;
-		Kill = 0;
+		EnnemyKill = 0;
 		CurrentEndlessDepth = 0;
 		EndlessMoney = 0;
 	}
@@ -85,6 +88,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
 	FCombatResult CombatResult;
+
+	/* Endless mode utils */
 
 	/*********** FUNCTIONS *************/
 

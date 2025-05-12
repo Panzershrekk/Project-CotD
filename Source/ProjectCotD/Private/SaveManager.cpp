@@ -25,7 +25,7 @@ void USaveManager::SaveGame()
     }
 
     UGameplayStatics::SaveGameToSlot(CurrentSaveGame, SaveSlotName, 0);
-    UE_LOG(LogTemp, Warning, TEXT("Saving successful"));
+    UE_LOG(LogTemp, Warning, TEXT("Saving whole game successful"));
 }
 
 void USaveManager::LoadGame()
@@ -44,4 +44,37 @@ void USaveManager::LoadGame()
         CurrentSaveGame = Cast<UCOTDMainSaveGame>(UGameplayStatics::CreateSaveGameObject(UCOTDMainSaveGame::StaticClass()));
         SaveGame();
     }
+}
+
+/************ END LESS *************/
+UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+void USaveManager::SaveEndlessRunState(const FEndlessRunState& State)
+{
+    if (!CurrentSaveGame) return;
+
+    CurrentSaveGame->EndlessRunState = State;
+    UE_LOG(LogTemp, Warning, TEXT("Saving endlessRun state"));
+    SaveGame();
+}
+
+UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+bool USaveManager::LoadEndlessRunState(FEndlessRunState& OutState)
+{
+    if (!CurrentSaveGame) return false;
+
+    OutState = CurrentSaveGame->EndlessRunState;
+    return OutState.bRunInProgress;
+}
+
+void USaveManager::ClearEndlessRunState()
+{
+    if (!CurrentSaveGame)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("ClearEndlessRunState: CurrentSaveGame is null."));
+        return;
+    }
+    CurrentSaveGame->EndlessRunState = FEndlessRunState();
+    SaveGame();
+
+    UE_LOG(LogTemp, Log, TEXT("Endless run state cleared and save game updated."));
 }

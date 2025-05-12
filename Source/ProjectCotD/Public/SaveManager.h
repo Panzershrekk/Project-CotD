@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "COTDMainSaveGame.h"
+#include "EndlessRunState.h"
 #include "SaveManager.generated.h"
 
 class UCOTDGameInstance;
@@ -29,6 +30,17 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "SaveSystem")
 	UCOTDMainSaveGame* GetCurrentSaveGame() const { return CurrentSaveGame; }
+
+	/*********** ENDLESS RUN ************/
+
+	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+	void SaveEndlessRunState(const FEndlessRunState& State);
+
+	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+	bool LoadEndlessRunState(FEndlessRunState& OutState);
+
+	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+	void ClearEndlessRunState();
 
 private:
 	UPROPERTY()

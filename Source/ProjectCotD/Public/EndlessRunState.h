@@ -30,6 +30,9 @@ struct PROJECTCOTD_API FEndlessRunState
     int32 Gold;
     UPROPERTY(BlueprintReadOnly)
     int32 Seed;
+
+    UPROPERTY(BlueprintReadWrite)
+    bool bRunInProgress = false;
 };
 
 USTRUCT(BlueprintType)
