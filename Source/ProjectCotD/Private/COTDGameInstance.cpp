@@ -51,7 +51,7 @@ void UCOTDGameInstance::UpdateWorld()
 
 void UCOTDGameInstance::ResetCombatResult()
 {
-    CombatResult.Reset();
+    CombatResult = FCombatResult();
 }
 
 void UCOTDGameInstance::ComputeCombatResult()

@@ -36,6 +36,9 @@ struct PROJECTCOTD_API FCombatResult
 	UPROPERTY(BlueprintReadWrite)
 	int32 AllyDeath = 0;
 
+	UPROPERTY(BlueprintReadWrite)
+	EGameModeType Mode;
+
 	//For endless mode only
 	UPROPERTY(BlueprintReadWrite)
 	int32 CurrentEndlessDepth = 0;
@@ -46,13 +49,6 @@ struct PROJECTCOTD_API FCombatResult
 	UPROPERTY(BlueprintReadOnly)
 	float EndlessMoney = 0;
 
-	void Reset()
-	{
-		Victory = false;
-		EnnemyKill = 0;
-		CurrentEndlessDepth = 0;
-		EndlessMoney = 0;
-	}
 };
 
 UCLASS()
