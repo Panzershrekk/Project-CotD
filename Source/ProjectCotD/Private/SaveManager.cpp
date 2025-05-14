@@ -66,6 +66,14 @@ bool USaveManager::LoadEndlessRunState(FEndlessRunState& OutState)
     return OutState.bRunInProgress;
 }
 
+void USaveManager::CreateNewRunWithSeed(int32 Seed)
+{
+    FEndlessRunState NewRun = FEndlessRunState();
+    NewRun.Seed = Seed;
+    NewRun.bRunInProgress = true;
+    SaveEndlessRunState(NewRun);
+}
+
 void USaveManager::ClearEndlessRunState()
 {
     if (!CurrentSaveGame)

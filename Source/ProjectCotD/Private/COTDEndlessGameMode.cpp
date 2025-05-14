@@ -3,6 +3,15 @@
 
 #include "COTDEndlessGameMode.h"
 
+void ACOTDEndlessGameMode::InitClass(UCOTDGameInstance* GameInstance)
+{
+    GI = GameInstance;
+    if (GI)
+    {
+        SaveManager = GI->SaveManager;
+    }
+}
+
 void ACOTDEndlessGameMode::InitRun()
 {
 	InitRunWithGivenSeed(GenerateRandomSeed());
@@ -10,9 +19,33 @@ void ACOTDEndlessGameMode::InitRun()
 
 void ACOTDEndlessGameMode::InitRunWithGivenSeed(int32 Seed)
 {
-	CurrentRunState.Depth = 0;
-	CurrentRunState.Gold = 0;
-	CurrentRunState.Seed = Seed;
+    if (SaveManager)
+    {
+        SaveManager->CreateNewRunWithSeed(Seed);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Save Manager is Null"));
+    }
+}
+
+void ACOTDEndlessGameMode::ProcessCombatResult()
+{
+    if (GI && SaveManager)
+    {
+        const FCombatResult& Result = GI->CombatResult;
+        FEndlessRunState UpdatedState = SaveManager->GetCurrentSaveGame()->EndlessRunState;
+        if (Result.Victory == true)
+        {
+            UpdatedState.EndlessCurrency += Result.EndlessMoney;
+            UpdatedState.Depth += 1;
+        }
+        SaveManager->SaveEndlessRunState(UpdatedState);
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Intance or SaveManager is Null"));
+    }
 }
 
 TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
@@ -30,14 +63,6 @@ TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
         Nodes.Add(Node);
     }
     return Nodes;
-}
-
-void ACOTDEndlessGameMode::StartCombat(const FMapNode& Node)
-{
-    /*auto GI = Cast<UEndlessGameInstance>(GetGameInstance());
-    GI->CurrentRun.Depth = Node.Depth;
-    GI->CurrentRun.Buffs.Append(Node.MapModifiers);
-    UGameplayStatics::OpenLevel(this, TEXT("CombatLevel"));*/
 }
 
 /*GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());

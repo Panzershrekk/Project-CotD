@@ -40,6 +40,9 @@ public:
 	bool LoadEndlessRunState(FEndlessRunState& OutState);
 
 	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+	void CreateNewRunWithSeed(int32 Seed);
+
+	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
 	void ClearEndlessRunState();
 
 private:

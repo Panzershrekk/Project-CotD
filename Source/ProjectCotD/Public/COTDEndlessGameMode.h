@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "COTDGameInstance.h"
 #include "EndlessModeSaveGame.h"
 #include "random"
 #include "COTDEndlessGameMode.generated.h"
@@ -16,11 +17,19 @@ class PROJECTCOTD_API ACOTDEndlessGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
-    //Attributes
-    UPROPERTY(BlueprintReadWrite)
-    FEndlessRunState CurrentRunState;
+
+    UPROPERTY(BlueprintReadOnly, Category = "Manager")
+    UCOTDGameInstance* GI;
+
+    UPROPERTY(BlueprintReadOnly, Category = "Manager")
+    USaveManager* SaveManager;
 
     //Function
+
+    //CALL THAT IN BP BEFORE ANYTHING
+    UFUNCTION(BlueprintCallable)
+    void InitClass(UCOTDGameInstance* GameInstance);
+
     UFUNCTION(BlueprintCallable)
     void InitRun();
 
@@ -28,16 +37,10 @@ public:
 	void InitRunWithGivenSeed(int32 Seed);
 
     UFUNCTION(BlueprintCallable)
+    void ProcessCombatResult();
+
+    UFUNCTION(BlueprintCallable)
     TArray<FMapNode> GenerateRowAtDepth(int32 Depth);
-
-    UFUNCTION(BlueprintCallable)
-    void StartCombat(const FMapNode& Node);
-
-    UFUNCTION(BlueprintCallable)
-    void RestoreRun(const UEndlessModeSaveGame* SaveData)
-    {
-        CurrentRunState = SaveData->RunState;
-    }
 
     UFUNCTION(BlueprintCallable)
     int32 GenerateRandomSeed()

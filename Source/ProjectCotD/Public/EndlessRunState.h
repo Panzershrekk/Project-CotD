@@ -27,7 +27,7 @@ struct PROJECTCOTD_API FEndlessRunState
     UPROPERTY(BlueprintReadOnly)
     int32 Depth;
     UPROPERTY(BlueprintReadOnly)
-    int32 Gold;
+    int32 EndlessCurrency;
     UPROPERTY(BlueprintReadOnly)
     int32 Seed;
 
