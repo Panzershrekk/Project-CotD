@@ -2,10 +2,26 @@
 
 #pragma once
 #include "CoreMinimal.h"
+#include "COTDGameplayAbility.h"
 #include "EndlessRunState.generated.h"
 
 USTRUCT(BlueprintType)
-struct PROJECTCOTD_API FHeroState
+struct PROJECTCOTD_API FEndlessRunBuff
+{
+    GENERATED_BODY()
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TSubclassOf<UGameplayEffect> GameplayEffectClass;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    int32 StackCount = 1;
+
+    UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    bool bUnique = false;
+};
+
+USTRUCT(BlueprintType)
+struct PROJECTCOTD_API FEndlessHeroState
 {
     GENERATED_BODY()
 
@@ -32,6 +48,8 @@ struct PROJECTCOTD_API FEndlessRunState
     int32 Seed;
 
     UPROPERTY(BlueprintReadWrite)
+    TArray<FEndlessRunBuff> ActiveEndlessRunBuffs;
+    UPROPERTY(BlueprintReadWrite)
     bool bRunInProgress = false;
 };
 
@@ -54,7 +72,6 @@ struct PROJECTCOTD_API FMapNode
     UPROPERTY(BlueprintReadOnly)
     FGuid NodeID;
 };
-
 
 
 

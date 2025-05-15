@@ -86,3 +86,26 @@ void USaveManager::ClearEndlessRunState()
 
     UE_LOG(LogTemp, Log, TEXT("Endless run state cleared and save game updated."));
 }
+
+void USaveManager::AddBuffToEndlessRun(TSubclassOf<UGameplayEffect> BuffEffect, int32 Count = 1, bool bUnique = false)
+{
+    for (FEndlessRunBuff& Buff : CurrentSaveGame->EndlessRunState.ActiveEndlessRunBuffs)
+    {
+        if (Buff.GameplayEffectClass == BuffEffect)
+        {
+            if (!Buff.bUnique)
+            {
+                Buff.StackCount += Count;
+                SaveGame();
+            }
+            return;
+        }
+    }
+
+    FEndlessRunBuff NewBuff;
+    NewBuff.GameplayEffectClass = BuffEffect;
+    NewBuff.StackCount = Count;
+    NewBuff.bUnique = bUnique;
+    CurrentSaveGame->EndlessRunState.ActiveEndlessRunBuffs.Add(NewBuff);
+    SaveGame();
+}
