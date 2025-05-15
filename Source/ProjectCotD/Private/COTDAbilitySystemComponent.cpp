@@ -109,6 +109,26 @@ void UCOTDAbilitySystemComponent::ApplyCustomGameplayEffectToTarget(UCOTDGamepla
     
 }
 
+void UCOTDAbilitySystemComponent::ApplyCustomGameplayEffectToTargetWithStacks(TSubclassOf<UGameplayEffect> EffectClass, int32 Stacks)
+{
+    TSubclassOf<UGameplayEffect> DamageBuffEffect = EffectClass;
+
+    if (DamageBuffEffect)
+    {
+        FGameplayEffectContextHandle EffectContext = MakeEffectContext();
+        EffectContext.AddSourceObject(this);
+
+        const int32 AbilityLevel = 1;
+        FGameplayEffectSpecHandle SpecHandle = MakeOutgoingSpec(DamageBuffEffect, AbilityLevel, EffectContext);
+
+        if (SpecHandle.IsValid())
+        {
+            SpecHandle.Data->StackCount = Stacks;
+            ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+        }
+    }
+}
+
 void UCOTDAbilitySystemComponent::OnEffectRemoved(const FActiveGameplayEffect& RemovedEffect)
 {
     FActiveGameplayEffectHandle EffectHandle = RemovedEffect.Handle;

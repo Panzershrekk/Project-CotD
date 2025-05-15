@@ -49,6 +49,8 @@ public:
 
     UFUNCTION(BlueprintCallable, Category = "GAS")
     void ApplyCustomGameplayEffectToTarget(UCOTDGameplayAbility* GA, UCOTDAbilitySystemComponent* Target, TSubclassOf<UGameplayEffect> EffectClass, float EffectLevel);
+    UFUNCTION(BlueprintCallable, Category = "GAS")
+    void ApplyCustomGameplayEffectToTargetWithStacks(TSubclassOf<UGameplayEffect> EffectClass, int32 Stacks);
     void OnEffectRemoved(const FActiveGameplayEffect& RemovedEffect);
     float GetMultiplierFromTag(FGameplayTag DamageTag, const UAbilitySystemComponent* ASC) const;
 };

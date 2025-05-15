@@ -87,7 +87,7 @@ void USaveManager::ClearEndlessRunState()
     UE_LOG(LogTemp, Log, TEXT("Endless run state cleared and save game updated."));
 }
 
-void USaveManager::AddBuffToEndlessRun(TSubclassOf<UGameplayEffect> BuffEffect, int32 Count = 1, bool bUnique = false)
+void USaveManager::AddBuffToEndlessRun(TSubclassOf<UGameplayEffect> BuffEffect, int32 Count, bool bUnique)
 {
     for (FEndlessRunBuff& Buff : CurrentSaveGame->EndlessRunState.ActiveEndlessRunBuffs)
     {
