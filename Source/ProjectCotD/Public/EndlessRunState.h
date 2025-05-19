@@ -68,6 +68,9 @@ struct PROJECTCOTD_API FMapNode
     /*UPROPERTY(BlueprintReadOnly)
     TMap<FName, float> MapModifiers;*/
 
+    UPROPERTY(BlueprintReadWrite)
+    TArray<FEndlessRunBuff> MapEnnemiesBuff;
+
     // Identifiant unique pour la navigation ou sauvegarde
     UPROPERTY(BlueprintReadOnly)
     FGuid NodeID;

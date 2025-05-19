@@ -33,7 +33,7 @@ void ACOTDEndlessGameMode::ProcessCombatResult()
 {
     if (GI && SaveManager)
     {
-        const FCombatResult& Result = GI->CombatResult;
+        const FCombatDatas& Result = GI->CombatResult;
         FEndlessRunState UpdatedState = SaveManager->GetCurrentSaveGame()->EndlessRunState;
         if (Result.Victory == true)
         {
@@ -60,9 +60,22 @@ TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
         Node.Depth = Depth;
 
         Node.NodeID = FGuid::NewGuid();
+
+        //Generation
+
+
+        //End Gen
+
         Nodes.Add(Node);
     }
     return Nodes;
+}
+
+void ACOTDEndlessGameMode::AddEnemyBuffOnNode(FMapNode& MapNode, const FEndlessRunBuff& MapEnemyBuff)
+{
+
+
+    MapNode.MapEnnemiesBuff.Add(MapEnemyBuff);
 }
 
 /*GI = Cast<UCOTDGameInstance>(SourceActor->GetWorld()->GetGameInstance());

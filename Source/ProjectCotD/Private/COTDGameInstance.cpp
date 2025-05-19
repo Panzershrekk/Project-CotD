@@ -51,7 +51,7 @@ void UCOTDGameInstance::UpdateWorld()
 
 void UCOTDGameInstance::ResetCombatResult()
 {
-    CombatResult = FCombatResult();
+    CombatResult = FCombatDatas();
 }
 
 void UCOTDGameInstance::ComputeCombatResult()

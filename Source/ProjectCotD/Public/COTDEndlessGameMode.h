@@ -24,6 +24,8 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "Manager")
     USaveManager* SaveManager;
 
+    /*UPROPERTY(BlueprintReadOnly, Category = "Affixes")
+    TArray<TSubclassOf<FEndlessRunBuff>> PossiblesAffixesForEnemy;*/
     //Function
 
     //CALL THAT IN BP BEFORE ANYTHING
@@ -41,6 +43,9 @@ public:
 
     UFUNCTION(BlueprintCallable)
     TArray<FMapNode> GenerateRowAtDepth(int32 Depth);
+
+    UFUNCTION(BlueprintCallable)
+    void AddEnemyBuffOnNode(FMapNode& MapNode, const FEndlessRunBuff& MapEnemyBuff);
 
     UFUNCTION(BlueprintCallable)
     int32 GenerateRandomSeed()

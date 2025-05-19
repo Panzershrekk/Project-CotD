@@ -23,7 +23,7 @@ enum class EGameModeType : uint8
 };
 
 USTRUCT(BlueprintType)
-struct PROJECTCOTD_API FCombatResult
+struct PROJECTCOTD_API FCombatDatas
 {
 	GENERATED_BODY()
 
@@ -36,12 +36,18 @@ struct PROJECTCOTD_API FCombatResult
 	UPROPERTY(BlueprintReadWrite)
 	int32 AllyDeath = 0;
 
+	/*** Passed As Data Between scen ***/
+
 	UPROPERTY(BlueprintReadWrite)
 	EGameModeType Mode;
 
 	//For endless mode only
 	UPROPERTY(BlueprintReadWrite)
 	int32 CurrentEndlessDepth = 0;
+
+	//For Endless mode Only
+	UPROPERTY(BlueprintReadWrite)
+	FMapNode MapNodeSelected;
 
 	/*** Calculated Post game ***/
 
@@ -83,7 +89,7 @@ public:
 	EGameModeType CurrentGameMode;
 
 	UPROPERTY(BlueprintReadWrite, Category = "Combat")
-	FCombatResult CombatResult;
+	FCombatDatas CombatResult;
 
 	/* Endless mode utils */
 
