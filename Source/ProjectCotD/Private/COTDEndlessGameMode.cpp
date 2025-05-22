@@ -50,7 +50,7 @@ void ACOTDEndlessGameMode::ProcessCombatResult()
 
 TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
 {
-    //FRandomStream RNG(CurrentRunState.Seed);
+    FRandomStream RNG(SaveManager->GetCurrentSaveGame()->EndlessRunState.Seed);
     TArray<FMapNode> Nodes;
     Nodes.Reserve(3);
 
@@ -62,8 +62,17 @@ TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
         Node.NodeID = FGuid::NewGuid();
 
         //Generation
+        for (int32 j = 0; j < Node.Depth + 1; ++j)
+        {
+            if (PossiblesAffixesForEnemy.Num() > 0)
+            {
+                int32 Index = RNG.RandRange(0, PossiblesAffixesForEnemy.Num() - 1);
+                FEndlessRunBuff RandomBuff = PossiblesAffixesForEnemy[Index];
 
-
+                AddEnemyBuffOnNode(Node, RandomBuff);
+            }
+            UE_LOG(LogTemp, Warning, TEXT("Node has %d effect(s)"), Node.MapEnnemiesBuff.Num());
+        }
         //End Gen
 
         Nodes.Add(Node);
@@ -74,7 +83,31 @@ TArray<FMapNode> ACOTDEndlessGameMode::GenerateRowAtDepth(int32 Depth)
 void ACOTDEndlessGameMode::AddEnemyBuffOnNode(FMapNode& MapNode, const FEndlessRunBuff& MapEnemyBuff)
 {
 
+    if (!MapEnemyBuff.GameplayEffectClass)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Buff is invalid: GameplayEffectClass is null"));
+        return;
+    }
+    TSubclassOf<UGameplayEffect> BuffEffect = MapEnemyBuff.GameplayEffectClass;
+    int32 Count = MapEnemyBuff.StackCount;
+    bool bUnique = MapEnemyBuff.bUnique;
 
+    for (FEndlessRunBuff& Buff : MapNode.MapEnnemiesBuff)
+    {
+        if (Buff.GameplayEffectClass == BuffEffect)
+        {
+            if (!Buff.bUnique)
+            {
+                Buff.StackCount += Count;
+            }
+            return;
+        }
+    }
+
+    FEndlessRunBuff NewBuff;
+    NewBuff.GameplayEffectClass = BuffEffect;
+    NewBuff.StackCount = Count;
+    NewBuff.bUnique = bUnique;
     MapNode.MapEnnemiesBuff.Add(MapEnemyBuff);
 }
 

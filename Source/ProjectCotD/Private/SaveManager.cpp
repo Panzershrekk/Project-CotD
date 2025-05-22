@@ -109,3 +109,35 @@ void USaveManager::AddBuffToEndlessRun(TSubclassOf<UGameplayEffect> BuffEffect, 
     CurrentSaveGame->EndlessRunState.ActiveEndlessRunBuffs.Add(NewBuff);
     SaveGame();
 }
+
+void USaveManager::AddCompleteBuffToEndlessRun(FEndlessRunBuff Buff)
+{
+    if (!Buff.GameplayEffectClass)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Buff is invalid: GameplayEffectClass is null"));
+        return;
+    }
+    TSubclassOf<UGameplayEffect> BuffEffect = Buff.GameplayEffectClass;
+    int32 Count = Buff.StackCount;
+    bool bUnique = Buff.bUnique;
+
+    for (FEndlessRunBuff& Buff : CurrentSaveGame->EndlessRunState.ActiveEndlessRunBuffs)
+    {
+        if (Buff.GameplayEffectClass == BuffEffect)
+        {
+            if (!Buff.bUnique)
+            {
+                Buff.StackCount += Count;
+                SaveGame();
+            }
+            return;
+        }
+    }
+
+    FEndlessRunBuff NewBuff;
+    NewBuff.GameplayEffectClass = BuffEffect;
+    NewBuff.StackCount = Count;
+    NewBuff.bUnique = bUnique;
+    CurrentSaveGame->EndlessRunState.ActiveEndlessRunBuffs.Add(NewBuff);
+    SaveGame();
+}

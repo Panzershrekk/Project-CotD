@@ -24,8 +24,8 @@ public:
     UPROPERTY(BlueprintReadOnly, Category = "Manager")
     USaveManager* SaveManager;
 
-    /*UPROPERTY(BlueprintReadOnly, Category = "Affixes")
-    TArray<TSubclassOf<FEndlessRunBuff>> PossiblesAffixesForEnemy;*/
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Affixes")
+    TArray<FEndlessRunBuff> PossiblesAffixesForEnemy;
     //Function
 
     //CALL THAT IN BP BEFORE ANYTHING

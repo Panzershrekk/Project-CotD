@@ -48,6 +48,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
 	void AddBuffToEndlessRun(TSubclassOf<UGameplayEffect> BuffEffect, int32 Count = 1, bool bUnique = false);
 
+	UFUNCTION(BlueprintCallable, Category = "EndlessMode")
+	void AddCompleteBuffToEndlessRun(FEndlessRunBuff Buff);
 private:
 	UPROPERTY()
 	UCOTDMainSaveGame* CurrentSaveGame;
