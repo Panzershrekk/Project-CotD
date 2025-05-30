@@ -7,7 +7,6 @@ ControllableEntityAttributeSet.Initiative,15.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.InitiativeVariation,0.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.MartialPoint,1.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.MaxMartialPoint,1.000000,0.000000,1.000000,,False
-ControllableEntityAttributeSet.Strength,5.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.Experience,0.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.ExperienceToLevelUp,10.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.Level,1.000000,0.000000,1.000000,,False
@@ -17,8 +16,6 @@ ControllableEntityAttributeSet.MaxMagicPoint,1.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.Movement,10000.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.MaxMovement,10000.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.DamageMultiplier,0.000000,0.000000,1.000000,,False
-ControllableEntityAttributeSet.Intelligence,5.000000,0.000000,1.000000,,False
-ControllableEntityAttributeSet.Stamina,5.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.PhysicalDamageMultiplier,0.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.MagicalDamageMultiplier,0.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.BluntDamageMultiplier,0.000000,0.000000,1.000000,,False
@@ -31,3 +28,9 @@ ControllableEntityAttributeSet.ShadowDamageMultiplier,0.000000,0.000000,1.000000
 ControllableEntityAttributeSet.LightDamageMultiplier,0.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.ArcaneDamageMultiplier,0.000000,0.000000,1.000000,,False
 ControllableEntityAttributeSet.PoisonDamageMultiplier,0.000000,0.000000,1.000000,,False
+ControllableEntityAttributeSet.Strength,5.000000,0.000000,1.000000,,False
+ControllableEntityAttributeSet.Intelligence,5.000000,0.000000,1.000000,,False
+ControllableEntityAttributeSet.Wisdom,5.000000,0.000000,1.000000,,False
+ControllableEntityAttributeSet.Cunning,5.000000,0.000000,1.000000,,False
+ControllableEntityAttributeSet.Luck,5.000000,0.000000,1.000000,,False
+ControllableEntityAttributeSet.Stamina,5.000000,0.000000,1.000000,,False

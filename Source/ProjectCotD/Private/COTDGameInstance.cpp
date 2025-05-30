@@ -39,6 +39,14 @@ void UCOTDGameInstance::Init()
             SaveManager->Initialize(this);
         }
     }
+    if (ProgressionManagerClass)
+    {
+        ProgressionManager = NewObject<UCOTDProgressionManager>(this, ProgressionManagerClass);
+        if (ProgressionManager)
+        {
+            ProgressionManager->Initialize(this);
+        }
+    }
 }
 
 void UCOTDGameInstance::UpdateWorld()

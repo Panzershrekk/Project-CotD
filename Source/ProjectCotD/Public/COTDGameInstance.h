@@ -7,6 +7,7 @@
 #include "BattleManager.h"
 #include "SaveManager.h"
 #include "COTDDamageManager.h"
+#include "COTDProgressionManager.h"
 #include "Engine/GameInstance.h"
 #include "COTDGameInstance.generated.h"
 
@@ -74,6 +75,8 @@ public:
 	UCOTDDamageManager* DamageManager;
 	UPROPERTY(BlueprintReadOnly, Category = "Managers")
 	USaveManager* SaveManager;
+	UPROPERTY(BlueprintReadOnly, Category = "Managers")
+	UCOTDProgressionManager* ProgressionManager;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
 	TSubclassOf<UUIManager> UIManagerClass;
@@ -83,6 +86,8 @@ public:
 	TSubclassOf<UCOTDDamageManager> DamagerManagerClass;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Save")
 	TSubclassOf<USaveManager> SaveManagerClass;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Progression")
+	TSubclassOf<UCOTDProgressionManager> ProgressionManagerClass;
 
 	/* Combat Section */
 	UPROPERTY(BlueprintReadOnly, Category = "Combat")
