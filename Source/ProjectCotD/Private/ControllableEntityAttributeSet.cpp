@@ -5,11 +5,9 @@
 #include "GameplayEffectExtension.h" 
 void UControllableEntityAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
-    Super::PostGameplayEffectExecute(Data);
-    if (Data.EvaluatedData.Attribute == GetExperienceAttribute())
+    if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
     {
-        float CurrentXP = GetExperience();
-        float RequiredXP = GetExperienceToLevelUp();
+        /*float CurrentXP = GetExperience();
 
         if (CurrentXP >= RequiredXP)
         {
@@ -22,6 +20,6 @@ void UControllableEntityAttributeSet::PostGameplayEffectExecute(const FGameplayE
 
             float NewXPRequired = (NewLevel == 2) ? 50 : RequiredXP * 1.5f;
             SetExperienceToLevelUp(NewXPRequired);
-        }
+        }*/
     }
 }
