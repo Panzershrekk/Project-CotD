@@ -28,52 +28,54 @@ struct FHeroSaveData
 {
 	GENERATED_BODY()
 
+
+	// Load the assets -> UEntityStatsDataAsset* LoadedData = Cast<UEntityStatsDataAsset>(AssetManager->GetPrimaryAssetObject(EntityDataId));
 	UPROPERTY()
-	FString HeroID;
+	FPrimaryAssetId EntityDataId;
 
 	// Leveling
-	UPROPERTY() int32 Level;
-	UPROPERTY() float Experience;
-	UPROPERTY() float UnassignedStatPoints;
+	UPROPERTY() int32 Level = 1;
+	UPROPERTY() float Experience = 0;
+	UPROPERTY() float UnassignedStatPoints = 0;
 
 	// Health, Mana, Martial, Magic
-	UPROPERTY() float Health;
-	UPROPERTY() float MaxHealth;
-	UPROPERTY() float Mana;
-	UPROPERTY() float MaxMana;
-	UPROPERTY() float MartialPoint;
-	UPROPERTY() float MaxMartialPoint;
-	UPROPERTY() float MagicPoint;
-	UPROPERTY() float MaxMagicPoint;
+	UPROPERTY() float Health = 0;
+	UPROPERTY() float MaxHealth = 0;
+	UPROPERTY() float Mana = 0;
+	UPROPERTY() float MaxMana = 0;
+	UPROPERTY() float MartialPoint = 1;
+	UPROPERTY() float MaxMartialPoint = 1;
+	UPROPERTY() float MagicPoint = 1;
+	UPROPERTY() float MaxMagicPoint = 1;
 
 	// Movement / Initiative
-	UPROPERTY() float Initiative;
-	UPROPERTY() float InitiativeVariation;
-	UPROPERTY() float Movement;
-	UPROPERTY() float MaxMovement;
+	UPROPERTY() float Initiative = 1;
+	UPROPERTY() float InitiativeVariation = 1;
+	UPROPERTY() float Movement = 10;
+	UPROPERTY() float MaxMovement = 10;
 
 	// Main Stats
-	UPROPERTY() float Strength;
-	UPROPERTY() float Intelligence;
-	UPROPERTY() float Stamina;
+	UPROPERTY() float Strength = 0;
+	UPROPERTY() float Intelligence = 0;
+	UPROPERTY() float Stamina = 0;
 
 	// Damage Multipliers
-	UPROPERTY() float DamageMultiplier;
-	UPROPERTY() float PhysicalDamageMultiplier;
-	UPROPERTY() float MagicalDamageMultiplier;
-	UPROPERTY() float BluntDamageMultiplier;
-	UPROPERTY() float PiercingDamageMultiplier;
-	UPROPERTY() float SlashDamageMultiplier;
-	UPROPERTY() float FireDamageMultiplier;
-	UPROPERTY() float FrostDamageMultiplier;
-	UPROPERTY() float NatureDamageMultiplier;
-	UPROPERTY() float ShadowDamageMultiplier;
-	UPROPERTY() float LightDamageMultiplier;
-	UPROPERTY() float ArcaneDamageMultiplier;
-	UPROPERTY() float PoisonDamageMultiplier;
+	UPROPERTY() float DamageMultiplier = 0;
+	UPROPERTY() float PhysicalDamageMultiplier = 0;
+	UPROPERTY() float MagicalDamageMultiplier = 0;
+	UPROPERTY() float BluntDamageMultiplier = 0;
+	UPROPERTY() float PiercingDamageMultiplier = 0;
+	UPROPERTY() float SlashDamageMultiplier = 0;
+	UPROPERTY() float FireDamageMultiplier = 0;
+	UPROPERTY() float FrostDamageMultiplier = 0;
+	UPROPERTY() float NatureDamageMultiplier = 0;
+	UPROPERTY() float ShadowDamageMultiplier = 0;
+	UPROPERTY() float LightDamageMultiplier =  0;
+	UPROPERTY() float ArcaneDamageMultiplier = 0;
+	UPROPERTY() float PoisonDamageMultiplier = 0;
 
 	// Utility
-	void FromAttributeSet(const class UControllableEntityAttributeSet* AttrSet)
+	/*void FromAttributeSet(const class UControllableEntityAttributeSet* AttrSet)
 	{
 		if (!AttrSet) return;
 
@@ -208,7 +210,7 @@ struct FHeroSaveData
 
 		Attributes->PoisonDamageMultiplier.SetBaseValue(PoisonDamageMultiplier);
 		Attributes->PoisonDamageMultiplier.SetCurrentValue(PoisonDamageMultiplier);
-	}
+	}*/
 };
 
 

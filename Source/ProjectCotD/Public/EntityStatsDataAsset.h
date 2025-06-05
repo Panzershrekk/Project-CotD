@@ -11,7 +11,7 @@
  * 
  */
 UCLASS()
-class PROJECTCOTD_API UEntityStatsDataAsset : public UDataAsset
+class PROJECTCOTD_API UEntityStatsDataAsset : public UPrimaryDataAsset
 {
 	GENERATED_BODY()
 public:
@@ -46,6 +46,11 @@ public:
 	//Should mostly be passiv or over time
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "BaseEffects")
 	TArray<TSubclassOf<UGameplayEffect>> StartingEffects;
+
+	FPrimaryAssetId GetPrimaryAssetId() const override
+	{
+		return FPrimaryAssetId("EntityData", GetFName());
+	}
 };
 
 USTRUCT(BlueprintType)

@@ -9,6 +9,7 @@
 #include "COTDDamageManager.h"
 #include "COTDProgressionManager.h"
 #include "Engine/GameInstance.h"
+#include <Engine/AssetManager.h>
 #include "COTDGameInstance.generated.h"
 
 /**
@@ -119,4 +120,18 @@ public:
 	//Should be called at the end of the battle
 	UFUNCTION(BlueprintCallable, Category = "Combat")
 	void ComputeCombatResult();
+
+
+	UFUNCTION(BlueprintCallable, Category = "Debug")
+	void CheckPrimaryData()
+	{
+		UAssetManager& AssetManager = UAssetManager::Get();
+		TArray<FPrimaryAssetId> Assets;
+		AssetManager.GetPrimaryAssetIdList(FPrimaryAssetType("EntityData"), Assets);
+
+		for (const FPrimaryAssetId& Id : Assets)
+		{
+			UE_LOG(LogTemp, Log, TEXT("Found Primary Asset: %s"), *Id.ToString());
+		}
+	}
 };
