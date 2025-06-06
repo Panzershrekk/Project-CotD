@@ -39,10 +39,10 @@ public:
 	void UnlockHero(UEntityStatsDataAsset* HeroDataAsset);
 
 	UFUNCTION(BlueprintCallable, Category = "Party")
-	void RemoveAndAddHeroToParty(FHeroSaveData& ToRemoveHero, FHeroSaveData& ToAddHero);
+	void RemoveAndAddHeroToParty(const FHeroSaveData& ToRemoveHero, const FHeroSaveData& ToAddHero);
 
 	UFUNCTION(BlueprintCallable, Category = "Party")
-	void AddHeroToParty(FHeroSaveData& ToAddHero);
+	void AddHeroToParty(const FHeroSaveData& ToAddHero);
 
 	/*********** ENDLESS RUN ************/
 

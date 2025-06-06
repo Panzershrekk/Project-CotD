@@ -87,9 +87,9 @@ void USaveManager::UnlockHero(UEntityStatsDataAsset* HeroDataAsset)
     UE_LOG(LogTemp, Log, TEXT("Hero %s unlocked!"), *HeroAssetId.ToString());
 }
 
-void USaveManager::RemoveAndAddHeroToParty(FHeroSaveData& ToRemoveHero, FHeroSaveData& ToAddHero)
+void USaveManager::RemoveAndAddHeroToParty(const FHeroSaveData& ToRemoveHero, const FHeroSaveData& ToAddHero)
 {
-    /*bool bInParty = CurrentSaveGame->ActiveHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
+    bool bInParty = CurrentSaveGame->ActiveHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
         {
             return Data.EntityDataId.ToString().Equals(ToRemoveHero.EntityDataId.ToString());
         });
@@ -102,10 +102,10 @@ void USaveManager::RemoveAndAddHeroToParty(FHeroSaveData& ToRemoveHero, FHeroSav
         CurrentSaveGame->ActiveHeroes.Remove(ToRemoveHero);
         SaveGame();
     }
-    AddHeroToParty(ToAddHero);*/
+    AddHeroToParty(ToAddHero);
 }
 
-void USaveManager::AddHeroToParty(FHeroSaveData& ToAddHero)
+void USaveManager::AddHeroToParty(const FHeroSaveData& ToAddHero)
 {
     bool bAlreadyInParty = CurrentSaveGame->ActiveHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
         {

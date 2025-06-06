@@ -76,6 +76,12 @@ struct FHeroSaveData
 	UPROPERTY() float PoisonDamageMultiplier = 0;
 
 	// Utility
+	FORCEINLINE bool operator==(const FHeroSaveData& Other) const
+	{
+		return EntityDataId.ToString().Equals(Other.EntityDataId.ToString());
+		// Optionnel : tu peux comparer d'autres champs si nécessaire.
+	}
+
 	/*void FromAttributeSet(const class UControllableEntityAttributeSet* AttrSet)
 	{
 		if (!AttrSet) return;
