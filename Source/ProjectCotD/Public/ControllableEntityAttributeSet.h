@@ -58,6 +58,7 @@ struct FHeroSaveData
 	UPROPERTY() float Strength = 0;
 	UPROPERTY() float Intelligence = 0;
 	UPROPERTY() float Stamina = 0;
+	UPROPERTY() float Wisdom = 0;
 
 	// Damage Multipliers
 	UPROPERTY() float DamageMultiplier = 0;
@@ -100,6 +101,7 @@ struct FHeroSaveData
 		Strength = AttrSet->Strength.GetCurrentValue();
 		Intelligence = AttrSet->Intelligence.GetCurrentValue();
 		Stamina = AttrSet->Stamina.GetCurrentValue();
+		Stamina = AttrSet->Wisdom.GetCurrentValue();
 
 		DamageMultiplier = AttrSet->DamageMultiplier.GetCurrentValue();
 		PhysicalDamageMultiplier = AttrSet->PhysicalDamageMultiplier.GetCurrentValue();
@@ -135,6 +137,9 @@ struct FHeroSaveData
 
 		Attributes->Stamina.SetBaseValue(Stamina);
 		Attributes->Stamina.SetCurrentValue(Stamina);
+
+		Attributes->Wisdom.SetBaseValue(Wisdom);
+		Attributes->Wisdom.SetCurrentValue(Wisdom);
 
 		Attributes->Health.SetBaseValue(Health);
 		Attributes->Health.SetCurrentValue(Health);

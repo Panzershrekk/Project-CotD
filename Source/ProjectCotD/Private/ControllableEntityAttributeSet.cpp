@@ -3,6 +3,7 @@
 
 #include "ControllableEntityAttributeSet.h"
 #include "GameplayEffectExtension.h" 
+
 void UControllableEntityAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
     if (Data.EvaluatedData.Attribute == GetStaminaAttribute())

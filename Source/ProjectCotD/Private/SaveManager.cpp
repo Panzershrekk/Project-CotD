@@ -46,6 +46,81 @@ void USaveManager::LoadGame()
     }
 }
 
+/********* PARTY **********/
+
+void USaveManager::UnlockHero(UEntityStatsDataAsset* HeroDataAsset)
+{
+    if (!HeroDataAsset)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("UnlockHero called with null HeroDataAsset!"));
+        return;
+    }
+
+    UAssetManager& AssetManager = UAssetManager::Get();
+    FPrimaryAssetId HeroAssetId = HeroDataAsset->GetPrimaryAssetId();
+
+    bool bAlreadyUnlocked = CurrentSaveGame->UnlockedHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
+        {
+            return Data.EntityDataId == HeroAssetId;
+        });
+
+    if (bAlreadyUnlocked)
+    {
+        UE_LOG(LogTemp, Log, TEXT("Hero %s is already unlocked"), *HeroAssetId.ToString());
+        return;
+    }
+
+    FHeroSaveData NewProgressionData;
+    NewProgressionData.EntityDataId = HeroAssetId;
+
+    /**TODO Default init, need to change that later **/
+    NewProgressionData.Level = 1;
+    NewProgressionData.UnassignedStatPoints = 0;
+
+    NewProgressionData.Strength = 10.f;
+    NewProgressionData.Intelligence = 10.f;
+    NewProgressionData.Stamina = 10.f;
+    NewProgressionData.Wisdom = 10.f;
+
+    CurrentSaveGame->UnlockedHeroes.Add(NewProgressionData);
+    SaveGame();
+    UE_LOG(LogTemp, Log, TEXT("Hero %s unlocked!"), *HeroAssetId.ToString());
+}
+
+void USaveManager::RemoveAndAddHeroToParty(FHeroSaveData& ToRemoveHero, FHeroSaveData& ToAddHero)
+{
+    /*bool bInParty = CurrentSaveGame->ActiveHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
+        {
+            return Data.EntityDataId.ToString().Equals(ToRemoveHero.EntityDataId.ToString());
+        });
+    if (!bInParty)
+    {
+        UE_LOG(LogTemp, Log, TEXT("Hero %s is not in active Party"), *ToRemoveHero.EntityDataId.ToString());
+    }
+    else
+    {
+        CurrentSaveGame->ActiveHeroes.Remove(ToRemoveHero);
+        SaveGame();
+    }
+    AddHeroToParty(ToAddHero);*/
+}
+
+void USaveManager::AddHeroToParty(FHeroSaveData& ToAddHero)
+{
+    bool bAlreadyInParty = CurrentSaveGame->ActiveHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
+        {
+            return Data.EntityDataId.ToString().Equals(ToAddHero.EntityDataId.ToString());
+        });
+    //TODO Add a limit
+    if (bAlreadyInParty)
+    {
+        UE_LOG(LogTemp, Log, TEXT("Hero %s is already in active Party"), *ToAddHero.EntityDataId.ToString());
+        return;
+    }
+    CurrentSaveGame->ActiveHeroes.Add(ToAddHero);
+    SaveGame();
+}
+
 /************ END LESS *************/
 UFUNCTION(BlueprintCallable, Category = "EndlessMode")
 void USaveManager::SaveEndlessRunState(const FEndlessRunState& State)

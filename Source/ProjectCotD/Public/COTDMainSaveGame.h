@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/SaveGame.h"
 #include "EndlessRunState.h"
+#include "ControllableEntityAttributeSet.h"
 #include "COTDMainSaveGame.generated.h"
 
 /**
@@ -21,6 +22,13 @@ public:
 
     UPROPERTY(BlueprintReadWrite, Category = "SaveData")
     int32 Treasure;
+
+    UPROPERTY(BlueprintReadWrite, Category = "SaveData")
+    TArray<FHeroSaveData> UnlockedHeroes;
+
+    // 4 heroes for now
+    UPROPERTY(BlueprintReadWrite, Category = "SaveData")
+    TArray<FHeroSaveData> ActiveHeroes;
 
     //For endless mode
     UPROPERTY(BlueprintReadWrite, Category = "EndlessMode")

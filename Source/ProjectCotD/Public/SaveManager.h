@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "COTDMainSaveGame.h"
 #include "EndlessRunState.h"
+#include "EntityStatsDataAsset.h"
+#include "Engine/AssetManager.h"
 #include "SaveManager.generated.h"
 
 class UCOTDGameInstance;
@@ -30,6 +32,17 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "SaveSystem")
 	UCOTDMainSaveGame* GetCurrentSaveGame() const { return CurrentSaveGame; }
+
+	/*********** PARTY HANDLING **********/
+
+	UFUNCTION(BlueprintCallable, Category = "Party")
+	void UnlockHero(UEntityStatsDataAsset* HeroDataAsset);
+
+	UFUNCTION(BlueprintCallable, Category = "Party")
+	void RemoveAndAddHeroToParty(FHeroSaveData& ToRemoveHero, FHeroSaveData& ToAddHero);
+
+	UFUNCTION(BlueprintCallable, Category = "Party")
+	void AddHeroToParty(FHeroSaveData& ToAddHero);
 
 	/*********** ENDLESS RUN ************/
 
