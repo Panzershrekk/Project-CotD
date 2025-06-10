@@ -24,56 +24,56 @@
 */
 
 USTRUCT(BlueprintType)
-struct FHeroSaveData
+struct PROJECTCOTD_API FHeroSaveData
 {
 	GENERATED_BODY()
 
 
 	// Load the assets -> UEntityStatsDataAsset* LoadedData = Cast<UEntityStatsDataAsset>(AssetManager->GetPrimaryAssetObject(EntityDataId));
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info")
 	FPrimaryAssetId EntityDataId;
 
 	// Leveling
-	UPROPERTY() int32 Level = 1;
-	UPROPERTY() float Experience = 0;
-	UPROPERTY() float UnassignedStatPoints = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") int32 Level = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Experience = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float UnassignedStatPoints = 0;
 
 	// Health, Mana, Martial, Magic
-	UPROPERTY() float Health = 0;
-	UPROPERTY() float MaxHealth = 0;
-	UPROPERTY() float Mana = 0;
-	UPROPERTY() float MaxMana = 0;
-	UPROPERTY() float MartialPoint = 1;
-	UPROPERTY() float MaxMartialPoint = 1;
-	UPROPERTY() float MagicPoint = 1;
-	UPROPERTY() float MaxMagicPoint = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Health = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MaxHealth = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Mana = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MaxMana = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MartialPoint = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MaxMartialPoint = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MagicPoint = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MaxMagicPoint = 1;
 
 	// Movement / Initiative
-	UPROPERTY() float Initiative = 1;
-	UPROPERTY() float InitiativeVariation = 1;
-	UPROPERTY() float Movement = 10;
-	UPROPERTY() float MaxMovement = 10;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Initiative = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float InitiativeVariation = 1;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Movement = 10;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MaxMovement = 10;
 
 	// Main Stats
-	UPROPERTY() float Strength = 0;
-	UPROPERTY() float Intelligence = 0;
-	UPROPERTY() float Stamina = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Strength = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Intelligence = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Stamina = 0;
 	UPROPERTY() float Wisdom = 0;
 
 	// Damage Multipliers
-	UPROPERTY() float DamageMultiplier = 0;
-	UPROPERTY() float PhysicalDamageMultiplier = 0;
-	UPROPERTY() float MagicalDamageMultiplier = 0;
-	UPROPERTY() float BluntDamageMultiplier = 0;
-	UPROPERTY() float PiercingDamageMultiplier = 0;
-	UPROPERTY() float SlashDamageMultiplier = 0;
-	UPROPERTY() float FireDamageMultiplier = 0;
-	UPROPERTY() float FrostDamageMultiplier = 0;
-	UPROPERTY() float NatureDamageMultiplier = 0;
-	UPROPERTY() float ShadowDamageMultiplier = 0;
-	UPROPERTY() float LightDamageMultiplier =  0;
-	UPROPERTY() float ArcaneDamageMultiplier = 0;
-	UPROPERTY() float PoisonDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float DamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float PhysicalDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float MagicalDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float BluntDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float PiercingDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float SlashDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float FireDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float FrostDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float NatureDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float ShadowDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float LightDamageMultiplier =  0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float ArcaneDamageMultiplier = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float PoisonDamageMultiplier = 0;
 
 	// Utility
 	FORCEINLINE bool operator==(const FHeroSaveData& Other) const

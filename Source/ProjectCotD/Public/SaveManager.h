@@ -42,6 +42,9 @@ public:
 	void RemoveAndAddHeroToParty(const FHeroSaveData& ToRemoveHero, const FHeroSaveData& ToAddHero);
 
 	UFUNCTION(BlueprintCallable, Category = "Party")
+	void RemoveHeroFromParty(const FHeroSaveData& ToRemoveHero);
+
+	UFUNCTION(BlueprintCallable, Category = "Party")
 	void AddHeroToParty(const FHeroSaveData& ToAddHero);
 
 	/*********** ENDLESS RUN ************/

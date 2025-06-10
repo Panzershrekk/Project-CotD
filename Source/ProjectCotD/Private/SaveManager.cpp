@@ -75,12 +75,12 @@ void USaveManager::UnlockHero(UEntityStatsDataAsset* HeroDataAsset)
 
     /**TODO Default init, need to change that later **/
     NewProgressionData.Level = 1;
-    NewProgressionData.UnassignedStatPoints = 0;
+    /*NewProgressionData.UnassignedStatPoints = 0;
 
     NewProgressionData.Strength = 10.f;
     NewProgressionData.Intelligence = 10.f;
     NewProgressionData.Stamina = 10.f;
-    NewProgressionData.Wisdom = 10.f;
+    NewProgressionData.Wisdom = 10.f;*/
 
     CurrentSaveGame->UnlockedHeroes.Add(NewProgressionData);
     SaveGame();
@@ -88,6 +88,12 @@ void USaveManager::UnlockHero(UEntityStatsDataAsset* HeroDataAsset)
 }
 
 void USaveManager::RemoveAndAddHeroToParty(const FHeroSaveData& ToRemoveHero, const FHeroSaveData& ToAddHero)
+{
+    RemoveHeroFromParty(ToRemoveHero);
+    AddHeroToParty(ToAddHero);
+}
+
+void USaveManager::RemoveHeroFromParty(const FHeroSaveData& ToRemoveHero)
 {
     bool bInParty = CurrentSaveGame->ActiveHeroes.ContainsByPredicate([&](const FHeroSaveData& Data)
         {
@@ -102,7 +108,6 @@ void USaveManager::RemoveAndAddHeroToParty(const FHeroSaveData& ToRemoveHero, co
         CurrentSaveGame->ActiveHeroes.Remove(ToRemoveHero);
         SaveGame();
     }
-    AddHeroToParty(ToAddHero);
 }
 
 void USaveManager::AddHeroToParty(const FHeroSaveData& ToAddHero)
