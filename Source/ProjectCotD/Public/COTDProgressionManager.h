@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "ControllableEntityAttributeSet.h"
 #include "COTDProgressionManager.generated.h"
 
 class UCOTDGameInstance;
@@ -21,6 +22,9 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Progression")
 	UCOTDGameInstance* COTDGameInstance;
+
+	UFUNCTION(BlueprintCallable, Category = "EXP")
+	void GrantExpToHero(FHeroSaveData& Hero, float Amount);
 
 	UFUNCTION(BlueprintCallable, Category = "EXP")
 	float GetRequiredEXPToLevelUP(float Level) const;

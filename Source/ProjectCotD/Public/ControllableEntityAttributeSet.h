@@ -57,8 +57,10 @@ struct PROJECTCOTD_API FHeroSaveData
 	// Main Stats
 	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Strength = 0;
 	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Intelligence = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Wisdom = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Cunning = 0;
+	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Luck = 0;
 	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float Stamina = 0;
-	UPROPERTY() float Wisdom = 0;
 
 	// Damage Multipliers
 	UPROPERTY(BlueprintReadOnly, Category = "Hero info") float DamageMultiplier = 0;
@@ -79,7 +81,6 @@ struct PROJECTCOTD_API FHeroSaveData
 	FORCEINLINE bool operator==(const FHeroSaveData& Other) const
 	{
 		return EntityDataId.ToString().Equals(Other.EntityDataId.ToString());
-		// Optionnel : tu peux comparer d'autres champs si nécessaire.
 	}
 
 	/*void FromAttributeSet(const class UControllableEntityAttributeSet* AttrSet)
@@ -106,8 +107,10 @@ struct PROJECTCOTD_API FHeroSaveData
 
 		Strength = AttrSet->Strength.GetCurrentValue();
 		Intelligence = AttrSet->Intelligence.GetCurrentValue();
+		Wisdom = AttrSet->Wisdom.GetCurrentValue();
+		Cunning = AttrSet->Cunning.GetCurrentValue();
+		Luck = AttrSet->Luck.GetCurrentValue();
 		Stamina = AttrSet->Stamina.GetCurrentValue();
-		Stamina = AttrSet->Wisdom.GetCurrentValue();
 
 		DamageMultiplier = AttrSet->DamageMultiplier.GetCurrentValue();
 		PhysicalDamageMultiplier = AttrSet->PhysicalDamageMultiplier.GetCurrentValue();
@@ -141,11 +144,17 @@ struct PROJECTCOTD_API FHeroSaveData
 		Attributes->Intelligence.SetBaseValue(Intelligence);
 		Attributes->Intelligence.SetCurrentValue(Intelligence);
 
-		Attributes->Stamina.SetBaseValue(Stamina);
-		Attributes->Stamina.SetCurrentValue(Stamina);
-
 		Attributes->Wisdom.SetBaseValue(Wisdom);
 		Attributes->Wisdom.SetCurrentValue(Wisdom);
+
+		Attributes->Cunning.SetBaseValue(Cunning);
+		Attributes->Cunning.SetCurrentValue(Cunning);
+
+		Attributes->Luck.SetBaseValue(Luck);
+		Attributes->Luck.SetCurrentValue(Luck);
+
+		Attributes->Stamina.SetBaseValue(Stamina);
+		Attributes->Stamina.SetCurrentValue(Stamina);
 
 		Attributes->Health.SetBaseValue(Health);
 		Attributes->Health.SetCurrentValue(Health);
@@ -295,6 +304,8 @@ public:
 	FGameplayAttributeData MaxMovement;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, MaxMovement);
 
+	/***************************** MAIN STATS ***********************************/
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
 	FGameplayAttributeData Strength;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Strength);
@@ -302,6 +313,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
 	FGameplayAttributeData Intelligence;
 	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Intelligence);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
+	FGameplayAttributeData Wisdom;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Wisdom);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
+	FGameplayAttributeData Cunning;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Cunning);
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
+	FGameplayAttributeData Luck;
+	ATTRIBUTE_ACCESSORS(UControllableEntityAttributeSet, Luck);
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "MainStats")
 	FGameplayAttributeData Stamina;
