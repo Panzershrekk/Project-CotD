@@ -126,6 +126,31 @@ void USaveManager::AddHeroToParty(const FHeroSaveData& ToAddHero)
     SaveGame();
 }
 
+FHeroSaveData USaveManager::GetHeroSaveDataById(FPrimaryAssetId HeroId) const
+{
+    const FHeroSaveData* FoundHero = CurrentSaveGame->UnlockedHeroes.FindByPredicate(
+        [&](const FHeroSaveData& Data)
+        {
+            return Data.EntityDataId == HeroId;
+        });
+
+    if (FoundHero)
+    {
+        return *FoundHero;
+    }
+
+    UE_LOG(LogTemp, Warning, TEXT("GetHeroSaveDataById: No hero found with ID %s"), *HeroId.ToString());
+    return FHeroSaveData();
+}
+
+FHeroSaveData* USaveManager::GetMutableHeroSaveData(FPrimaryAssetId HeroId)
+{
+    return CurrentSaveGame->UnlockedHeroes.FindByPredicate([&](FHeroSaveData& Data)
+        {
+            return Data.EntityDataId == HeroId;
+        });
+}
+
 /************ END LESS *************/
 UFUNCTION(BlueprintCallable, Category = "EndlessMode")
 void USaveManager::SaveEndlessRunState(const FEndlessRunState& State)

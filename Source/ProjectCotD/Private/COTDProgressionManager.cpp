@@ -25,6 +25,23 @@ void UCOTDProgressionManager::GrantExpToHero(FHeroSaveData& Hero, float Amount)
 	COTDGameInstance->SaveManager->SaveGame();
 }
 
+bool UCOTDProgressionManager::GrantExperienceToHeroById(FPrimaryAssetId HeroId, float Amount)
+{
+    FHeroSaveData* FoundHero = COTDGameInstance->SaveManager->GetCurrentSaveGame()->UnlockedHeroes.FindByPredicate([&](const FHeroSaveData& Data)
+        {
+            return Data.EntityDataId == HeroId;
+        });
+
+    if (!FoundHero)
+    {
+        UE_LOG(LogTemp, Warning, TEXT("Hero %s not found in unlocked heroes."), *HeroId.ToString());
+        return false;
+    }
+
+    GrantExpToHero(*FoundHero, Amount);
+    return true;
+}
+
 float UCOTDProgressionManager::GetRequiredEXPToLevelUP(float Level) const
 {
 	return 100.f * Level + FMath::Pow(Level, 2) * 10.f;

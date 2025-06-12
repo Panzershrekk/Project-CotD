@@ -47,6 +47,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Party")
 	void AddHeroToParty(const FHeroSaveData& ToAddHero);
 
+	UFUNCTION(BlueprintCallable, Category = "Party")
+	FHeroSaveData GetHeroSaveDataById(FPrimaryAssetId HeroId) const;
+
+	FHeroSaveData* GetMutableHeroSaveData(FPrimaryAssetId HeroId);
+
 	/*********** ENDLESS RUN ************/
 
 	UFUNCTION(BlueprintCallable, Category = "EndlessMode")

@@ -27,6 +27,9 @@ public:
 	void GrantExpToHero(FHeroSaveData& Hero, float Amount);
 
 	UFUNCTION(BlueprintCallable, Category = "EXP")
+	bool GrantExperienceToHeroById(FPrimaryAssetId HeroId, float Amount);
+
+	UFUNCTION(BlueprintCallable, Category = "EXP")
 	float GetRequiredEXPToLevelUP(float Level) const;
 
 };
