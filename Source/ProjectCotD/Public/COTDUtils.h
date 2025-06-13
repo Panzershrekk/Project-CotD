@@ -55,3 +55,14 @@ struct FAreaSelector
     EAreaSelectionType AreaSelectionType;
 };
 
+UENUM(BlueprintType)
+enum class COTDStatsType : uint8
+{
+    Strength     UMETA(DisplayName = "Strength"),
+    Intelligence UMETA(DisplayName = "Intelligence"),
+    Cunning      UMETA(DisplayName = "Cunning"),
+    Luck         UMETA(DisplayName = "Luck"),
+    Wisdom       UMETA(DisplayName = "Wisdom"),
+    Stamina      UMETA(DisplayName = "Stamina"),
+};
+

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
 #include "ControllableEntityAttributeSet.h"
+#include "COTDUtils.h"
 #include "COTDProgressionManager.generated.h"
 
 class UCOTDGameInstance;
@@ -28,8 +29,19 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "EXP")
 	bool GrantExperienceToHeroById(FPrimaryAssetId HeroId, float Amount);
-
 	UFUNCTION(BlueprintCallable, Category = "EXP")
 	float GetRequiredEXPToLevelUP(float Level) const;
 
+	UFUNCTION(BlueprintCallable, Category = "ProgressStats")
+	void GiveMainStatsToHero(FHeroSaveData& Hero, COTDStatsType StatsType, float Amount);
+	UFUNCTION(BlueprintCallable, Category = "ProgressStats")
+	bool GiveMainStatsToHeroByID(FPrimaryAssetId HeroId, COTDStatsType StatsType, float Amount);
+
+	UFUNCTION(BlueprintCallable, Category = "ProgressStats")
+	void RemoveMainStatsFromHero(FHeroSaveData& Hero, COTDStatsType StatsType, float Amount);
+	UFUNCTION(BlueprintCallable, Category = "ProgressStats")
+	bool RemoveMainStatsFromHeroByID(FPrimaryAssetId HeroId, COTDStatsType StatsType, float Amount);
+
+	UFUNCTION(BlueprintCallable, Category = "ProgressStats")
+	float GetMainStatsFromHeroID(FPrimaryAssetId HeroId, COTDStatsType StatsType);
 };
